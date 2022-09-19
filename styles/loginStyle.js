@@ -46,6 +46,12 @@ const loginStyle = StyleSheet.create({
     borderRadius: 25,
     paddingLeft: 10,
   },
+  center: {
+    flex: 1,
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
   form_button: {
     backgroundColor: "#5dbea3",
     height: 55,

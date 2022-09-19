@@ -28,7 +28,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import AppStyles from "../../styles/AppStyles";
-import initializedBase from "../../initFirebase";
+import { initializedBase } from "../../initFirebase";
 const auth = getAuth(initializedBase);
 
 const ResetPassword = ({ route, navigation }) => {

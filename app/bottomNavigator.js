@@ -2,8 +2,7 @@ import React from "react";
 import { Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./screens/Home";
-import Settings from "./screens/Settings";
-
+import SignOut from "./screens/Signout";
 const BottomNavigator = () => {
   const Tab = createBottomTabNavigator();
   return (
@@ -63,7 +62,7 @@ const BottomNavigator = () => {
       />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={SignOut}
         options={{
           tabBarIcon: ({ focused }) => {
             <View

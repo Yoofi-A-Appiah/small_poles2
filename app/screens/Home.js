@@ -9,11 +9,14 @@ import {
   SafeAreaView,
 } from "react-native";
 import loginStyle from "../../styles/loginStyle";
-import initializedBase from "../../initFirebase";
+import { initializedBase } from "../../initFirebase";
 import { getAuth, signOut, sendEmailVerification } from "firebase/auth";
 import AppStyles from "../../styles/AppStyles";
 import DrawerNavigator from "../app.navigation";
-
+import LeaderBoard from "./leaderboards";
+import { Feather } from "react-native-vector-icons";
+import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
+import { color } from "react-native-reanimated";
 const auth = getAuth(initializedBase);
 
 const Home = ({ navigation, route }) => {
@@ -38,16 +41,39 @@ const Home = ({ navigation, route }) => {
       </SafeAreaView>
     );
   };
+  const players_navigation = () => {
+    navigation.navigate("LeaderBoard");
+  };
+  const verticalonpress = () => {
+    players_navigation();
+  };
   return (
     <SafeAreaView style={loginStyle.bottomContainer}>
       {auth.currentUser.emailVerified
         ? showContent()
         : showSendVerificationEmail()}
-      <Button title="LOGOUT" onPress={logout}></Button>
+      <View style={loginStyle.center}></View>
+
       <Button
         title="Go to Settings Screen"
         onPress={() => navigation.navigate("Settings")} // We added an onPress event which would navigate to the About screen
       />
+      <View style={LeaderBoardStyle.bottom_stack}>
+        <Feather.Button
+          style={{
+            flexDirection: "column",
+            color: "white",
+            fontWeight: "600",
+          }}
+          name="more-vertical"
+          size={25}
+          backgroundColor={"grey"}
+          borderRadius={5}
+          onPress={() => verticalonpress()}
+        >
+          Options
+        </Feather.Button>
+      </View>
     </SafeAreaView>
   );
 };

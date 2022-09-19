@@ -1,11 +1,11 @@
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Settings from "./screens/Settings";
 import Home from "./screens/Home";
 import Splash from "./screens/splash.screen";
 import Fixtures from "./screens/fixtures";
 import Leagues from "./screens/leagues";
 import LeaderBoard from "./screens/leaderboards";
+import SignOut from "./screens/Signout";
 const Tab = createMaterialBottomTabNavigator();
 
 const MaterialTabs = () => {

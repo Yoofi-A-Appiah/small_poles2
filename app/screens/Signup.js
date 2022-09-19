@@ -35,7 +35,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 // import { mainAuth } from "../../initFirebase";
-import initializedBase from "../../initFirebase";
+import { initializedBase } from "../../initFirebase";
 const auth = getAuth(initializedBase);
 
 const Login_Signup = ({ navigation }) => {
