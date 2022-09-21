@@ -4,8 +4,10 @@ import Home from "./screens/Home";
 import Splash from "./screens/splash.screen";
 import Fixtures from "./screens/fixtures";
 import Leagues from "./screens/leagues";
+import MainLeaderBoard from "./screens/main_leaderBoard";
 import LeaderBoard from "./screens/leaderboards";
 import SignOut from "./screens/Signout";
+import { BottomTabBar } from "@react-navigation/bottom-tabs";
 const Tab = createMaterialBottomTabNavigator();
 
 const MaterialTabs = () => {
@@ -14,6 +16,12 @@ const MaterialTabs = () => {
       initialRouteName="SecondHome"
       activeColor="#00B84D"
       barStyle={{ backgroundColor: "#ffffff", height: 80 }}
+      tabBar={(props) => (
+        <BottomTabBar
+          {...props}
+          state={{ ...props.state, routes: props.state.routes.slice(0, 2) }}
+        ></BottomTabBar>
+      )}
     >
       <Tab.Screen
         name="Leagues"
@@ -54,8 +62,8 @@ const MaterialTabs = () => {
         }}
       />
       <Tab.Screen
-        name="LeaderBoard"
-        component={LeaderBoard}
+        name="MainLeaderBoard"
+        component={MainLeaderBoard}
         options={{
           tabBarLabel: "Rankings",
           tabBarIcon: ({ color }) => (
@@ -63,6 +71,7 @@ const MaterialTabs = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="Splash"
         component={Splash}
@@ -71,6 +80,13 @@ const MaterialTabs = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="LeaderBoard"
+        component={LeaderBoard}
+        options={{
+          tabBarStyle: { display: "none" },
         }}
       />
     </Tab.Navigator>

@@ -36,7 +36,19 @@ import {
 } from "firebase/auth";
 // import { mainAuth } from "../../initFirebase";
 import { initializedBase } from "../../initFirebase";
+import { firebase } from "../../initFirebase";
 const auth = getAuth(initializedBase);
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
 
 const Login_Signup = ({ navigation }) => {
   let [email, setEmail] = React.useState("");
@@ -49,6 +61,7 @@ const Login_Signup = ({ navigation }) => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
+
           navigation.navigate("Home", { user: userCredential.user });
           // ...
         })
@@ -63,12 +76,29 @@ const Login_Signup = ({ navigation }) => {
     if (email !== "" && password !== "" && confirmPassword !== "") {
       if (password === confirmPassword) {
         createUserWithEmailAndPassword(auth, email, password)
+          // .then((cred) => {
+          //   return firebase
+          //     .firestore()
+          //     .collection("users")
+          //     .doc(cred.user.uid)
+          //     .set({
+          //       team_name: email,
+          //     });
+          // })
           .then((userCredential) => {
             // Signed in
+            firebase
+              .firestore()
+              .collection("Users")
+              .doc(userCredential.uid)
+              .set({
+                team_name: email,
+              });
             sendEmailVerification(auth.currentUser);
-            navigation.navigate("Home", {
+            navigation.navigate("FirstTimeUser", {
               user: userCredential.user,
             });
+
             // ...
           })
           .catch((error) => {

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
+  ImageBackground,
 } from "react-native";
 import loginStyle from "../../styles/loginStyle";
 import { initializedBase } from "../../initFirebase";
@@ -14,27 +15,33 @@ import { getAuth, signOut, sendEmailVerification } from "firebase/auth";
 import AppStyles from "../../styles/AppStyles";
 import DrawerNavigator from "../app.navigation";
 import LeaderBoard from "./leaderboards";
-import { Feather } from "react-native-vector-icons";
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
-import { color } from "react-native-reanimated";
+import FloatingButton from "../components/FloatingButton";
 const auth = getAuth(initializedBase);
 
 const Home = ({ navigation, route }) => {
   //const navigation = useNavigation();
-  let logout = () => {
-    signOut(auth).then(() => {
-      navigation.popToTop();
-    });
-  };
 
-  let showContent = () => {};
+  let showContent = () => {
+    return (
+      <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
+        <SafeAreaView style={loginStyle.bottomContainer}>
+          <View style={loginStyle.center}></View>
+
+          <View style={LeaderBoardStyle.bottom_stack}>
+            <FloatingButton></FloatingButton>
+          </View>
+        </SafeAreaView>
+      </ImageBackground>
+    );
+  };
   let showSendVerificationEmail = () => {
     return (
       <SafeAreaView>
         <View style={loginStyle.bottomContainer}>
           <Text style={AppStyles.errorMessage}>Please verify your email </Text>
           <Button
-            title="Resend verification email"
+            title="Click to resend verification email"
             onPress={() => sendEmailVerification(auth.currentUser)}
           ></Button>
         </View>
@@ -47,34 +54,15 @@ const Home = ({ navigation, route }) => {
   const verticalonpress = () => {
     players_navigation();
   };
+  const image = require("../../assets/rotatedpitch1.jpg");
   return (
-    <SafeAreaView style={loginStyle.bottomContainer}>
+    //<ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       {auth.currentUser.emailVerified
         ? showContent()
         : showSendVerificationEmail()}
-      <View style={loginStyle.center}></View>
-
-      <Button
-        title="Go to Settings Screen"
-        onPress={() => navigation.navigate("Settings")} // We added an onPress event which would navigate to the About screen
-      />
-      <View style={LeaderBoardStyle.bottom_stack}>
-        <Feather.Button
-          style={{
-            flexDirection: "column",
-            color: "white",
-            fontWeight: "600",
-          }}
-          name="more-vertical"
-          size={25}
-          backgroundColor={"grey"}
-          borderRadius={5}
-          onPress={() => verticalonpress()}
-        >
-          Options
-        </Feather.Button>
-      </View>
     </SafeAreaView>
+    //</ImageBackground>
   );
 };
 

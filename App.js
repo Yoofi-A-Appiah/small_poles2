@@ -6,6 +6,7 @@ import ResetPassword from "./app/screens/ResetPassword";
 import Home from "./app/screens/Home";
 import TestHome from "./app/screens/testhome";
 import DrawerNavigator from "./app/app.navigation";
+import FirstTimeUser from "./app/screens/FirstTimeUser";
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -21,6 +22,11 @@ export default function App() {
           component={ResetPassword}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="FirstTimeUser"
+          component={FirstTimeUser}
+          options={{ headerShown: false }}
+        ></Stack.Screen>
         <Stack.Screen
           name="Home"
           component={DrawerNavigator}

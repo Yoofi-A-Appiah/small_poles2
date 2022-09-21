@@ -44,7 +44,7 @@ const LeaderBoard = () => {
     <View style={styles.center}>
       <Text>This is the LeaderBoards screen</Text>
       <FlatList
-        style={{ height: "100" }}
+        style={{ height: 100 }}
         data={players}
         numColumns={1}
         renderItem={({ item }) => (
