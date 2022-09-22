@@ -4,10 +4,7 @@ import Home from "./screens/Home";
 import Splash from "./screens/splash.screen";
 import Fixtures from "./screens/fixtures";
 import Leagues from "./screens/leagues";
-import MainLeaderBoard from "./screens/main_leaderBoard";
-import LeaderBoard from "./screens/leaderboards";
-import SignOut from "./screens/Signout";
-import { BottomTabBar } from "@react-navigation/bottom-tabs";
+import Statistics from "./screens/Statistics";
 const Tab = createMaterialBottomTabNavigator();
 
 const MaterialTabs = () => {
@@ -15,13 +12,7 @@ const MaterialTabs = () => {
     <Tab.Navigator
       initialRouteName="SecondHome"
       activeColor="#00B84D"
-      barStyle={{ backgroundColor: "#ffffff", height: 80 }}
-      tabBar={(props) => (
-        <BottomTabBar
-          {...props}
-          state={{ ...props.state, routes: props.state.routes.slice(0, 2) }}
-        ></BottomTabBar>
-      )}
+      barStyle={{ backgroundColor: "#ffffff" }}
     >
       <Tab.Screen
         name="Leagues"
@@ -31,19 +22,19 @@ const MaterialTabs = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="trophy" color={color} size={26} />
           ),
-          tabBarLabelStyle: {
-            fontSize: 8,
-            fontWeight: "bold",
-          },
         }}
       />
       <Tab.Screen
         name="Fixtures"
         component={Fixtures}
         options={{
-          tabBarLabel: "Fixtures",
+          tabBarLabel: "News",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="calendar" color={color} size={26} />
+            <MaterialCommunityIcons
+              name="newspaper-variant-multiple-outline"
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -62,10 +53,10 @@ const MaterialTabs = () => {
         }}
       />
       <Tab.Screen
-        name="MainLeaderBoard"
-        component={MainLeaderBoard}
+        name="Statistics"
+        component={Statistics}
         options={{
-          tabBarLabel: "Rankings",
+          tabBarLabel: "Stats",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chart-box" color={color} size={26} />
           ),
@@ -82,13 +73,13 @@ const MaterialTabs = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="LeaderBoard"
         component={LeaderBoard}
         options={{
           tabBarStyle: { display: "none" },
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

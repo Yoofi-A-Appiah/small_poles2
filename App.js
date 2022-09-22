@@ -7,6 +7,8 @@ import Home from "./app/screens/Home";
 import TestHome from "./app/screens/testhome";
 import DrawerNavigator from "./app/app.navigation";
 import FirstTimeUser from "./app/screens/FirstTimeUser";
+import BottomNavigator from "./app/bottomNavigator";
+import LeaderBoard from "./app/screens/leaderboards";
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -32,6 +34,16 @@ export default function App() {
           component={DrawerNavigator}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="Bottom"
+          component={BottomNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Make Transfer"
+          component={LeaderBoard}
+          options={{ headerShown: true }}
+        ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
