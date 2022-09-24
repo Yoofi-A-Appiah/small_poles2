@@ -9,6 +9,7 @@ import DrawerNavigator from "./app/app.navigation";
 import FirstTimeUser from "./app/screens/FirstTimeUser";
 import BottomNavigator from "./app/bottomNavigator";
 import LeaderBoard from "./app/screens/leaderboards";
+import Transfers from "./app/screens/transfers";
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -42,6 +43,11 @@ export default function App() {
         <Stack.Screen
           name="Make Transfer"
           component={LeaderBoard}
+          options={{ headerShown: true }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="Gameweek Transfers"
+          component={Transfers}
           options={{ headerShown: true }}
         ></Stack.Screen>
       </Stack.Navigator>

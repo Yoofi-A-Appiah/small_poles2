@@ -18,35 +18,35 @@ import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
 const auth = getAuth(initializedBase);
 import { db } from "../../initFirebase";
 import { collection, query, where, getDocs } from "firebase/firestore"; //const firestore = Firestore();
-const LeaderBoard = ({ route }) => {
+const Transfers = () => {
   const navigation = useNavigation();
   const [players, setPlayers] = useState([]);
   const [params, setParams] = useState("");
 
-  const q = query(collection(db, "Players"), where("Position", "==", params));
+  //const q = query(collection(db, "Players"), where("Position", "==", params));
   const playerData = firebase.firestore().collection("Players");
 
   const fetching = async () => {
-    const querySnapshot = await getDocs(q);
-    // playerData.onSnapshot((querySnapshot) => {
-    const players = [];
-    querySnapshot.forEach((doc) => {
-      const { Player_Name, Team_id, Player_Value, Position } = doc.data();
-      players.push({
-        id: doc.id,
-        Player_Name,
-        Team_id,
-        Player_Value,
-        Position,
+    //const querySnapshot = await getDocs(q);
+    playerData.onSnapshot((querySnapshot) => {
+      const players = [];
+      querySnapshot.forEach((doc) => {
+        const { Player_Name, Team_id, Player_Value, Position } = doc.data();
+        players.push({
+          id: doc.id,
+          Player_Name,
+          Team_id,
+          Player_Value,
+          Position,
+        });
       });
+      setPlayers(players);
     });
-    setPlayers(players);
-    //});
   };
 
   useEffect(() => {
     fetching();
-    setParams(route.params.paramKey);
+    //setParams(route.params.paramKey);
   });
   return (
     <View style={styles.center}>
@@ -58,7 +58,7 @@ const LeaderBoard = ({ route }) => {
         renderItem={({ item }) => (
           <Pressable
             style={LeaderBoardStyle.single_item}
-            onPress={() => navigation.navigate("FirstTimeUser")}
+            onPress={() => navigation.navigate("SecondHome")}
           >
             <View>
               <Text>Name: {item.Player_Name}</Text>
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeaderBoard;
+export default Transfers;

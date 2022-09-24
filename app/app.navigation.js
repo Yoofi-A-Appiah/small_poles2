@@ -8,9 +8,9 @@ import Home from "./screens/Home";
 const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Navigator initialRouteName="HomeTab">
       <Drawer.Screen
-        name="Home"
+        name="HomeTab"
         component={MaterialTabs}
         options={{ title: "Small Poles Arena" }}
       />

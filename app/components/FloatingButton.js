@@ -40,7 +40,7 @@ const FloatingButton = () => {
           name="light-bulb"
           size={30}
           color={"#00B84D"}
-          onPress={() => navigation.navigate("Make Transfer")}
+          onPress={() => navigation.navigate("Gameweek Transfers")}
         ></Entypo>
       </Animated.View>
       <Animated.View style={floatStyle.menu3}>
@@ -48,7 +48,7 @@ const FloatingButton = () => {
           name="eye"
           size={30}
           color={"#00B84D"}
-          onPress={() => navigation.navigate("Make Transfer")}
+          onPress={() => navigation.navigate("Gameweek Transfers")}
         ></Entypo>
       </Animated.View>
       <Animated.View style={floatStyle.menu2}>
@@ -56,7 +56,7 @@ const FloatingButton = () => {
           name="swap-horiz"
           size={30}
           color={"#00B84D"}
-          onPress={() => navigation.navigate("Make Transfer")}
+          onPress={() => navigation.navigate("Gameweek Transfers")}
         ></MaterialIcons>
       </Animated.View>
       <Animated.View style={[floatStyle.menu, floatStyle.buttton]}>
@@ -64,7 +64,7 @@ const FloatingButton = () => {
           name="more-vertical"
           size={30}
           color={"#00B84D"}
-          onPress={() => navigation.navigate("Make Transfer")}
+          onPress={() => navigation.navigate("Gameweek Transfers")}
         ></Feather>
       </Animated.View>
     </View>

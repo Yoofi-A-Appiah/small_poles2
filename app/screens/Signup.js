@@ -201,7 +201,7 @@ const Login_Signup = ({ navigation }) => {
             ></Ellipse>
           </ClipPath>
           <Image
-            href={require("../../assets/svg-image2.jpg")}
+            href={require("../../assets/newSplash.png")}
             width={width + 100}
             height={height + 100}
             preserveAspectRatio="xMidYMid slice"
