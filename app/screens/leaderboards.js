@@ -31,13 +31,15 @@ const LeaderBoard = ({ route }) => {
     // playerData.onSnapshot((querySnapshot) => {
     const players = [];
     querySnapshot.forEach((doc) => {
-      const { Player_Name, Team_id, Player_Value, Position } = doc.data();
+      const { Player_Name, Team_id, Player_Value, Position, Player_id } =
+        doc.data();
       players.push({
         id: doc.id,
         Player_Name,
         Team_id,
         Player_Value,
         Position,
+        Player_id,
       });
     });
     setPlayers(players);

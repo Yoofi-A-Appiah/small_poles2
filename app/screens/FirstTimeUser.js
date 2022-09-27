@@ -16,18 +16,26 @@ import { Picker } from "@react-native-picker/picker";
 import FirstTimeUserStyle from "../../styles/firstTimeUserStyle";
 import { MaterialIcons } from "react-native-vector-icons";
 import { Ionicons } from "react-native-vector-icons";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  set_team_name,
+  set_fav_team,
+  set_team_players,
+} from "../redux/actions";
 //import { useState } from "react";
-const FirstTimeUser = () => {
+const FirstTimeUser = ({ route }) => {
   // const add_info = () => {
   //   firebase.firestore().collection("Users").doc(userCredential.uid).set({
   //     team_name: email,
   //   });
   // };
+  //const { team_name, fav_team } = useSelector((state) => state.userReducer);
   const navigation = useNavigation();
   const [favteam, setFavTeam] = useState("");
   const teamData = firebase.firestore().collection("Teams");
   const [teams, setPlayers] = useState([]);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
+  const dispatch = useDispatch();
   let fetching = async () => {
     teamData.onSnapshot((querySnapshot) => {
       const teams = [];
@@ -44,7 +52,12 @@ const FirstTimeUser = () => {
 
   useEffect(() => {
     fetching();
+    dispatch(set_team_players(route.params.Player_id));
   }, []);
+  const setData = async () => {
+    // dispatch(set_team_name(team_name));
+    // dispatch(set_fav_team(fav_team));
+  };
   const image = require("../../assets/rotatedpitch1.jpg");
   return (
     <View style={FirstTimeUserStyle.container}>
@@ -55,6 +68,8 @@ const FirstTimeUser = () => {
         <TextInput
           placeholder="Enter Team Name"
           style={FirstTimeUserStyle.text_input}
+          value={useSelector((state) => state.userReducer.name)}
+          onChangeText={(value) => dispatch(set_team_name(value))}
         ></TextInput>
         <Pressable onPress={() => setIsPickerVisible(true)}>
           <Text
@@ -83,9 +98,9 @@ const FirstTimeUser = () => {
               <Text style={{ color: "red" }}>CLOSE</Text>
             </Pressable>
             <Picker
-              selectedValue={favteam}
+              selectedValue={useSelector((state) => state.userReducer.fav)}
               style={{ height: 120, width: 250 }}
-              onValueChange={(value, index) => setFavTeam(value)}
+              onValueChange={(value, index) => dispatch(set_fav_team(value))}
               mode="dropdown"
             >
               {teams.map((value) => (
@@ -100,7 +115,8 @@ const FirstTimeUser = () => {
         </View>
       </Modal>
       <Text style={{ fontSize: 16, marginTop: 10, marginBottom: 10 }}>
-        You selected {favteam} as your favorite team
+        You selected {useSelector((state) => state.userReducer.fav)} as your
+        favorite team
       </Text>
       <ImageBackground source={image} resizeMode="cover">
         <View style={FirstTimeUserStyle.mainContainer}>
@@ -157,6 +173,15 @@ const FirstTimeUser = () => {
               size={40}
               color={"black"}
               style={FirstTimeUserStyle.player_def4}
+              onPress={() =>
+                navigation.navigate("Make Transfer", { paramKey: "DEF" })
+              }
+            ></Ionicons>
+            <Ionicons
+              name="add-circle-outline"
+              size={40}
+              color={"black"}
+              style={FirstTimeUserStyle.player_def5}
               onPress={() =>
                 navigation.navigate("Make Transfer", { paramKey: "DEF" })
               }

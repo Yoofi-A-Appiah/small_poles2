@@ -106,6 +106,12 @@ const FirstTimeUserStyle = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
+  player_def5: {
+    padding: 25,
+    width: 90,
+    marginLeft: 10,
+    marginRight: 10,
+  },
   player_mid1: {
     padding: 25,
     width: 90,
