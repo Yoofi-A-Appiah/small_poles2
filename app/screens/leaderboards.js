@@ -15,6 +15,8 @@ import initializedBase from "../../initFirebase";
 import { firebase } from "../../initFirebase";
 import { onSnapshot, QuerySnapshot } from "firebase/firestore";
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
+import { useDispatch, useSelector } from "react-redux";
+import { set_player_gk1 } from "../redux/actions";
 const auth = getAuth(initializedBase);
 import { db } from "../../initFirebase";
 import { collection, query, where, getDocs } from "firebase/firestore"; //const firestore = Firestore();
@@ -22,10 +24,27 @@ const LeaderBoard = ({ route }) => {
   const navigation = useNavigation();
   const [players, setPlayers] = useState([]);
   const [params, setParams] = useState("");
-
-  const q = query(collection(db, "Players"), where("Position", "==", params));
+  // const [allPlayers, setAllPlayers] = useState([]);
+  // let player_gk1 = useSelector(
+  //   (state) => state.userReducer.player_gk1.player_id
+  // );
+  // let player_gk2 = useSelector(
+  //   (state) => state.userReducer.player_gk2.player_id
+  // );
+  // let player_def1 = useSelector(
+  //   (state) => state.userReducer.player_def1.player_id
+  // );
+  // let player_def2 = useSelector(
+  //   (state) => state.userReducer.player_def2.player_id
+  // );
+  // let allofthem = [player_gk1, player_gk2, player_def1, player_def2];
+  const q = query(
+    collection(db, "Players"),
+    //where("Player_id", "not-in", [allPlayers])
+    where("Position", "==", params)
+  );
   const playerData = firebase.firestore().collection("Players");
-
+  const dispatch = useDispatch();
   const fetching = async () => {
     const querySnapshot = await getDocs(q);
     // playerData.onSnapshot((querySnapshot) => {
@@ -45,14 +64,16 @@ const LeaderBoard = ({ route }) => {
     setPlayers(players);
     //});
   };
-
+  // useEffect(() => {
+  //   setAllPlayers(allofthem);
+  // }, []);
   useEffect(() => {
     fetching();
     setParams(route.params.paramKey);
   });
   return (
     <View style={styles.center}>
-      <Text>This is the Transfers screen</Text>
+      <Text>This is the Transfers screen </Text>
       <FlatList
         style={{ height: 100 }}
         data={players}
@@ -60,7 +81,13 @@ const LeaderBoard = ({ route }) => {
         renderItem={({ item }) => (
           <Pressable
             style={LeaderBoardStyle.single_item}
-            onPress={() => navigation.navigate("FirstTimeUser")}
+            onPress={() => {
+              navigation.navigate("FirstTimeUser");
+              //let reduxAction = route.params.reduxParams;
+              dispatch(
+                route.params.reduxParams(item.Player_Name, item.Player_id)
+              );
+            }}
           >
             <View>
               <Text>Name: {item.Player_Name}</Text>

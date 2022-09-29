@@ -20,7 +20,22 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   set_team_name,
   set_fav_team,
-  set_team_players,
+  clear_data,
+  set_player_gk1,
+  set_player_gk2,
+  set_player_def1,
+  set_player_def2,
+  set_player_def3,
+  set_player_def4,
+  set_player_def5,
+  set_player_mid1,
+  set_player_mid2,
+  set_player_mid3,
+  set_player_mid4,
+  set_player_fwd1,
+  set_player_fwd2,
+  set_player_fwd3,
+  set_player_fwd4,
 } from "../redux/actions";
 //import { useState } from "react";
 const FirstTimeUser = ({ route }) => {
@@ -50,9 +65,61 @@ const FirstTimeUser = ({ route }) => {
     });
   };
 
+  /**
+   * !The values below will be the individual player components
+   */
+
+  let player_gk1 = useSelector(
+    (state) => state.userReducer.player_gk1.player_name
+  );
+  let player_gk2 = useSelector(
+    (state) => state.userReducer.player_gk2.player_name
+  );
+  let player_def1 = useSelector(
+    (state) => state.userReducer.player_def1.player_name
+  );
+  let player_def2 = useSelector(
+    (state) => state.userReducer.player_def2.player_name
+  );
+  let player_def3 = useSelector(
+    (state) => state.userReducer.player_def3.player_name
+  );
+  let player_def4 = useSelector(
+    (state) => state.userReducer.player_def4.player_name
+  );
+  let player_def5 = useSelector(
+    (state) => state.userReducer.player_def5.player_name
+  );
+  let player_mid1 = useSelector(
+    (state) => state.userReducer.player_mid1.player_name
+  );
+  let player_mid2 = useSelector(
+    (state) => state.userReducer.player_mid2.player_name
+  );
+  let player_mid3 = useSelector(
+    (state) => state.userReducer.player_mid3.player_name
+  );
+  let player_mid4 = useSelector(
+    (state) => state.userReducer.player_mid4.player_name
+  );
+  let player_fwd1 = useSelector(
+    (state) => state.userReducer.player_fwd1.player_name
+  );
+  let player_fwd2 = useSelector(
+    (state) => state.userReducer.player_fwd2.player_name
+  );
+  let player_fwd3 = useSelector(
+    (state) => state.userReducer.player_fwd3.player_name
+  );
+  let player_fwd4 = useSelector(
+    (state) => state.userReducer.player_fwd4.player_name
+  );
+  /**
+   * !END OF PLAYER COMPONENTS
+   */
   useEffect(() => {
     fetching();
-    dispatch(set_team_players(route.params.Player_id));
+    // dispatch(set_team_players(route.params.Player_id));
   }, []);
   const setData = async () => {
     // dispatch(set_team_name(team_name));
@@ -121,147 +188,402 @@ const FirstTimeUser = ({ route }) => {
       <ImageBackground source={image} resizeMode="cover">
         <View style={FirstTimeUserStyle.mainContainer}>
           <View style={FirstTimeUserStyle.subContainer1}>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_gk1}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "GK" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_gk2}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "GK" })
-              }
-            ></Ionicons>
+            {player_gk1 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_gk1}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "GK",
+                    reduxParams: set_player_gk1,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_gk1}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "GK",
+                    reduxParams: set_player_gk1,
+                  })
+                }
+              >
+                {player_gk1}
+              </Text>
+            )}
+            {player_gk2 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_gk2}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "GK",
+                    reduxParams: set_player_gk2,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_gk2}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "GK",
+                    reduxParams: set_player_gk2,
+                  })
+                }
+              >
+                {player_gk2}
+              </Text>
+            )}
           </View>
           <View style={FirstTimeUserStyle.subContainer2}>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_def1}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "DEF" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_def2}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "DEF" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_def3}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "DEF" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_def4}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "DEF" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_def5}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "DEF" })
-              }
-            ></Ionicons>
+            {player_def1 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_def1}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def1,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_def1}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def1,
+                  })
+                }
+              >
+                {player_def1}
+              </Text>
+            )}
+            {player_def2 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_def2}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def2,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_def2}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def2,
+                  })
+                }
+              >
+                {player_def2}
+              </Text>
+            )}
+            {player_def3 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_def3}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def3,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_def3}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def3,
+                  })
+                }
+              >
+                {player_def3}
+              </Text>
+            )}
+            {player_def4 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_def4}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def4,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_def4}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def4,
+                  })
+                }
+              >
+                {player_def4}
+              </Text>
+            )}
+            {player_def5 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_def5}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def5,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_def5}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "DEF",
+                    reduxParams: set_player_def5,
+                  })
+                }
+              >
+                {player_def5}
+              </Text>
+            )}
           </View>
           <View style={FirstTimeUserStyle.subContainer3}>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_mid1}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "MID" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_mid2}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "MID" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_mid3}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "MID" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_mid4}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "MID" })
-              }
-            ></Ionicons>
+            {player_mid1 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_mid1}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "MID",
+                    reduxParams: set_player_mid1,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_mid1}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "MID",
+                    reduxParams: set_player_mid1,
+                  })
+                }
+              >
+                {player_mid1}
+              </Text>
+            )}
+            {player_mid2 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_mid2}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "MID",
+                    reduxParams: set_player_mid2,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_mid2}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "MID",
+                    reduxParams: set_player_mid2,
+                  })
+                }
+              >
+                {player_mid2}
+              </Text>
+            )}
+            {player_mid3 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_mid3}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "MID",
+                    reduxParams: set_player_mid3,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_mid3}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "MID",
+                    reduxParams: set_player_mid3,
+                  })
+                }
+              >
+                {player_mid3}
+              </Text>
+            )}
+            {player_mid4 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_mid4}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "MID",
+                    reduxParams: set_player_mid4,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_mid4}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "MID",
+                    reduxParams: set_player_mid4,
+                  })
+                }
+              >
+                {player_mid4}
+              </Text>
+            )}
           </View>
           <View style={FirstTimeUserStyle.subContainer4}>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_fwd1}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "FWD" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_fwd2}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "FWD" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_fwd3}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "FWD" })
-              }
-            ></Ionicons>
-            <Ionicons
-              name="add-circle-outline"
-              size={40}
-              color={"black"}
-              style={FirstTimeUserStyle.player_fwd4}
-              onPress={() =>
-                navigation.navigate("Make Transfer", { paramKey: "FWD" })
-              }
-            ></Ionicons>
+            {player_fwd1 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_fwd1}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "FWD",
+                    reduxParams: set_player_fwd1,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_fwd1}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "FWD",
+                    reduxParams: set_player_fwd1,
+                  })
+                }
+              >
+                {player_fwd1}
+              </Text>
+            )}
+            {player_fwd2 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_fwd2}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "FWD",
+                    reduxParams: set_player_fwd2,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_fwd2}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "FWD",
+                    reduxParams: set_player_fwd2,
+                  })
+                }
+              >
+                {player_fwd2}
+              </Text>
+            )}
+            {player_fwd3 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_fwd3}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "FWD",
+                    reduxParams: set_player_fwd3,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_fwd3}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "FWD",
+                    reduxParams: set_player_fwd3,
+                  })
+                }
+              >
+                {player_fwd3}
+              </Text>
+            )}
+            {player_fwd4 === "N@me" ? (
+              <Ionicons
+                name="add-circle-outline"
+                size={40}
+                color={"black"}
+                style={FirstTimeUserStyle.player_fwd4}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "FWD",
+                    reduxParams: set_player_fwd4,
+                  })
+                }
+              ></Ionicons>
+            ) : (
+              <Text
+                style={FirstTimeUserStyle.player_fwd4}
+                onPress={() =>
+                  navigation.navigate("Make Transfer", {
+                    paramKey: "FWD",
+                    reduxParams: set_player_fwd4,
+                  })
+                }
+              >
+                {player_fwd4}
+              </Text>
+            )}
           </View>
         </View>
       </ImageBackground>
@@ -286,6 +608,9 @@ const FirstTimeUser = ({ route }) => {
             alignContent: "center",
 
             borderRadius: 50 / 2,
+          }}
+          onPress={() => {
+            dispatch(clear_data());
           }}
         >
           <Text style={{ textAlign: "center", color: "red" }}>RESET</Text>
