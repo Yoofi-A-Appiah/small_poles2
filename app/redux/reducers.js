@@ -20,6 +20,7 @@ import {
   SET_PLAYER_FWD3,
   SET_PLAYER_FWD4,
   CLEAR_DATA,
+  GET_ALL_PLAYERS,
 } from "./actions";
 
 const initialState = {
@@ -50,6 +51,8 @@ function userReducer(state = initialState, action) {
       return { ...state, fav: action.payload };
     case CLEAR_DATA:
       return initialState;
+    case GET_ALL_PLAYERS:
+      return state;
     case SET_PLAYER_GK1: {
       const player_id = action.player_id;
       const player_name = action.player_name;

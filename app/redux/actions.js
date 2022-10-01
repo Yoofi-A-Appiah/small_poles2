@@ -5,6 +5,7 @@
 export const SET_TEAM_NAME = "SET_TEAM_NAME";
 export const SET_FAV_TEAM = "SET_FAV_TEAM";
 export const CLEAR_DATA = "CLEAR_DATA";
+export const GET_ALL_PLAYERS = "GET_ALL_PLAYERS";
 export const SET_PLAYER_GK1 = "SET_PLAYER_GK1";
 export const SET_PLAYER_GK2 = "SET_PLAYER_GK2";
 export const SET_PLAYER_DEF1 = "SET_PLAYER_DEF1";
@@ -36,6 +37,9 @@ export const set_fav_team = (fav) => (dispatch) => {
 };
 export const clear_data = () => ({
   type: CLEAR_DATA,
+});
+export const get_all_players = () => ({
+  type: GET_ALL_PLAYERS,
 });
 export const set_player_gk1 = (player_name, player_id) => (dispatch) => {
   dispatch({

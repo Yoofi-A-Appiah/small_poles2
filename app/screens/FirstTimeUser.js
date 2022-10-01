@@ -66,7 +66,7 @@ const FirstTimeUser = ({ route }) => {
   };
 
   /**
-   * !The values below will be the individual player components
+   * *The values below will be the individual player components
    */
 
   let player_gk1 = useSelector(
@@ -115,7 +115,7 @@ const FirstTimeUser = ({ route }) => {
     (state) => state.userReducer.player_fwd4.player_name
   );
   /**
-   * !END OF PLAYER COMPONENTS
+   * *END OF PLAYER COMPONENTS
    */
   useEffect(() => {
     fetching();
@@ -126,6 +126,7 @@ const FirstTimeUser = ({ route }) => {
     // dispatch(set_fav_team(fav_team));
   };
   const image = require("../../assets/rotatedpitch1.jpg");
+  const set = JSON.stringify(set_player_gk1);
   return (
     <View style={FirstTimeUserStyle.container}>
       <Text style={{ fontSize: 18, marginBottom: 10 }}>
