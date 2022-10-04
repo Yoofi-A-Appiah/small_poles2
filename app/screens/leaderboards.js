@@ -19,12 +19,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { set_player_gk1, set_player_gk2 } from "../redux/actions";
 const auth = getAuth(initializedBase);
 import { db } from "../../initFirebase";
-import { collection, query, where, getDocs } from "firebase/firestore"; //const firestore = Firestore();
+import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
+import UseFullPageLoader from "../hooks/useFullPageLoader";
 const LeaderBoard = ({ route }) => {
   const navigation = useNavigation();
   const [players, setPlayers] = useState([]);
   const [params, setParams] = useState("");
-  const [allPlayers, setAllPlayers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loader, showLoader, hideLoader] = UseFullPageLoader();
   const gk1 = useSelector((state) => state.userReducer.player_gk1.player_id);
   const gk2 = useSelector((state) => state.userReducer.player_gk2.player_id);
   const def1 = useSelector((state) => state.userReducer.player_def1.player_id);
@@ -60,20 +62,26 @@ const LeaderBoard = ({ route }) => {
 
   const q = query(
     collection(db, "Players"),
-    where("Position", "==", params)
-    //where("Player_id", "not-in", parameterArray)
+    where("Position", "==", route.params.paramKey)
   );
 
   const playerData = firebase.firestore().collection("Players");
   const dispatch = useDispatch();
 
   const fetching = async () => {
+    showLoader();
     const querySnapshot = await getDocs(q);
     // playerData.onSnapshot((querySnapshot) => {
     const players = [];
     querySnapshot.forEach((doc) => {
-      const { Player_Name, Team_id, Player_Value, Position, Player_id } =
-        doc.data();
+      const {
+        Player_Name,
+        Team_id,
+        Player_Value,
+        Position,
+        Player_id,
+        Team_Name,
+      } = doc.data();
       players.push({
         id: doc.id,
         Player_Name,
@@ -81,40 +89,18 @@ const LeaderBoard = ({ route }) => {
         Player_Value,
         Position,
         Player_id,
+        Team_Name,
       });
     });
+
+    setTest(() =>
+      players.filter((item) => !parameterArray.includes(item.Player_id))
+    );
     setPlayers(players);
+    setIsLoading(true);
+    hideLoader();
     //});
   };
-
-  async function once(originalArray, itemsToBeRemoved) {
-    const filteredArray = [];
-    console.log(itemsToBeRemoved);
-
-    for (let i = 0; i < originalArray.length; i++) {
-      let isSubset = false;
-      for (let j = 0; j < itemsToBeRemoved.length; j++) {
-        // check if whole object is a subset of the object in itemsToBeRemoved
-        if (
-          Object.keys(originalArray[i]).every(
-            (key) => originalArray[i][key] === itemsToBeRemoved[j][key]
-          )
-        ) {
-          isSubset = true;
-        }
-      }
-      if (!isSubset) {
-        filteredArray.push(originalArray[i]);
-      }
-    }
-    const meow = [
-      { Player_id: 1000, Player_Name: "dfer" },
-      { Player_id: 1001, Player_Name: "otherr" },
-    ];
-    return meow;
-
-    //setTest(filteredArray);
-  }
 
   const [test, setTest] = useState([]);
 
@@ -122,12 +108,6 @@ const LeaderBoard = ({ route }) => {
     (item) => !parameterArray.includes(item.Player_id)
   );
 
-  useEffect(() => {
-    fetching();
-    setParams(route.params.paramKey);
-    //once(players, allPlayers);
-    //setTest(please);
-  }, []);
   const wait = (timeout) => {
     // Defined the timeout function for testing purpose
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -139,22 +119,28 @@ const LeaderBoard = ({ route }) => {
     setIsRefreshing(true);
     wait(2000).then(() => setIsRefreshing(false));
   }, []);
+
+  useEffect(() => {
+    fetching();
+  }, []);
   return (
     <View style={styles.center}>
+      {loader}
       <Text>This is the Transfers screen</Text>
+      <Pressable onPress={() => fetching()}>
+        <Text>PRESS</Text>
+      </Pressable>
       <FlatList
         style={{ flex: 1, height: 100 }}
-        data={available}
+        data={test}
         refreshing={isRefreshing} // Added pull to refesh state
         onRefresh={onRefresh}
         numColumns={1}
-        keyExtractor={(item) => item.Player_id.toString()}
         renderItem={({ item }) => (
           <Pressable
             style={LeaderBoardStyle.single_item}
             onPress={() => {
               navigation.navigate("FirstTimeUser");
-              //let reduxAction = route.params.reduxParams;
               dispatch(
                 route.params.reduxParams(item.Player_Name, item.Player_id)
               );
@@ -162,8 +148,8 @@ const LeaderBoard = ({ route }) => {
           >
             <View>
               <Text>Name: {item.Player_Name}</Text>
-              <Text>Team_id: {item.Player_id}</Text>
-              <Text>Player_Value: {item.Player_Value}</Text>
+              <Text>Value: ${item.Player_Value}M</Text>
+              <Text>Team Name: {item.Team_Name}</Text>
               <Text>Position: {item.Position}</Text>
             </View>
           </Pressable>

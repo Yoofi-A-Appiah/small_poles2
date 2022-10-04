@@ -37,6 +37,8 @@ import {
   set_player_fwd3,
   set_player_fwd4,
 } from "../redux/actions";
+import UseFullPageLoader from "../hooks/useFullPageLoader";
+
 //import { useState } from "react";
 const FirstTimeUser = ({ route }) => {
   // const add_info = () => {
@@ -50,6 +52,7 @@ const FirstTimeUser = ({ route }) => {
   const teamData = firebase.firestore().collection("Teams");
   const [teams, setPlayers] = useState([]);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
+  const [loader, showLoader, hideLoader] = UseFullPageLoader();
   const dispatch = useDispatch();
   let fetching = async () => {
     teamData.onSnapshot((querySnapshot) => {
@@ -72,48 +75,95 @@ const FirstTimeUser = ({ route }) => {
   let player_gk1 = useSelector(
     (state) => state.userReducer.player_gk1.player_name
   );
+  let player_gk1_id = useSelector(
+    (state) => state.userReducer.player_gk1.player_id
+  );
   let player_gk2 = useSelector(
     (state) => state.userReducer.player_gk2.player_name
+  );
+  let player_gk2_id = useSelector(
+    (state) => state.userReducer.player_gk2.player_id
   );
   let player_def1 = useSelector(
     (state) => state.userReducer.player_def1.player_name
   );
+  let player_def1_id = useSelector(
+    (state) => state.userReducer.player_mid1.player_id
+  );
   let player_def2 = useSelector(
     (state) => state.userReducer.player_def2.player_name
+  );
+  let player_def2_id = useSelector(
+    (state) => state.userReducer.player_def2.player_id
   );
   let player_def3 = useSelector(
     (state) => state.userReducer.player_def3.player_name
   );
+  let player_def3_id = useSelector(
+    (state) => state.userReducer.player_def3.player_id
+  );
   let player_def4 = useSelector(
     (state) => state.userReducer.player_def4.player_name
+  );
+  let player_def4_id = useSelector(
+    (state) => state.userReducer.player_def4.player_id
   );
   let player_def5 = useSelector(
     (state) => state.userReducer.player_def5.player_name
   );
+  let player_def5_id = useSelector(
+    (state) => state.userReducer.player_def5.player_id
+  );
   let player_mid1 = useSelector(
     (state) => state.userReducer.player_mid1.player_name
+  );
+  let player_mid1_id = useSelector(
+    (state) => state.userReducer.player_mid1.player_id
   );
   let player_mid2 = useSelector(
     (state) => state.userReducer.player_mid2.player_name
   );
+  let player_mid2_id = useSelector(
+    (state) => state.userReducer.player_mid2.player_id
+  );
   let player_mid3 = useSelector(
     (state) => state.userReducer.player_mid3.player_name
+  );
+  let player_mid3_id = useSelector(
+    (state) => state.userReducer.player_mid3.player_id
   );
   let player_mid4 = useSelector(
     (state) => state.userReducer.player_mid4.player_name
   );
+  let player_mid4_id = useSelector(
+    (state) => state.userReducer.player_mid4.player_id
+  );
   let player_fwd1 = useSelector(
     (state) => state.userReducer.player_fwd1.player_name
+  );
+  let player_fwd1_id = useSelector(
+    (state) => state.userReducer.player_fwd1.player_id
   );
   let player_fwd2 = useSelector(
     (state) => state.userReducer.player_fwd2.player_name
   );
+  let player_fwd2_id = useSelector(
+    (state) => state.userReducer.player_fwd2.player_id
+  );
   let player_fwd3 = useSelector(
     (state) => state.userReducer.player_fwd3.player_name
+  );
+  let player_fwd3_id = useSelector(
+    (state) => state.userReducer.player_fwd3.player_id
   );
   let player_fwd4 = useSelector(
     (state) => state.userReducer.player_fwd4.player_name
   );
+  let player_fwd4_id = useSelector(
+    (state) => state.userReducer.player_fwd4.player_id
+  );
+  let team_name = useSelector((state) => state.userReducer.name);
+  let favorite_team = useSelector((state) => state.userReducer.fav);
   /**
    * *END OF PLAYER COMPONENTS
    */
@@ -126,7 +176,38 @@ const FirstTimeUser = ({ route }) => {
     // dispatch(set_fav_team(fav_team));
   };
   const image = require("../../assets/rotatedpitch1.jpg");
+  //TODO chore: Set individual useSelectors as stringified JSON
   const set = JSON.stringify(set_player_gk1);
+  //TODO chore: END stringify
+
+  //const user = route.params.user
+  const uploadUser = () => {
+    showLoader();
+    firebase
+      .firestore()
+      .collection("Users")
+      .doc(route.params.user_id)
+      .set({
+        Team_name: team_name,
+        Favortie_team: favorite_team,
+        Player_GK1: { Name: player_gk1, Player_id: player_gk1_id },
+        Player_GK2: { Name: player_gk2, Player_id: player_gk2_id },
+        Player_DEF1: { Name: player_def1, Player_id: player_def1_id },
+        Player_DEF2: { Name: player_def2, Player_id: player_def2_id },
+        Player_DEF3: { Name: player_def3, Player_id: player_def3_id },
+        Player_DEF4: { Name: player_def4, Player_id: player_def4_id },
+        Player_DEF5: { Name: player_def5, Player_id: player_def5_id },
+        Player_MID1: { Name: player_mid1, Player_id: player_mid1_id },
+        Player_MID2: { Name: player_mid2, Player_id: player_mid2_id },
+        Player_MID3: { Name: player_mid3, Player_id: player_mid3_id },
+        Player_MID4: { Name: player_mid4, Player_id: player_mid4_id },
+        Player_FWD1: { Name: player_fwd1, Player_id: player_fwd1_id },
+        Player_FWD2: { Name: player_fwd2, Player_id: player_fwd2_id },
+        Player_FWD3: { Name: player_fwd3, Player_id: player_fwd3_id },
+        Player_FWD4: { Name: player_fwd4, Player_id: player_fwd4_id },
+      })
+      .then(hideLoader(), navigation.navigate("Home"));
+  };
   return (
     <View style={FirstTimeUserStyle.container}>
       <Text style={{ fontSize: 18, marginBottom: 10 }}>
@@ -630,10 +711,14 @@ const FirstTimeUser = ({ route }) => {
             backgroundColor: "#387262",
             borderRadius: 50 / 2,
           }}
+          onPress={() => {
+            uploadUser();
+          }}
         >
           <Text style={{ textAlign: "center", color: "white" }}>SAVE</Text>
         </Pressable>
       </View>
+      {loader}
     </View>
   );
 };

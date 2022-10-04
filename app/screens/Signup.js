@@ -87,16 +87,19 @@ const Login_Signup = ({ navigation }) => {
           // })
           .then((userCredential) => {
             // Signed in
-            firebase
-              .firestore()
-              .collection("Users")
-              .doc(userCredential.uid)
-              .set({
-                team_name: email,
-              });
+            // ! the upload logic is below
+            // firebase
+            //   .firestore()
+            //   .collection("Users")
+            //   .doc(userCredential.uid)
+            //   .set({
+            //     team_name: email,
+            //   });
+            // ! the upload logic ends here
             sendEmailVerification(auth.currentUser);
             navigation.navigate("FirstTimeUser", {
               user: userCredential.user,
+              user_id: userCredential.uid,
             });
 
             // ...
@@ -237,13 +240,13 @@ const Login_Signup = ({ navigation }) => {
           </Animated.View>
           <Animated.View style={[loginStyle.ani_button, buttonAnimatedStyle]}>
             <Pressable style={loginStyle.button} onPress={registerHandler}>
-              <Text style={loginStyle.buttonText}>REGISTER</Text>
+              <Text style={loginStyle.buttonText}>SIGNUP</Text>
             </Pressable>
           </Animated.View>
 
           <Animated.View style={[loginStyle.formContainer, formAnimator]}>
             {(isRegistering && (
-              <Text style={loginStyle.inFormText}>REGISTER</Text>
+              <Text style={loginStyle.inFormText}>SIGNUP</Text>
             )) || <Text style={loginStyle.inFormText}>LOGIN</Text>}
             <Text
               style={
@@ -307,7 +310,7 @@ const Login_Signup = ({ navigation }) => {
                 }}
               >
                 <Text style={loginStyle.buttonText}>
-                  {isRegistering ? "REGISTER" : "LOGIN"}
+                  {isRegistering ? "SIGNUP" : "LOGIN"}
                 </Text>
               </Pressable>
             </Animated.View>
