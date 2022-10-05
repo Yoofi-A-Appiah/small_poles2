@@ -10,7 +10,9 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   ImageBackground,
+  Alert,
 } from "react-native";
+import _ from "lodash";
 import { firebase } from "../../initFirebase";
 import { Picker } from "@react-native-picker/picker";
 import FirstTimeUserStyle from "../../styles/firstTimeUserStyle";
@@ -36,23 +38,19 @@ import {
   set_player_fwd2,
   set_player_fwd3,
   set_player_fwd4,
+  balance,
 } from "../redux/actions";
 import UseFullPageLoader from "../hooks/useFullPageLoader";
-
-//import { useState } from "react";
+import { set_team_value } from "../redux/actions";
 const FirstTimeUser = ({ route }) => {
-  // const add_info = () => {
-  //   firebase.firestore().collection("Users").doc(userCredential.uid).set({
-  //     team_name: email,
-  //   });
-  // };
-  //const { team_name, fav_team } = useSelector((state) => state.userReducer);
   const navigation = useNavigation();
   const [favteam, setFavTeam] = useState("");
   const teamData = firebase.firestore().collection("Teams");
   const [teams, setPlayers] = useState([]);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [loader, showLoader, hideLoader] = UseFullPageLoader();
+  const [isOverBudgetModal, setIsOverBudgetModal] = useState(false);
+
   const dispatch = useDispatch();
   let fetching = async () => {
     teamData.onSnapshot((querySnapshot) => {
@@ -78,11 +76,17 @@ const FirstTimeUser = ({ route }) => {
   let player_gk1_id = useSelector(
     (state) => state.userReducer.player_gk1.player_id
   );
+  const gk1_value = useSelector(
+    (state) => state.userReducer.player_gk1.player_value
+  );
   let player_gk2 = useSelector(
     (state) => state.userReducer.player_gk2.player_name
   );
   let player_gk2_id = useSelector(
     (state) => state.userReducer.player_gk2.player_id
+  );
+  const gk2_value = useSelector(
+    (state) => state.userReducer.player_gk2.player_value
   );
   let player_def1 = useSelector(
     (state) => state.userReducer.player_def1.player_name
@@ -90,11 +94,17 @@ const FirstTimeUser = ({ route }) => {
   let player_def1_id = useSelector(
     (state) => state.userReducer.player_mid1.player_id
   );
+  const def1_value = useSelector(
+    (state) => state.userReducer.player_def1.player_value
+  );
   let player_def2 = useSelector(
     (state) => state.userReducer.player_def2.player_name
   );
   let player_def2_id = useSelector(
     (state) => state.userReducer.player_def2.player_id
+  );
+  const def2_value = useSelector(
+    (state) => state.userReducer.player_def2.player_value
   );
   let player_def3 = useSelector(
     (state) => state.userReducer.player_def3.player_name
@@ -102,11 +112,17 @@ const FirstTimeUser = ({ route }) => {
   let player_def3_id = useSelector(
     (state) => state.userReducer.player_def3.player_id
   );
+  const def3_value = useSelector(
+    (state) => state.userReducer.player_def3.player_value
+  );
   let player_def4 = useSelector(
     (state) => state.userReducer.player_def4.player_name
   );
   let player_def4_id = useSelector(
     (state) => state.userReducer.player_def4.player_id
+  );
+  const def4_value = useSelector(
+    (state) => state.userReducer.player_def4.player_value
   );
   let player_def5 = useSelector(
     (state) => state.userReducer.player_def5.player_name
@@ -114,11 +130,17 @@ const FirstTimeUser = ({ route }) => {
   let player_def5_id = useSelector(
     (state) => state.userReducer.player_def5.player_id
   );
+  const def5_value = useSelector(
+    (state) => state.userReducer.player_def5.player_value
+  );
   let player_mid1 = useSelector(
     (state) => state.userReducer.player_mid1.player_name
   );
   let player_mid1_id = useSelector(
     (state) => state.userReducer.player_mid1.player_id
+  );
+  const mid1_value = useSelector(
+    (state) => state.userReducer.player_mid1.player_value
   );
   let player_mid2 = useSelector(
     (state) => state.userReducer.player_mid2.player_name
@@ -126,11 +148,17 @@ const FirstTimeUser = ({ route }) => {
   let player_mid2_id = useSelector(
     (state) => state.userReducer.player_mid2.player_id
   );
+  const mid2_value = useSelector(
+    (state) => state.userReducer.player_mid2.player_value
+  );
   let player_mid3 = useSelector(
     (state) => state.userReducer.player_mid3.player_name
   );
   let player_mid3_id = useSelector(
     (state) => state.userReducer.player_mid3.player_id
+  );
+  const mid3_value = useSelector(
+    (state) => state.userReducer.player_mid3.player_value
   );
   let player_mid4 = useSelector(
     (state) => state.userReducer.player_mid4.player_name
@@ -138,11 +166,17 @@ const FirstTimeUser = ({ route }) => {
   let player_mid4_id = useSelector(
     (state) => state.userReducer.player_mid4.player_id
   );
+  const mid4_value = useSelector(
+    (state) => state.userReducer.player_mid4.player_value
+  );
   let player_fwd1 = useSelector(
     (state) => state.userReducer.player_fwd1.player_name
   );
   let player_fwd1_id = useSelector(
     (state) => state.userReducer.player_fwd1.player_id
+  );
+  const fwd1_value = useSelector(
+    (state) => state.userReducer.player_fwd1.player_value
   );
   let player_fwd2 = useSelector(
     (state) => state.userReducer.player_fwd2.player_name
@@ -150,11 +184,17 @@ const FirstTimeUser = ({ route }) => {
   let player_fwd2_id = useSelector(
     (state) => state.userReducer.player_fwd2.player_id
   );
+  const fwd2_value = useSelector(
+    (state) => state.userReducer.player_fwd2.player_value
+  );
   let player_fwd3 = useSelector(
     (state) => state.userReducer.player_fwd3.player_name
   );
   let player_fwd3_id = useSelector(
     (state) => state.userReducer.player_fwd3.player_id
+  );
+  const fwd3_value = useSelector(
+    (state) => state.userReducer.player_fwd3.player_value
   );
   let player_fwd4 = useSelector(
     (state) => state.userReducer.player_fwd4.player_name
@@ -162,34 +202,106 @@ const FirstTimeUser = ({ route }) => {
   let player_fwd4_id = useSelector(
     (state) => state.userReducer.player_fwd4.player_id
   );
+  const fwd4_value = useSelector(
+    (state) => state.userReducer.player_fwd4.player_value
+  );
   let team_name = useSelector((state) => state.userReducer.name);
   let favorite_team = useSelector((state) => state.userReducer.fav);
+
   /**
    * *END OF PLAYER COMPONENTS
    */
-  useEffect(() => {
-    fetching();
-    // dispatch(set_team_players(route.params.Player_id));
-  }, []);
-  const setData = async () => {
-    // dispatch(set_team_name(team_name));
-    // dispatch(set_fav_team(fav_team));
+  let calculateTeamValue = () => {
+    let value =
+      gk1_value +
+      gk2_value +
+      def1_value +
+      def2_value +
+      def3_value +
+      def4_value +
+      mid1_value +
+      mid2_value +
+      mid3_value +
+      mid4_value +
+      fwd1_value +
+      fwd2_value +
+      fwd3_value +
+      fwd4_value;
+    return value;
   };
+
   const image = require("../../assets/rotatedpitch1.jpg");
   //TODO chore: Set individual useSelectors as stringified JSON
   const set = JSON.stringify(set_player_gk1);
   //TODO chore: END stringify
+  const [allParams, setAllParams] = useState("");
+  let currState = useSelector((state) => state.userReducer);
 
-  //const user = route.params.user
+  const checkAllParams = () => {
+    const initialState = {
+      name: "",
+      fav: "___",
+      team_value: 0,
+      budget: false, //indicates that user is under budget by default
+      balance: 1000,
+      player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def3: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def5: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+    };
+    if (
+      _.isEqual(initialState.name, currState.name) ||
+      _.isEqual(initialState.fav, currState.fav) ||
+      // _.isEqual(initialState.balance, currState.balance) ||
+      _.isEqual(initialState.team_value, currState.team_value) ||
+      currState.budget === true ||
+      _.isEqual(initialState.player_gk1, currState.player_gk1) ||
+      _.isEqual(initialState.player_gk2, currState.player_gk2) ||
+      _.isEqual(initialState.player_def1, currState.player_def1) ||
+      _.isEqual(initialState.player_def2, currState.player_def2) ||
+      _.isEqual(initialState.player_def3, currState.player_def3) ||
+      _.isEqual(initialState.player_def4, currState.player_def5) ||
+      _.isEqual(initialState.player_def5, currState.player_def5) ||
+      _.isEqual(initialState.player_mid1, currState.player_mid1) ||
+      _.isEqual(initialState.player_mid2, currState.player_mid2) ||
+      _.isEqual(initialState.player_mid3, currState.player_mid3) ||
+      _.isEqual(initialState.player_mid4, currState.player_mid4) ||
+      _.isEqual(initialState.player_fwd1, currState.player_fwd1) ||
+      _.isEqual(initialState.player_fwd2, currState.player_fwd2) ||
+      _.isEqual(initialState.player_fwd3, currState.player_fwd3) ||
+      _.isEqual(initialState.player_fwd4, currState.player_fwd4)
+    ) {
+      //setAllParams("Not ready to save");
+      incompleteCreation();
+    } else {
+      //setAllParams("Ready to save");
+      uploadUser();
+      // console.log(`Current: ${currState.player_gk1.player_name}`);
+      // console.log(`Initial: ${initialState.fav}`);
+    }
+  };
   const uploadUser = () => {
     showLoader();
     firebase
       .firestore()
       .collection("Users")
-      .doc(route.params.user_id)
+      .doc("nan")
       .set({
         Team_name: team_name,
         Favortie_team: favorite_team,
+        Balance_left: amountLeft(),
+        Team_Value: available_balance,
         Player_GK1: { Name: player_gk1, Player_id: player_gk1_id },
         Player_GK2: { Name: player_gk2, Player_id: player_gk2_id },
         Player_DEF1: { Name: player_def1, Player_id: player_def1_id },
@@ -208,6 +320,42 @@ const FirstTimeUser = ({ route }) => {
       })
       .then(hideLoader(), navigation.navigate("Home"));
   };
+  // const overBudget = () => {
+  //   useSelector((state) => state.userReducer.budget);
+  // };
+  const overBudgetAlert = () =>
+    Alert.alert(
+      "The selected players exceed your budget",
+      "Make sure your balance is a positive value ",
+      [{ text: "Make Changes" }]
+    );
+  const incompleteCreation = () =>
+    Alert.alert(
+      "You can not save your current team",
+      "Make sure you set your team's name, favorite team and have selected 15 players ",
+      [{ text: "Make Changes" }]
+    );
+  const theResetAlert = () =>
+    Alert.alert("All selections have been reset", "Create your dream team!", [
+      { text: "Proceed" },
+    ]);
+  let curr_val = useSelector((state) => state.userReducer.team_value);
+  let available_balance = useSelector((state) => state.userReducer.balance);
+  const amountLeft = () => {
+    let amount = available_balance - calculateTeamValue();
+
+    return amount;
+  };
+  const saveReamianingState = () => {
+    dispatch(balance(amountLeft()));
+    checkAllParams();
+  };
+  useEffect(() => {
+    //amountLeft();
+    dispatch(balance(amountLeft()));
+    fetching();
+    dispatch(set_team_value(calculateTeamValue()));
+  }, []);
   return (
     <View style={FirstTimeUserStyle.container}>
       <Text style={{ fontSize: 18, marginBottom: 10 }}>
@@ -263,10 +411,21 @@ const FirstTimeUser = ({ route }) => {
           </View>
         </View>
       </Modal>
-      <Text style={{ fontSize: 16, marginTop: 10, marginBottom: 10 }}>
+      <Text style={{ fontSize: 16, marginTop: 2, marginBottom: 2 }}>
         You selected {useSelector((state) => state.userReducer.fav)} as your
         favorite team
       </Text>
+      {/* <Text style={{ fontSize: 16, marginTop: 2, marginBottom: 2 }}>
+        Current team value is{" "}
+        {useSelector((state) => state.userReducer.team_value)}
+      </Text> */}
+      {useSelector((state) => state.userReducer.budget) === false
+        ? ""
+        : overBudgetAlert()}
+      <Text>Balance: {amountLeft()}</Text>
+      {/* <Text>Balance: {useSelector((state) => state.userReducer.balance)}</Text> */}
+
+      {/* <Text>Value: {useSelector((state) => state.userReducer.team_value)}</Text> */}
       <ImageBackground source={image} resizeMode="cover">
         <View style={FirstTimeUserStyle.mainContainer}>
           <View style={FirstTimeUserStyle.subContainer1}>
@@ -276,22 +435,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_gk1}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "GK",
                     reduxParams: set_player_gk1,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_gk1}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "GK",
                     reduxParams: set_player_gk1,
-                  })
-                }
+                  });
+                }}
               >
                 {player_gk1}
               </Text>
@@ -302,22 +465,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_gk2}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "GK",
                     reduxParams: set_player_gk2,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_gk2}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "GK",
                     reduxParams: set_player_gk2,
-                  })
-                }
+                  });
+                }}
               >
                 {player_gk2}
               </Text>
@@ -330,22 +497,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_def1}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def1,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_def1}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def1,
-                  })
-                }
+                  });
+                }}
               >
                 {player_def1}
               </Text>
@@ -356,22 +527,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_def2}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def2,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_def2}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def2,
-                  })
-                }
+                  });
+                }}
               >
                 {player_def2}
               </Text>
@@ -382,22 +557,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_def3}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def3,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_def3}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def3,
-                  })
-                }
+                  });
+                }}
               >
                 {player_def3}
               </Text>
@@ -408,22 +587,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_def4}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def4,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_def4}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def4,
-                  })
-                }
+                  });
+                }}
               >
                 {player_def4}
               </Text>
@@ -434,22 +617,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_def5}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def5,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_def5}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "DEF",
                     reduxParams: set_player_def5,
-                  })
-                }
+                  });
+                }}
               >
                 {player_def5}
               </Text>
@@ -462,22 +649,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_mid1}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "MID",
                     reduxParams: set_player_mid1,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_mid1}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "MID",
                     reduxParams: set_player_mid1,
-                  })
-                }
+                  });
+                }}
               >
                 {player_mid1}
               </Text>
@@ -488,22 +679,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_mid2}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "MID",
                     reduxParams: set_player_mid2,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_mid2}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "MID",
                     reduxParams: set_player_mid2,
-                  })
-                }
+                  });
+                }}
               >
                 {player_mid2}
               </Text>
@@ -514,22 +709,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_mid3}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "MID",
                     reduxParams: set_player_mid3,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_mid3}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "MID",
                     reduxParams: set_player_mid3,
-                  })
-                }
+                  });
+                }}
               >
                 {player_mid3}
               </Text>
@@ -540,22 +739,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_mid4}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "MID",
                     reduxParams: set_player_mid4,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_mid4}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "MID",
                     reduxParams: set_player_mid4,
-                  })
-                }
+                  });
+                }}
               >
                 {player_mid4}
               </Text>
@@ -568,22 +771,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_fwd1}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "FWD",
                     reduxParams: set_player_fwd1,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_fwd1}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "FWD",
                     reduxParams: set_player_fwd1,
-                  })
-                }
+                  });
+                }}
               >
                 {player_fwd1}
               </Text>
@@ -594,22 +801,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_fwd2}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "FWD",
                     reduxParams: set_player_fwd2,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_fwd2}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "FWD",
                     reduxParams: set_player_fwd2,
-                  })
-                }
+                  });
+                }}
               >
                 {player_fwd2}
               </Text>
@@ -620,22 +831,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_fwd3}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "FWD",
                     reduxParams: set_player_fwd3,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_fwd3}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "FWD",
                     reduxParams: set_player_fwd3,
-                  })
-                }
+                  });
+                }}
               >
                 {player_fwd3}
               </Text>
@@ -646,22 +861,26 @@ const FirstTimeUser = ({ route }) => {
                 size={40}
                 color={"black"}
                 style={FirstTimeUserStyle.player_fwd4}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "FWD",
                     reduxParams: set_player_fwd4,
-                  })
-                }
+                  });
+                }}
               ></Ionicons>
             ) : (
               <Text
                 style={FirstTimeUserStyle.player_fwd4}
-                onPress={() =>
+                onPress={() => {
+                  dispatch(set_team_value(calculateTeamValue()));
+                  //dispatch(balance(amountLeft()));
                   navigation.navigate("Make Transfer", {
                     paramKey: "FWD",
                     reduxParams: set_player_fwd4,
-                  })
-                }
+                  });
+                }}
               >
                 {player_fwd4}
               </Text>
@@ -693,6 +912,7 @@ const FirstTimeUser = ({ route }) => {
           }}
           onPress={() => {
             dispatch(clear_data());
+            theResetAlert();
           }}
         >
           <Text style={{ textAlign: "center", color: "red" }}>RESET</Text>
@@ -712,7 +932,8 @@ const FirstTimeUser = ({ route }) => {
             borderRadius: 50 / 2,
           }}
           onPress={() => {
-            uploadUser();
+            //uploadUser();
+            saveReamianingState();
           }}
         >
           <Text style={{ textAlign: "center", color: "white" }}>SAVE</Text>
