@@ -10,7 +10,10 @@ const SignOut = ({ navigation }) => {
   let logout = () => {
     signOut(auth)
       .then(() => {
-        navigation.popToTop();
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Login" }],
+        });
       })
       .catch((error) => {
         setError(error.message);

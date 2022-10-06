@@ -37,6 +37,8 @@ import {
 // import { mainAuth } from "../../initFirebase";
 import { initializedBase } from "../../initFirebase";
 import { firebase } from "../../initFirebase";
+import { set_user_id } from "../redux/actions";
+import { useDispatch } from "react-redux";
 const auth = getAuth(initializedBase);
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -55,6 +57,7 @@ const Login_Signup = ({ navigation }) => {
   let [password, setPassword] = React.useState("");
   let [validationMessage, setValidationMessage] = React.useState("");
   let [confirmPassword, setConfirmPassword] = React.useState("");
+  const dispatch = useDispatch();
 
   let login = (email, password) => {
     if (email !== "" && password !== "") {
@@ -87,19 +90,10 @@ const Login_Signup = ({ navigation }) => {
           // })
           .then((userCredential) => {
             // Signed in
-            // ! the upload logic is below
-            // firebase
-            //   .firestore()
-            //   .collection("Users")
-            //   .doc(userCredential.uid)
-            //   .set({
-            //     team_name: email,
-            //   });
-            // ! the upload logic ends here
+            dispatch(set_user_id(userCredential.user.uid));
             sendEmailVerification(auth.currentUser);
             navigation.navigate("FirstTimeUser", {
               user: userCredential.user,
-              user_id: userCredential.uid,
             });
 
             // ...

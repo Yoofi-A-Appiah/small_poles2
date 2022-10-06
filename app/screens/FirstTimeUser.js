@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import React, { Component, useState, useEffect } from "react";
 import {
   View,
@@ -49,8 +49,6 @@ const FirstTimeUser = ({ route }) => {
   const [teams, setPlayers] = useState([]);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [loader, showLoader, hideLoader] = UseFullPageLoader();
-  const [isOverBudgetModal, setIsOverBudgetModal] = useState(false);
-
   const dispatch = useDispatch();
   let fetching = async () => {
     teamData.onSnapshot((querySnapshot) => {
@@ -207,6 +205,7 @@ const FirstTimeUser = ({ route }) => {
   );
   let team_name = useSelector((state) => state.userReducer.name);
   let favorite_team = useSelector((state) => state.userReducer.fav);
+  let user_id = useSelector((state) => state.userReducer.user_id);
 
   /**
    * *END OF PLAYER COMPONENTS
@@ -219,6 +218,7 @@ const FirstTimeUser = ({ route }) => {
       def2_value +
       def3_value +
       def4_value +
+      def5_value +
       mid1_value +
       mid2_value +
       mid3_value +
@@ -244,6 +244,7 @@ const FirstTimeUser = ({ route }) => {
       team_value: 0,
       budget: false, //indicates that user is under budget by default
       balance: 1000,
+      user_id: "",
       player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
       player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
       player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
@@ -291,17 +292,20 @@ const FirstTimeUser = ({ route }) => {
       // console.log(`Initial: ${initialState.fav}`);
     }
   };
+  const upload_id = useSelector((state) => state.signupReducer.user_id);
+
   const uploadUser = () => {
+    dispatch(balance(amountLeft()));
     showLoader();
     firebase
       .firestore()
       .collection("Users")
-      .doc("nan")
+      .doc(upload_id)
       .set({
         Team_name: team_name,
         Favortie_team: favorite_team,
         Balance_left: amountLeft(),
-        Team_Value: available_balance,
+        Team_Value: curr_val,
         Player_GK1: { Name: player_gk1, Player_id: player_gk1_id },
         Player_GK2: { Name: player_gk2, Player_id: player_gk2_id },
         Player_DEF1: { Name: player_def1, Player_id: player_def1_id },
@@ -318,7 +322,17 @@ const FirstTimeUser = ({ route }) => {
         Player_FWD3: { Name: player_fwd3, Player_id: player_fwd3_id },
         Player_FWD4: { Name: player_fwd4, Player_id: player_fwd4_id },
       })
-      .then(hideLoader(), navigation.navigate("Home"));
+      .then(
+        hideLoader(),
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        })
+      )
+      .catch((e) => {
+        console.log(e);
+        undoAmountLeft();
+      });
   };
   // const overBudget = () => {
   //   useSelector((state) => state.userReducer.budget);
@@ -346,8 +360,10 @@ const FirstTimeUser = ({ route }) => {
 
     return amount;
   };
+  const undoAmountLeft = () => {
+    dispatch(balance(available_balance + calculateTeamValue()));
+  };
   const saveReamianingState = () => {
-    dispatch(balance(amountLeft()));
     checkAllParams();
   };
   useEffect(() => {

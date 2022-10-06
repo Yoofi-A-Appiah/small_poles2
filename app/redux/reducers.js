@@ -24,6 +24,7 @@ import {
   SET_TEAM_VALUE,
   GET_BUDGET,
   BALANCE,
+  SET_USER_ID,
 } from "./actions";
 
 const initialState = {
@@ -32,6 +33,7 @@ const initialState = {
   team_value: 0,
   budget: false, //indicates that user is under budget by default
   balance: 1000,
+  user_id: "",
   player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
@@ -48,8 +50,16 @@ const initialState = {
   player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
 };
+export function signupReducer(state = initialState, action) {
+  switch (action.type) {
+    case SET_USER_ID:
+      return { ...state, user_id: action.userid };
+    default:
+      return state;
+  }
+}
 
-function userReducer(state = initialState, action) {
+export function userReducer(state = initialState, action) {
   switch (action.type) {
     case SET_TEAM_NAME:
       return { ...state, name: action.payload };
@@ -65,6 +75,8 @@ function userReducer(state = initialState, action) {
       return { ...state, team_value: action.total_value };
     case BALANCE:
       return { ...state, balance: action.balance };
+    // case SET_USER_ID:
+    //   return { ...state, user_id: action.userid };
     case SET_PLAYER_GK1: {
       const player_id = action.player_id;
       const player_name = action.player_name;
@@ -294,4 +306,3 @@ function userReducer(state = initialState, action) {
       return state;
   }
 }
-export default userReducer;
