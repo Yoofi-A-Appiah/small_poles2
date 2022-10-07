@@ -120,7 +120,7 @@ const LeaderBoard = ({ route }) => {
   const dispatch = useDispatch();
 
   const fetching = async () => {
-    showLoader();
+    //showLoader();
     const querySnapshot = await getDocs(q);
     // playerData.onSnapshot((querySnapshot) => {
     const players = [];
@@ -149,7 +149,7 @@ const LeaderBoard = ({ route }) => {
     );
     setPlayers(players);
     setIsLoading(true);
-    hideLoader();
+    //hideLoader();
     //});
   };
 
@@ -164,6 +164,7 @@ const LeaderBoard = ({ route }) => {
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
+    fetching();
     wait(2000).then(() => setIsRefreshing(false));
   }, []);
 

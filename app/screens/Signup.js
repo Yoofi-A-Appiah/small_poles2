@@ -64,6 +64,7 @@ const Login_Signup = ({ navigation }) => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
+          dispatch(set_user_id(userCredential.user.uid));
 
           navigation.navigate("Home", { user: userCredential.user });
           // ...

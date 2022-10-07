@@ -305,7 +305,7 @@ const FirstTimeUser = ({ route }) => {
         Team_name: team_name,
         Favortie_team: favorite_team,
         Balance_left: amountLeft(),
-        Team_Value: curr_val,
+        Team_Value: 1000 - amountLeft(),
         Player_GK1: { Name: player_gk1, Player_id: player_gk1_id },
         Player_GK2: { Name: player_gk2, Player_id: player_gk2_id },
         Player_DEF1: { Name: player_def1, Player_id: player_def1_id },
