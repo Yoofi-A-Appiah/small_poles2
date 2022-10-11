@@ -74,7 +74,7 @@ const FirstTimeUser = ({ route }) => {
   let player_gk1_id = useSelector(
     (state) => state.userReducer.player_gk1.player_id
   );
-  const gk1_value = useSelector(
+  let gk1_value = useSelector(
     (state) => state.userReducer.player_gk1.player_value
   );
   let player_gk2 = useSelector(
@@ -83,16 +83,16 @@ const FirstTimeUser = ({ route }) => {
   let player_gk2_id = useSelector(
     (state) => state.userReducer.player_gk2.player_id
   );
-  const gk2_value = useSelector(
+  let gk2_value = useSelector(
     (state) => state.userReducer.player_gk2.player_value
   );
   let player_def1 = useSelector(
     (state) => state.userReducer.player_def1.player_name
   );
   let player_def1_id = useSelector(
-    (state) => state.userReducer.player_mid1.player_id
+    (state) => state.userReducer.player_def1.player_id
   );
-  const def1_value = useSelector(
+  let def1_value = useSelector(
     (state) => state.userReducer.player_def1.player_value
   );
   let player_def2 = useSelector(
@@ -101,7 +101,7 @@ const FirstTimeUser = ({ route }) => {
   let player_def2_id = useSelector(
     (state) => state.userReducer.player_def2.player_id
   );
-  const def2_value = useSelector(
+  let def2_value = useSelector(
     (state) => state.userReducer.player_def2.player_value
   );
   let player_def3 = useSelector(
@@ -110,7 +110,7 @@ const FirstTimeUser = ({ route }) => {
   let player_def3_id = useSelector(
     (state) => state.userReducer.player_def3.player_id
   );
-  const def3_value = useSelector(
+  let def3_value = useSelector(
     (state) => state.userReducer.player_def3.player_value
   );
   let player_def4 = useSelector(
@@ -119,7 +119,7 @@ const FirstTimeUser = ({ route }) => {
   let player_def4_id = useSelector(
     (state) => state.userReducer.player_def4.player_id
   );
-  const def4_value = useSelector(
+  let def4_value = useSelector(
     (state) => state.userReducer.player_def4.player_value
   );
   let player_def5 = useSelector(
@@ -128,7 +128,7 @@ const FirstTimeUser = ({ route }) => {
   let player_def5_id = useSelector(
     (state) => state.userReducer.player_def5.player_id
   );
-  const def5_value = useSelector(
+  let def5_value = useSelector(
     (state) => state.userReducer.player_def5.player_value
   );
   let player_mid1 = useSelector(
@@ -137,7 +137,7 @@ const FirstTimeUser = ({ route }) => {
   let player_mid1_id = useSelector(
     (state) => state.userReducer.player_mid1.player_id
   );
-  const mid1_value = useSelector(
+  let mid1_value = useSelector(
     (state) => state.userReducer.player_mid1.player_value
   );
   let player_mid2 = useSelector(
@@ -146,7 +146,7 @@ const FirstTimeUser = ({ route }) => {
   let player_mid2_id = useSelector(
     (state) => state.userReducer.player_mid2.player_id
   );
-  const mid2_value = useSelector(
+  let mid2_value = useSelector(
     (state) => state.userReducer.player_mid2.player_value
   );
   let player_mid3 = useSelector(
@@ -155,7 +155,7 @@ const FirstTimeUser = ({ route }) => {
   let player_mid3_id = useSelector(
     (state) => state.userReducer.player_mid3.player_id
   );
-  const mid3_value = useSelector(
+  let mid3_value = useSelector(
     (state) => state.userReducer.player_mid3.player_value
   );
   let player_mid4 = useSelector(
@@ -164,7 +164,7 @@ const FirstTimeUser = ({ route }) => {
   let player_mid4_id = useSelector(
     (state) => state.userReducer.player_mid4.player_id
   );
-  const mid4_value = useSelector(
+  let mid4_value = useSelector(
     (state) => state.userReducer.player_mid4.player_value
   );
   let player_fwd1 = useSelector(
@@ -173,7 +173,7 @@ const FirstTimeUser = ({ route }) => {
   let player_fwd1_id = useSelector(
     (state) => state.userReducer.player_fwd1.player_id
   );
-  const fwd1_value = useSelector(
+  let fwd1_value = useSelector(
     (state) => state.userReducer.player_fwd1.player_value
   );
   let player_fwd2 = useSelector(
@@ -182,7 +182,7 @@ const FirstTimeUser = ({ route }) => {
   let player_fwd2_id = useSelector(
     (state) => state.userReducer.player_fwd2.player_id
   );
-  const fwd2_value = useSelector(
+  let fwd2_value = useSelector(
     (state) => state.userReducer.player_fwd2.player_value
   );
   let player_fwd3 = useSelector(
@@ -191,7 +191,7 @@ const FirstTimeUser = ({ route }) => {
   let player_fwd3_id = useSelector(
     (state) => state.userReducer.player_fwd3.player_id
   );
-  const fwd3_value = useSelector(
+  let fwd3_value = useSelector(
     (state) => state.userReducer.player_fwd3.player_value
   );
   let player_fwd4 = useSelector(
@@ -200,7 +200,7 @@ const FirstTimeUser = ({ route }) => {
   let player_fwd4_id = useSelector(
     (state) => state.userReducer.player_fwd4.player_id
   );
-  const fwd4_value = useSelector(
+  let fwd4_value = useSelector(
     (state) => state.userReducer.player_fwd4.player_value
   );
   let team_name = useSelector((state) => state.userReducer.name);
@@ -230,7 +230,7 @@ const FirstTimeUser = ({ route }) => {
     return value;
   };
 
-  const image = require("../../assets/rotatedpitch1.jpg");
+  const image = require("../../assets/hd_background.png");
   //TODO chore: Set individual useSelectors as stringified JSON
   const set = JSON.stringify(set_player_gk1);
   //TODO chore: END stringify
@@ -306,7 +306,11 @@ const FirstTimeUser = ({ route }) => {
         Favortie_team: favorite_team,
         Balance_left: amountLeft(),
         Team_Value: 1000 - amountLeft(),
-        Player_GK1: { Name: player_gk1, Player_id: player_gk1_id },
+        Player_GK1: {
+          Name: player_gk1,
+          Player_id: player_gk1_id,
+          Player_Value: player_gk1_value,
+        },
         Player_GK2: { Name: player_gk2, Player_id: player_gk2_id },
         Player_DEF1: { Name: player_def1, Player_id: player_def1_id },
         Player_DEF2: { Name: player_def2, Player_id: player_def2_id },

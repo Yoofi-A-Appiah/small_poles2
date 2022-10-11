@@ -49,6 +49,7 @@ const HomeStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     top: 5,
+    padding: 13,
   },
   substituesText: {
     position: "absolute",
@@ -82,9 +83,24 @@ const HomeStyles = StyleSheet.create({
     top: height / 18,
     //left: width / 10,
   },
+  player_text: {
+    backgroundColor: "white",
+    fontSize: 11,
+    height: 20,
+    width: 50,
+    borderRadius: 5,
+  },
   player_gk1: {
     padding: 25,
     width: 90,
+    marginLeft: 10,
+    marginRight: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  player_sub: {
+    padding: 5,
+    width: 30,
     marginLeft: 10,
     marginRight: 10,
     justifyContent: "center",

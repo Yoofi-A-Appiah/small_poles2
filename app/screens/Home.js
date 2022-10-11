@@ -26,18 +26,41 @@ import { Ionicons } from "react-native-vector-icons";
 import { firebase } from "../../initFirebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
 import { db } from "../../initFirebase";
-
+import TextTicker from "react-native-text-ticker";
 const auth = getAuth(initializedBase);
 
 const Home = ({ navigation, route }) => {
   //const navigation = useNavigation();
   const [allPlayers, setAllPlayers] = useState([]);
+  const [allPlayerIDs, setAllPlayerIDs] = useState([]);
+  const [currentPlayerValue, setCurrentPlayerValue] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   let getUserid = useSelector((state) => state.signupReducer.user_id);
   const q = query(
     collection(db, "Users"),
     where(firebase.firestore.FieldPath.documentId(), "==", getUserid)
   );
+  const q2 = query(collection(db, "Players"));
+  const fetchPoints = async () => {
+    const querySnapshot = await getDocs(q2);
+    const players = [];
+    querySnapshot.forEach((doc) => {
+      const { Player_Value, Player_id, Season_Points, Player_Name } =
+        doc.data();
+      players.push({
+        id: doc.id,
+        Player_Value,
+        Player_id,
+        Season_Points,
+        Player_Name,
+      });
+    });
+    setCurrentPlayerValue(
+      players.filter((item) => allPlayerIDs.includes(item.Player_id))
+    );
+    setIsLoading(false);
+  };
   const getPlayers = async () => {
     //showLoader();
     const querySnapshot = await getDocs(q);
@@ -87,159 +110,714 @@ const Home = ({ navigation, route }) => {
       });
     });
     setAllPlayers(players);
+    let arr = [];
+    allPlayers.map((item) => {
+      arr.push(
+        item.Player_GK1.Player_id,
+        item.Player_GK2.Player_id,
+        item.Player_DEF1.Player_id,
+        item.Player_DEF2.Player_id,
+        item.Player_DEF3.Player_id,
+        item.Player_DEF4.Player_id,
+        item.Player_DEF5.Player_id,
+        item.Player_MID1.Player_id,
+        item.Player_MID2.Player_id,
+        item.Player_MID3.Player_id,
+        item.Player_MID4.Player_id,
+        item.Player_FWD1.Player_id,
+        item.Player_FWD2.Player_id,
+        item.Player_FWD3.Player_id,
+        item.Player_FWD4.Player_id
+      );
+      setAllPlayerIDs(arr);
+    });
+    fetchPoints();
   };
   useEffect(() => {
     getPlayers();
   }, []);
   const playerIcon = require("../../assets/football-player.png");
+  // const getGK1_id = () => {
+  //   const temp = allPlayers.map((item) => {
+  //     return item.Player_GK1.Player_id;
+  //   });
+  //   return temp;
+  // };
+  let Points_GK1 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_GK1.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_GK2 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_GK2.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_DEF1 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_DEF1.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_DEF2 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_DEF2.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_DEF3 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_DEF3.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_DEF4 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_DEF4.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_DEF5 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_DEF5.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_MID1 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_MID1.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_MID2 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_MID2.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_MID3 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_MID3.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_MID4 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_DEF1.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_FWD1 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_FWD1.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_FWD2 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_FWD2.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_FWD3 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_FWD3.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+  let Points_FWD4 = () => {
+    // let arr = [];
+    const temp = allPlayers.map((item) => {
+      return item.Player_FWD4.Player_id;
+    });
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+  };
+
   let showContent = () => {
     return (
       <View style={{ flex: 1 }}>
-        <Text>
-          {" "}
-          Team Name:{" "}
-          {allPlayers.map((item) => {
-            return item.Team_name;
-          })}
-        </Text>
-        <Text>
-          {" "}
-          Team Value:{" "}
-          {allPlayers.map((item) => {
-            return item.Team_Value;
-          })}
-        </Text>
-        <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-          <SafeAreaView style={HomeStyles.mainContainer}>
-            {/* <View style={HomeStyles.mainContainer}> */}
-            <View style={HomeStyles.subContainer1}>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
+        {isLoading && <Text>Loading</Text>}
+        {!isLoading && (
+          <View style={{ flex: 1 }}>
+            <Text>
+              {" "}
+              Team Name:{" "}
+              {allPlayers.map((item) => {
+                return item.Team_name;
+              })}
+            </Text>
+            <Text>
+              {" "}
+              Team Value:{" "}
+              {allPlayers.map((item) => {
+                return item.Team_Value;
+              })}
+            </Text>
+            <Text>
+              {/* {console.log(currentPlayerValue)}
+              {"---"}
+              {console.log(allPlayerIDs)} */}
+            </Text>
+            <ImageBackground
+              source={image}
+              resizeMode="cover"
+              style={{ flex: 1 }}
+            >
+              <SafeAreaView style={HomeStyles.mainContainer}>
+                {/* <View style={HomeStyles.mainContainer}> */}
+                <View style={HomeStyles.subContainer1}>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_GK1().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_GK1.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                    {/* <Text style={HomeStyles.player_text}>
                   {allPlayers.map((item) => {
                     return item.Player_GK1.Name;
                   })}
-                </Text>
-              </Pressable>
-            </View>
-            <View style={HomeStyles.subContainer2}>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_DEF1.Name;
-                  })}
-                </Text>
-              </Pressable>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_DEF2.Name;
-                  })}
-                </Text>
-              </Pressable>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_DEF3.Name;
-                  })}
-                </Text>
-              </Pressable>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_DEF4.Name;
-                  })}
-                </Text>
-              </Pressable>
-            </View>
-            <View style={HomeStyles.subContainer3}>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_MID1.Name;
-                  })}
-                </Text>
-              </Pressable>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_MID2.Name;
-                  })}
-                </Text>
-              </Pressable>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_MID3.Name;
-                  })}
-                </Text>
-              </Pressable>
-            </View>
-            <View style={HomeStyles.subContainer4}>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_FWD1.Name;
-                  })}
-                </Text>
-              </Pressable>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_FWD2.Name;
-                  })}
-                </Text>
-              </Pressable>
-              <Pressable style={HomeStyles.player_gk1}>
-                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>
-                  {allPlayers.map((item) => {
-                    return item.Player_FWD3.Name;
-                  })}
-                </Text>
-              </Pressable>
-            </View>
+                </Text> */}
+                  </Pressable>
+                </View>
+                <View style={HomeStyles.subContainer2}>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_DEF1().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_DEF1.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_DEF2().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_DEF2.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_DEF3().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_DEF3.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_DEF4().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_DEF4.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                </View>
+                <View style={HomeStyles.subContainer3}>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_MID1().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_MID1.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_MID2().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_MID2.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_MID3().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_MID3.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                </View>
+                <View style={HomeStyles.subContainer4}>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_FWD1().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_FWD1.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_FWD2().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_FWD2.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                  <Pressable style={HomeStyles.player_gk1}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text>
+                      {Points_FWD3().map((item) => {
+                        return item.Season_Points;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {allPlayers.map((item) => {
+                          return item.Player_FWD3.Name;
+                        })}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                </View>
 
-            {/* </View> */}
-            <View style={loginStyle.center}></View>
+                {/* </View> */}
+                <View style={loginStyle.center}></View>
 
-            <View style={LeaderBoardStyle.bottom_stack}>
-              {/* <FloatingButton></FloatingButton> */}
-            </View>
-          </SafeAreaView>
-          <View style={HomeStyles.substitues}>
-            <Text style={HomeStyles.substituesText}>SUBSTITUES</Text>
-            <Text style={HomeStyles.player_gk2}>
-              {allPlayers.map((item) => {
-                return item.Player_GK2.Name;
-              })}
-            </Text>
-            <Text style={HomeStyles.player_def5}>
-              {allPlayers.map((item) => {
-                return item.Player_DEF5.Name;
-              })}
-            </Text>
-            <Text style={HomeStyles.player_mid4}>
-              {allPlayers.map((item) => {
-                return item.Player_MID4.Name;
-              })}
-            </Text>
-            <Text style={HomeStyles.player_fwd4}>
-              {allPlayers.map((item) => {
-                return item.Player_FWD4.Name;
-              })}
-            </Text>
+                <View style={LeaderBoardStyle.bottom_stack}>
+                  {/* <FloatingButton></FloatingButton> */}
+                </View>
+              </SafeAreaView>
+              <View style={HomeStyles.substitues}>
+                <Text style={HomeStyles.substituesText}>SUBSTITUES</Text>
+                <Pressable style={HomeStyles.player_gk1}>
+                  <Image
+                    style={{ width: 60, height: 60 }}
+                    source={playerIcon}
+                  />
+                  <Text>
+                    {Points_GK2().map((item) => {
+                      return item.Season_Points;
+                    })}
+                  </Text>
+                  <View
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      padding: 5,
+                    }}
+                  >
+                    <TextTicker
+                      style={HomeStyles.player_text}
+                      duration={3000}
+                      loop
+                      bounce
+                      repeatSpacer={50}
+                      marqueeDelay={3000}
+                    >
+                      {allPlayers.map((item) => {
+                        return item.Player_GK2.Name;
+                      })}
+                    </TextTicker>
+                  </View>
+                </Pressable>
+                <Pressable style={HomeStyles.player_gk1}>
+                  <Image
+                    style={{ width: 60, height: 60 }}
+                    source={playerIcon}
+                  />
+                  <Text>
+                    {Points_DEF5().map((item) => {
+                      return item.Season_Points;
+                    })}
+                  </Text>
+                  <View
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      padding: 5,
+                    }}
+                  >
+                    <TextTicker
+                      style={HomeStyles.player_text}
+                      duration={3000}
+                      loop
+                      bounce
+                      repeatSpacer={50}
+                      marqueeDelay={3000}
+                    >
+                      {allPlayers.map((item) => {
+                        return item.Player_DEF5.Name;
+                      })}
+                    </TextTicker>
+                  </View>
+                </Pressable>
+                <Pressable style={HomeStyles.player_gk1}>
+                  <Image
+                    style={{ width: 60, height: 60 }}
+                    source={playerIcon}
+                  />
+                  <Text>
+                    {Points_MID4().map((item) => {
+                      return item.Season_Points;
+                    })}
+                  </Text>
+                  <View
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      padding: 5,
+                    }}
+                  >
+                    <TextTicker
+                      style={HomeStyles.player_text}
+                      duration={3000}
+                      loop
+                      bounce
+                      repeatSpacer={50}
+                      marqueeDelay={3000}
+                    >
+                      {allPlayers.map((item) => {
+                        return item.Player_MID4.Name;
+                      })}
+                    </TextTicker>
+                  </View>
+                </Pressable>
+                <Pressable style={HomeStyles.player_gk1}>
+                  <Image
+                    style={{ width: 60, height: 60 }}
+                    source={playerIcon}
+                  />
+                  <Text>
+                    {Points_FWD4().map((item) => {
+                      return item.Season_Points;
+                    })}
+                  </Text>
+                  <View
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      padding: 5,
+                    }}
+                  >
+                    <TextTicker
+                      style={HomeStyles.player_text}
+                      duration={3000}
+                      loop
+                      bounce
+                      repeatSpacer={50}
+                      marqueeDelay={3000}
+                    >
+                      {allPlayers.map((item) => {
+                        return item.Player_FWD4.Name;
+                      })}
+                    </TextTicker>
+                  </View>
+                </Pressable>
+              </View>
+            </ImageBackground>
           </View>
-        </ImageBackground>
+        )}
       </View>
     );
   };
@@ -262,7 +840,7 @@ const Home = ({ navigation, route }) => {
   const verticalonpress = () => {
     players_navigation();
   };
-  const image = require("../../assets/rotatedpitch1.jpg");
+  const image = require("../../assets/hd_background.png");
   return (
     //<ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
     <SafeAreaView style={{ flex: 1 }}>
