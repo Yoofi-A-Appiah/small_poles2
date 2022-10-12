@@ -50,6 +50,9 @@ const initialState = {
   player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
 };
+// const homeState = {
+
+// }
 export function signupReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER_ID:
@@ -58,6 +61,11 @@ export function signupReducer(state = initialState, action) {
       return state;
   }
 }
+// export function homepageReducer(state = homeState, action){
+//   switch (action.type){
+//     case
+//   }
+// }
 
 export function userReducer(state = initialState, action) {
   switch (action.type) {

@@ -25,6 +25,19 @@ export const SET_PLAYER_FWD1 = "SET_PLAYER_FWD1";
 export const SET_PLAYER_FWD2 = "SET_PLAYER_FWD2";
 export const SET_PLAYER_FWD3 = "SET_PLAYER_FWD3";
 export const SET_PLAYER_FWD4 = "SET_PLAYER_FWD4";
+/**
+ * Home State
+ */
+// export const SET_HOME_PLAYER_GK1 = "SET_HOME_PLAYER_GK1";
+// export const SET_HOME_PLAYER_GK2 = "SET_HOME_PLAYER_GK2";
+// export const SET_HOME_PLAYER_MID1 = "SET_HOME_PLAYER_MID1";
+// export const SET_HOME_PLAYER_MID2 = "SET_HOME_PLAYER_MID2";
+// export const SET_HOME_PLAYER_MID3 = "SET_HOME_PLAYER_MID3";
+// export const SET_HOME_PLAYER_MID4 = "SET_HOME_PLAYER_MID4";
+// export const SET_HOME_PLAYER_FWD1 = "SET_HOME_PLAYER_FWD1";
+// export const SET_HOME_PLAYER_FWD2 = "SET_HOME_PLAYER_FWD2";
+// export const SET_HOME_PLAYER_FWD3 = "SET_HOME_PLAYER_FWD3";
+// export const SET_HOME_PLAYER_FWD4 = "SET_HOME_PLAYER_FWD4";
 
 export const set_team_name = (name) => (dispatch) => {
   dispatch({

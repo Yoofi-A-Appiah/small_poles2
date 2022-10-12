@@ -12,6 +12,7 @@ import {
   ImageBackground,
   Alert,
 } from "react-native";
+import TextTicker from "react-native-text-ticker";
 import _ from "lodash";
 import { firebase } from "../../initFirebase";
 import { Picker } from "@react-native-picker/picker";
@@ -295,7 +296,7 @@ const FirstTimeUser = ({ route }) => {
   const upload_id = useSelector((state) => state.signupReducer.user_id);
 
   const uploadUser = () => {
-    dispatch(balance(amountLeft()));
+    //dispatch(balance(amountLeft()));
     showLoader();
     firebase
       .firestore()
@@ -309,7 +310,6 @@ const FirstTimeUser = ({ route }) => {
         Player_GK1: {
           Name: player_gk1,
           Player_id: player_gk1_id,
-          Player_Value: player_gk1_value,
         },
         Player_GK2: { Name: player_gk2, Player_id: player_gk2_id },
         Player_DEF1: { Name: player_def1, Player_id: player_def1_id },
@@ -376,6 +376,7 @@ const FirstTimeUser = ({ route }) => {
     fetching();
     dispatch(set_team_value(calculateTeamValue()));
   }, []);
+  const playerIcon = require("../../assets/football-player.png");
   return (
     <View style={FirstTimeUserStyle.container}>
       <Text style={{ fontSize: 18, marginBottom: 10 }}>
@@ -465,7 +466,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
+              <Pressable
                 style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
@@ -476,8 +477,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_gk1}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_gk1}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_gk2 === "N@me" ? (
               <Ionicons
@@ -495,8 +515,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_gk2}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -506,8 +526,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_gk2}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_gk2}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
           </View>
           <View style={FirstTimeUserStyle.subContainer2}>
@@ -527,8 +566,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_def1}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -538,8 +577,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_def1}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_def1}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_def2 === "N@me" ? (
               <Ionicons
@@ -557,8 +615,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_def2}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -568,8 +626,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_def2}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_def2}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_def3 === "N@me" ? (
               <Ionicons
@@ -587,8 +664,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_def3}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -598,8 +675,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_def3}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_def3}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_def4 === "N@me" ? (
               <Ionicons
@@ -617,8 +713,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_def4}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -628,8 +724,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_def4}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_def4}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_def5 === "N@me" ? (
               <Ionicons
@@ -647,8 +762,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_def5}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -658,8 +773,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_def5}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_def5}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
           </View>
           <View style={FirstTimeUserStyle.subContainer3}>
@@ -679,8 +813,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_mid1}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -690,8 +824,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_mid1}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_mid1}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_mid2 === "N@me" ? (
               <Ionicons
@@ -709,8 +862,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_mid2}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -720,8 +873,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_mid2}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_mid2}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_mid3 === "N@me" ? (
               <Ionicons
@@ -739,8 +911,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_mid3}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -750,8 +922,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_mid3}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_mid3}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_mid4 === "N@me" ? (
               <Ionicons
@@ -769,8 +960,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_mid4}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -780,8 +971,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_mid4}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_mid4}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
           </View>
           <View style={FirstTimeUserStyle.subContainer4}>
@@ -801,8 +1011,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_fwd1}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -812,8 +1022,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_fwd1}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_fwd1}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_fwd2 === "N@me" ? (
               <Ionicons
@@ -831,8 +1060,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_fwd2}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -842,8 +1071,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_fwd2}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_fwd2}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_fwd3 === "N@me" ? (
               <Ionicons
@@ -861,8 +1109,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_fwd3}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -872,8 +1120,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_fwd3}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_fwd3}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
             {player_fwd4 === "N@me" ? (
               <Ionicons
@@ -891,8 +1158,8 @@ const FirstTimeUser = ({ route }) => {
                 }}
               ></Ionicons>
             ) : (
-              <Text
-                style={FirstTimeUserStyle.player_fwd4}
+              <Pressable
+                style={FirstTimeUserStyle.player_gk1}
                 onPress={() => {
                   dispatch(set_team_value(calculateTeamValue()));
                   //dispatch(balance(amountLeft()));
@@ -902,8 +1169,27 @@ const FirstTimeUser = ({ route }) => {
                   });
                 }}
               >
-                {player_fwd4}
-              </Text>
+                <Image style={{ width: 60, height: 60 }} source={playerIcon} />
+
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 5,
+                    padding: 5,
+                  }}
+                >
+                  <TextTicker
+                    style={FirstTimeUserStyle.player_text}
+                    duration={3000}
+                    loop
+                    bounce
+                    repeatSpacer={50}
+                    marqueeDelay={3000}
+                  >
+                    {player_fwd4}
+                  </TextTicker>
+                </View>
+              </Pressable>
             )}
           </View>
         </View>

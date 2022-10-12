@@ -56,9 +56,9 @@ const MaterialTabs = () => {
         name="Statistics"
         component={Statistics}
         options={{
-          tabBarLabel: "Stats",
+          tabBarLabel: "Swap Player",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="chart-box" color={color} size={26} />
+            <MaterialCommunityIcons name="cached" color={color} size={26} />
           ),
         }}
       />
