@@ -263,6 +263,7 @@ const FirstTimeUser = ({ route }) => {
       player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
     };
     if (
+      amountLeft() < 0 ||
       _.isEqual(initialState.name, currState.name) ||
       _.isEqual(initialState.fav, currState.fav) ||
       // _.isEqual(initialState.balance, currState.balance) ||
@@ -350,7 +351,7 @@ const FirstTimeUser = ({ route }) => {
   const incompleteCreation = () =>
     Alert.alert(
       "You can not save your current team",
-      "Make sure you set your team's name, favorite team and have selected 15 players ",
+      "Make sure you set your team's name, favorite team and have selected 15 players that are within budget ",
       [{ text: "Make Changes" }]
     );
   const theResetAlert = () =>

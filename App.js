@@ -50,7 +50,7 @@ export default function App() {
             options={{ headerShown: true }}
           ></Stack.Screen>
           <Stack.Screen
-            name="Gameweek Transfers"
+            name="GameWeek Transfers"
             component={Transfers}
             options={{ headerShown: true }}
           ></Stack.Screen>

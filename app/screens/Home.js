@@ -27,6 +27,24 @@ import { firebase } from "../../initFirebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
 import { db } from "../../initFirebase";
 import TextTicker from "react-native-text-ticker";
+import {
+  set_player_gk1,
+  set_player_gk2,
+  set_player_def1,
+  set_player_def2,
+  set_player_def3,
+  set_player_def4,
+  set_player_def5,
+  set_player_mid1,
+  set_player_mid2,
+  set_player_mid3,
+  set_player_mid4,
+  set_player_fwd1,
+  set_player_fwd2,
+  set_player_fwd3,
+  set_player_fwd4,
+  set_team_value,
+} from "../redux/actions";
 const auth = getAuth(initializedBase);
 
 const Home = ({ navigation, route }) => {
@@ -35,31 +53,78 @@ const Home = ({ navigation, route }) => {
   const [allPlayerIDs, setAllPlayerIDs] = useState([]);
   const [currentPlayerValue, setCurrentPlayerValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const dispatch = useDispatch();
   let getUserid = useSelector((state) => state.signupReducer.user_id);
+  let tester = useSelector((state) => state.userReducer.player_gk1.player_id);
   const q = query(
     collection(db, "Users"),
     where(firebase.firestore.FieldPath.documentId(), "==", getUserid)
   );
   const q2 = query(collection(db, "Players"));
-  const fetchPoints = async () => {
-    const querySnapshot = await getDocs(q2);
-    const players = [];
-    querySnapshot.forEach((doc) => {
-      const { Player_Value, Player_id, Season_Points, Player_Name } =
-        doc.data();
-      players.push({
-        id: doc.id,
-        Player_Value,
-        Player_id,
-        Season_Points,
-        Player_Name,
-      });
+  // const fetchPoints = async () => {
+  //   const querySnapshot = await getDocs(q2);
+  //   const players = [];
+  //   querySnapshot.forEach((doc) => {
+  //     const { Player_Value, Player_id, Season_Points, Player_Name } =
+  //       doc.data();
+  //     players.push({
+  //       id: doc.id,
+  //       Player_Value,
+  //       Player_id,
+  //       Season_Points,
+  //       Player_Name,
+  //     });
+  //   });
+  //   setCurrentPlayerValue(
+  //     players.filter((item) => allPlayerIDs.includes(item.Player_id))
+  //   );
+  //   setIsLoading(false);
+  // };
+  const dispatchingFunction = () => {
+    //console.log(currentPlayerValue);
+    allPlayers.map((item) => {
+      dispatch(set_player_gk1(item.Player_GK1.Name, item.Player_GK1.Player_id));
+      dispatch(set_player_gk2(item.Player_GK2.Name, item.Player_GK2.Player_id));
+      dispatch(
+        set_player_def1(item.Player_DEF1.Name, item.Player_DEF1.Player_id)
+      );
+      dispatch(
+        set_player_def2(item.Player_DEF2.Name, item.Player_DEF2.Player_id)
+      );
+      dispatch(
+        set_player_def3(item.Player_DEF3.Name, item.Player_DEF3.Player_id)
+      );
+      dispatch(
+        set_player_def4(item.Player_DEF4.Name, item.Player_DEF4.Player_id)
+      );
+      dispatch(
+        set_player_def5(item.Player_DEF5.Name, item.Player_DEF5.Player_id)
+      );
+      dispatch(
+        set_player_mid1(item.Player_MID1.Name, item.Player_MID1.Player_id)
+      );
+      dispatch(
+        set_player_mid2(item.Player_MID2.Name, item.Player_MID2.Player_id)
+      );
+      dispatch(
+        set_player_mid3(item.Player_MID3.Name, item.Player_MID3.Player_id)
+      );
+      dispatch(
+        set_player_mid4(item.Player_MID4.Name, item.Player_MID4.Player_id)
+      );
+      dispatch(
+        set_player_fwd1(item.Player_FWD1.Name, item.Player_FWD1.Player_id)
+      );
+      dispatch(
+        set_player_fwd2(item.Player_FWD2.Name, item.Player_FWD2.Player_id)
+      );
+      dispatch(
+        set_player_fwd3(item.Player_FWD3.Name, item.Player_FWD3.Player_id)
+      );
+      dispatch(
+        set_player_fwd4(item.Player_FWD4.Name, item.Player_FWD4.Player_id)
+      );
     });
-    setCurrentPlayerValue(
-      players.filter((item) => allPlayerIDs.includes(item.Player_id))
-    );
-    setIsLoading(false);
   };
   const getPlayers = async () => {
     //showLoader();
@@ -147,8 +212,10 @@ const Home = ({ navigation, route }) => {
     setCurrentPlayerValue(
       players2.filter((item) => arr.includes(item.Player_id))
     );
-    console.log(players2);
+    // console.log(players2);
+    dispatchingFunction();
     setIsLoading(false);
+
     //setAllPlayerIDs(arr);
   };
   useEffect(() => {
@@ -342,8 +409,10 @@ const Home = ({ navigation, route }) => {
               })}
             </Text>
             <Text>
-              {/* {console.log(currentPlayerValue)} */}
-              {"---"};{console.log(currentPlayerValue)}
+              {/* {console.log(currentPlayerValue)} 
+              {"---"};{console.log(currentPlayerValue)}*/}
+              {/* {useSelector((state) => state.userReducer.player_gk1.player_name)} */}
+              {tester}
             </Text>
             <ImageBackground
               source={image}
