@@ -220,7 +220,7 @@ const Home = ({ navigation, route }) => {
   };
   useEffect(() => {
     getPlayers();
-  }, []);
+  }, [isLoading]);
   const playerIcon = require("../../assets/football-player.png");
   // const getGK1_id = () => {
   //   const temp = allPlayers.map((item) => {
@@ -233,19 +233,19 @@ const Home = ({ navigation, route }) => {
     const temp = allPlayers.map((item) => {
       return item.Player_GK1.Player_id;
     });
-    currentPlayerValue.length === 0 ? getPlayers() : "";
-    if (currentPlayerValue.length === 0) {
-      getPlayers();
-      let arr = currentPlayerValue.filter(function (el) {
-        return el.Player_id == temp;
-      });
-      return arr;
-    } else {
-      let arr = currentPlayerValue.filter(function (el) {
-        return el.Player_id == temp;
-      });
-      return arr;
-    }
+    //currentPlayerValue.length === 0 ? getPlayers() : "";
+    // if (currentPlayerValue.length === 0) {
+    //   getPlayers();
+    let arr = currentPlayerValue.filter(function (el) {
+      return el.Player_id == temp;
+    });
+    return arr;
+    // } else {
+    //   let arr = currentPlayerValue.filter(function (el) {
+    //     return el.Player_id == temp;
+    //   });
+    //   return arr;
+    // }
   };
   let Points_GK2 = () => {
     // let arr = [];
@@ -340,7 +340,7 @@ const Home = ({ navigation, route }) => {
   let Points_MID4 = () => {
     // let arr = [];
     const temp = allPlayers.map((item) => {
-      return item.Player_DEF1.Player_id;
+      return item.Player_MID4.Player_id;
     });
     let arr = currentPlayerValue.filter(function (el) {
       return el.Player_id == temp;

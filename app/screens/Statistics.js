@@ -12,22 +12,40 @@ import {
   FlatList,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-
+//import stateComparison from "./stateComparison";
 import loginStyle from "../../styles/loginStyle";
 import { initializedBase } from "../../initFirebase";
 import { getAuth, signOut, sendEmailVerification } from "firebase/auth";
 import AppStyles from "../../styles/AppStyles";
-import DrawerNavigator from "../app.navigation";
-import LeaderBoard from "./leaderboards";
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
 import FloatingButton from "../components/FloatingButton";
 import HomeStyles from "../../styles/homeStyles";
-import { Ionicons } from "react-native-vector-icons";
+import { MaterialIcons } from "react-native-vector-icons";
 import { firebase } from "../../initFirebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
 import { db } from "../../initFirebase";
 import TextTicker from "react-native-text-ticker";
-import { set_player_gk1, set_team_value } from "../redux/actions";
+import {
+  transfer_player_GK1,
+  transfer_player_GK2,
+  transfer_player_DEF1,
+  transfer_player_DEF2,
+  transfer_player_DEF3,
+  transfer_player_DEF4,
+  transfer_player_DEF5,
+  transfer_player_MID1,
+  transfer_player_MID2,
+  transfer_player_MID3,
+  transfer_player_MID4,
+  transfer_player_FWD1,
+  transfer_player_FWD2,
+  transfer_player_FWD3,
+  transfer_player_FWD4,
+  set_team_value,
+  clear_transfer_data,
+} from "../redux/actions";
+import _ from "lodash";
+
 const auth = getAuth(initializedBase);
 
 const Statistics = ({ navigation, route }) => {
@@ -37,6 +55,7 @@ const Statistics = ({ navigation, route }) => {
   const [currentPlayerValue, setCurrentPlayerValue] = useState([]);
   const [isLoading, setIsLoading] = useState(false); //change
   const dispatch = useDispatch();
+  //const [check] = stateComparison();
   let getUserid = useSelector((state) => state.signupReducer.user_id);
   const q2 = query(collection(db, "Players"));
   const getPlayersValues = async () => {
@@ -73,62 +92,121 @@ const Statistics = ({ navigation, route }) => {
     (state) => state.userReducer.player_gk1.player_name
   );
   let GK1_id = useSelector((state) => state.userReducer.player_gk1.player_id);
+  let New_GK1_name = useSelector(
+    (state) => state.transfersReducer.player_gk1.player_name
+  );
+
   let GK2_name = useSelector(
     (state) => state.userReducer.player_gk2.player_name
   );
   let GK2_id = useSelector((state) => state.userReducer.player_gk2.player_id);
+  let New_GK2_name = useSelector(
+    (state) => state.transfersReducer.player_gk2.player_name
+  );
+
   let DEF1_name = useSelector(
     (state) => state.userReducer.player_def1.player_name
   );
   let DEF1_id = useSelector((state) => state.userReducer.player_def1.player_id);
+  let New_DEF1_name = useSelector(
+    (state) => state.transfersReducer.player_def1.player_name
+  );
+
   let DEF2_name = useSelector(
     (state) => state.userReducer.player_def2.player_name
   );
   let DEF2_id = useSelector((state) => state.userReducer.player_def2.player_id);
+  let New_DEF2_name = useSelector(
+    (state) => state.transfersReducer.player_def2.player_name
+  );
+
   let DEF3_name = useSelector(
     (state) => state.userReducer.player_def3.player_name
   );
   let DEF3_id = useSelector((state) => state.userReducer.player_def3.player_id);
+  let New_DEF3_name = useSelector(
+    (state) => state.transfersReducer.player_def3.player_name
+  );
+
   let DEF4_name = useSelector(
     (state) => state.userReducer.player_def4.player_name
   );
   let DEF4_id = useSelector((state) => state.userReducer.player_def4.player_id);
+  let New_DEF4_name = useSelector(
+    (state) => state.transfersReducer.player_def4.player_name
+  );
+
   let DEF5_name = useSelector(
     (state) => state.userReducer.player_def5.player_name
   );
   let DEF5_id = useSelector((state) => state.userReducer.player_def5.player_id);
+  let New_DEF5_name = useSelector(
+    (state) => state.transfersReducer.player_def5.player_name
+  );
+
   let MID1_name = useSelector(
     (state) => state.userReducer.player_mid1.player_name
   );
   let MID1_id = useSelector((state) => state.userReducer.player_mid1.player_id);
+  let New_MID1_name = useSelector(
+    (state) => state.transfersReducer.player_mid1.player_name
+  );
+
   let MID2_name = useSelector(
     (state) => state.userReducer.player_mid2.player_name
   );
   let MID2_id = useSelector((state) => state.userReducer.player_mid2.player_id);
+  let New_MID2_name = useSelector(
+    (state) => state.transfersReducer.player_mid2.player_name
+  );
+
   let MID3_name = useSelector(
     (state) => state.userReducer.player_mid3.player_name
   );
   let MID3_id = useSelector((state) => state.userReducer.player_mid3.player_id);
+  let New_MID3_name = useSelector(
+    (state) => state.transfersReducer.player_mid3.player_name
+  );
+
   let MID4_name = useSelector(
     (state) => state.userReducer.player_mid4.player_name
   );
   let MID4_id = useSelector((state) => state.userReducer.player_mid4.player_id);
+  let New_MID4_name = useSelector(
+    (state) => state.transfersReducer.player_mid4.player_name
+  );
+
   let FWD1_name = useSelector(
     (state) => state.userReducer.player_fwd1.player_name
   );
   let FWD1_id = useSelector((state) => state.userReducer.player_fwd1.player_id);
+  let New_FWD1_name = useSelector(
+    (state) => state.transfersReducer.player_fwd1.player_name
+  );
+
   let FWD2_name = useSelector(
     (state) => state.userReducer.player_fwd2.player_name
   );
   let FWD2_id = useSelector((state) => state.userReducer.player_fwd2.player_id);
+  let New_FWD2_name = useSelector(
+    (state) => state.transfersReducer.player_fwd2.player_name
+  );
+
   let FWD3_name = useSelector(
     (state) => state.userReducer.player_fwd3.player_name
   );
   let FWD3_id = useSelector((state) => state.userReducer.player_fwd3.player_id);
+  let New_FWD3_name = useSelector(
+    (state) => state.transfersReducer.player_fwd3.player_name
+  );
+
   let FWD4_name = useSelector(
     (state) => state.userReducer.player_fwd4.player_name
   );
   let FWD4_id = useSelector((state) => state.userReducer.player_fwd4.player_id);
+  let New_FWD4_name = useSelector(
+    (state) => state.transfersReducer.player_fwd4.player_name
+  );
 
   let idOfPlayers = [
     GK1_id,
@@ -195,6 +273,35 @@ const Statistics = ({ navigation, route }) => {
   let Value_FWD4 = allPlayerIDs.filter(function (el) {
     return el.Player_id == FWD4_id;
   });
+  let transferState = useSelector((state) => state.transfersReducer);
+  const [pushPlayers, setPushPlayers] = useState([]);
+  const stateComparison = () => {
+    const initialState = {
+      player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def3: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_def5: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+    };
+
+    if (
+      _.isEqual(initialState.player_gk1, transferState.player_gk1) === false
+    ) {
+      setPushPlayers(transferState.player_gk1.player_name);
+    }
+    console.log(pushPlayers);
+    // return pushPlayers;
+  };
 
   let showContent = () => {
     return (
@@ -216,26 +323,950 @@ const Statistics = ({ navigation, route }) => {
                 return item.Team_Value;
               })}
             </Text>
-            <Text>
-              {/* {console.log(currentPlayerValue)} 
-              {"---"};{console.log(currentPlayerValue)}*/}
-            </Text>
+
             <ImageBackground
               source={image}
               resizeMode="cover"
               style={{ flex: 1 }}
             >
               <SafeAreaView style={HomeStyles.mainContainer}>
+                <MaterialIcons
+                  name="check-circle"
+                  size={40}
+                  color={"black"}
+                  //style={FirstTimeUserStyle.player_gk1}
+                  onPress={() => {
+                    stateComparison();
+                  }}
+                ></MaterialIcons>
+                <MaterialIcons
+                  name="cancel"
+                  size={40}
+                  color={"black"}
+                  //style={FirstTimeUserStyle.player_gk1}
+                  onPress={() => {
+                    dispatch(clear_transfer_data());
+                  }}
+                ></MaterialIcons>
                 {/* <View style={HomeStyles.mainContainer}> */}
                 <View style={HomeStyles.subContainer1}>
+                  {New_GK1_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "GK",
+                          reduxParams: transfer_player_GK1,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_GK1.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {GK1_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "GK",
+                          reduxParams: transfer_player_GK1,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_GK1.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_GK1_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                </View>
+                <View style={HomeStyles.subContainer2}>
+                  {New_DEF1_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "DEF",
+                          reduxParams: transfer_player_DEF1,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_DEF1.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {DEF1_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "DEF",
+                          reduxParams: transfer_player_DEF1,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_DEF1.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_DEF1_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                  {New_DEF2_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "DEF",
+                          reduxParams: transfer_player_DEF2,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_DEF2.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {DEF2_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "DEF",
+                          reduxParams: transfer_player_DEF2,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_DEF2.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_DEF2_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                  {New_DEF3_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "DEF",
+                          reduxParams: transfer_player_DEF3,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_DEF3.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {DEF3_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "DEF",
+                          reduxParams: transfer_player_DEF3,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_DEF3.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_DEF3_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                  {New_DEF4_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "DEF",
+                          reduxParams: transfer_player_DEF4,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_DEF4.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {DEF4_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "DEF",
+                          reduxParams: transfer_player_DEF4,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_DEF4.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_DEF4_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                </View>
+                <View style={HomeStyles.subContainer3}>
+                  {New_MID1_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "MID",
+                          reduxParams: transfer_player_MID1,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_MID1.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {MID1_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "MID",
+                          reduxParams: transfer_player_MID1,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_MID1.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_MID1_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                  {New_MID2_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "MID",
+                          reduxParams: transfer_player_MID2,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_MID2.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {MID2_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "MID",
+                          reduxParams: transfer_player_MID2,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_MID2.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_MID2_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                  {New_MID3_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "MID",
+                          reduxParams: transfer_player_MID3,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_MID3.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {MID3_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "MID",
+                          reduxParams: transfer_player_MID3,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_MID3.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_MID3_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                </View>
+                <View style={HomeStyles.subContainer4}>
+                  {New_FWD1_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "FWD",
+                          reduxParams: transfer_player_FWD1,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_FWD1.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {FWD1_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "FWD",
+                          reduxParams: transfer_player_FWD1,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_FWD1.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_FWD1_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                  {New_FWD2_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "FWD",
+                          reduxParams: transfer_player_FWD2,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_FWD2.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {FWD2_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "FWD",
+                          reduxParams: transfer_player_FWD2,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_FWD2.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_FWD2_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                  {New_FWD3_name === "N@me" ? (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "FWD",
+                          reduxParams: transfer_player_FWD3,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_FWD3.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 5,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {FWD3_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        //dispatch(set_team_value(calculateTeamValue()));
+                        //dispatch(balance(amountLeft()));
+                        navigation.navigate("GameWeek Transfers", {
+                          paramKey: "FWD",
+                          reduxParams: transfer_player_FWD3,
+                        });
+                      }}
+                    >
+                      <Image
+                        style={{ width: 60, height: 60 }}
+                        source={playerIcon}
+                      />
+                      <Text style={{ fontSize: 18 }}>
+                        {Value_FWD3.map((item) => {
+                          return item.Player_Value;
+                        })}
+                      </Text>
+                      <View
+                        style={{
+                          backgroundColor: "white",
+                          borderRadius: 5,
+                          padding: 3,
+                        }}
+                      >
+                        <TextTicker
+                          style={HomeStyles.player_text}
+                          duration={3000}
+                          loop
+                          bounce
+                          repeatSpacer={50}
+                          marqueeDelay={3000}
+                        >
+                          {New_FWD3_name}
+                        </TextTicker>
+                      </View>
+                    </Pressable>
+                  )}
+                </View>
+
+                {/* </View> */}
+                <View style={loginStyle.center}></View>
+
+                <View style={LeaderBoardStyle.bottom_stack}>
+                  {/* <FloatingButton></FloatingButton> */}
+                </View>
+              </SafeAreaView>
+              <View style={HomeStyles.substitues}>
+                <Text style={HomeStyles.substituesText}>SUBSTITUES</Text>
+                {New_GK2_name === "N@me" ? (
                   <Pressable
                     style={HomeStyles.player_gk1}
                     onPress={() => {
-                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "GK",
-                        reduxParams: set_player_gk1,
+                        reduxParams: transfer_player_GK2,
                       });
                     }}
                   >
@@ -244,7 +1275,47 @@ const Statistics = ({ navigation, route }) => {
                       source={playerIcon}
                     />
                     <Text style={{ fontSize: 18 }}>
-                      {Value_GK1.map((item) => {
+                      {Value_GK2.map((item) => {
+                        return item.Player_Value;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {GK2_name}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      //dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("GameWeek Transfers", {
+                        paramKey: "GK",
+                        reduxParams: transfer_player_GK2,
+                      });
+                    }}
+                  >
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={{ fontSize: 18 }}>
+                      {Value_GK2.map((item) => {
                         return item.Player_Value;
                       })}
                     </Text>
@@ -263,433 +1334,254 @@ const Statistics = ({ navigation, route }) => {
                         repeatSpacer={50}
                         marqueeDelay={3000}
                       >
-                        {GK1_name}
+                        {New_GK2_name}
                       </TextTicker>
                     </View>
                   </Pressable>
-                </View>
-                <View style={HomeStyles.subContainer2}>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_DEF1.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {DEF1_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_DEF2.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {DEF2_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_DEF3.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {DEF3_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_DEF4.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {DEF4_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                </View>
-                <View style={HomeStyles.subContainer3}>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_MID1.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {MID1_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_MID2.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {MID2_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_MID3.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {MID3_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                </View>
-                <View style={HomeStyles.subContainer4}>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_FWD1.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {FWD1_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_FWD2.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {FWD2_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={playerIcon}
-                    />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_FWD3.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "white",
-                        borderRadius: 5,
-                        padding: 5,
-                      }}
-                    >
-                      <TextTicker
-                        style={HomeStyles.player_text}
-                        duration={3000}
-                        loop
-                        bounce
-                        repeatSpacer={50}
-                        marqueeDelay={3000}
-                      >
-                        {FWD3_name}
-                      </TextTicker>
-                    </View>
-                  </Pressable>
-                </View>
-
-                {/* </View> */}
-                <View style={loginStyle.center}></View>
-
-                <View style={LeaderBoardStyle.bottom_stack}>
-                  {/* <FloatingButton></FloatingButton> */}
-                </View>
-              </SafeAreaView>
-              <View style={HomeStyles.substitues}>
-                <Text style={HomeStyles.substituesText}>SUBSTITUES</Text>
-                <Pressable style={HomeStyles.player_gk1}>
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={{ fontSize: 18 }}>
-                    {Value_GK2.map((item) => {
-                      return item.Player_Value;
-                    })}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                )}
+                {New_DEF5_name === "N@me" ? (
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      //dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("GameWeek Transfers", {
+                        paramKey: "DEF",
+                        reduxParams: transfer_player_DEF5,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={HomeStyles.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={{ fontSize: 18 }}>
+                      {Value_DEF5.map((item) => {
+                        return item.Player_Value;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {GK2_name}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-                <Pressable style={HomeStyles.player_gk1}>
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={{ fontSize: 18 }}>
-                    {Value_DEF5.map((item) => {
-                      return item.Player_Value;
-                    })}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {DEF5_name}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      //dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("GameWeek Transfers", {
+                        paramKey: "DEF",
+                        reduxParams: transfer_player_DEF5,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={HomeStyles.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={{ fontSize: 18 }}>
+                      {Value_DEF5.map((item) => {
+                        return item.Player_Value;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 3,
+                      }}
                     >
-                      {DEF5_name}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-                <Pressable style={HomeStyles.player_gk1}>
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={{ fontSize: 18 }}>
-                    {Value_MID4.map((item) => {
-                      return item.Player_Value;
-                    })}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {New_DEF5_name}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {New_MID4_name === "N@me" ? (
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      //dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("GameWeek Transfers", {
+                        paramKey: "MID",
+                        reduxParams: transfer_player_MID4,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={HomeStyles.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={{ fontSize: 18 }}>
+                      {Value_MID4.map((item) => {
+                        return item.Player_Value;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {MID4_name}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-                <Pressable style={HomeStyles.player_gk1}>
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={{ fontSize: 18 }}>
-                    {Value_FWD4.map((item) => {
-                      return item.Player_Value;
-                    })}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {MID4_name}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      //dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("GameWeek Transfers", {
+                        paramKey: "MID",
+                        reduxParams: transfer_player_MID4,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={HomeStyles.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={{ fontSize: 18 }}>
+                      {Value_MID4.map((item) => {
+                        return item.Player_Value;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 3,
+                      }}
                     >
-                      {FWD4_name}
-                    </TextTicker>
-                  </View>
-                </Pressable>
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {New_MID4_name}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {New_FWD4_name === "N@me" ? (
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      //dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("GameWeek Transfers", {
+                        paramKey: "FWD",
+                        reduxParams: transfer_player_FWD4,
+                      });
+                    }}
+                  >
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={{ fontSize: 18 }}>
+                      {Value_FWD4.map((item) => {
+                        return item.Player_Value;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {FWD4_name}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      //dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("GameWeek Transfers", {
+                        paramKey: "FWD",
+                        reduxParams: transfer_player_FWD4,
+                      });
+                    }}
+                  >
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={{ fontSize: 18 }}>
+                      {Value_FWD4.map((item) => {
+                        return item.Player_Value;
+                      })}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 3,
+                      }}
+                    >
+                      <TextTicker
+                        style={HomeStyles.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {New_FWD4_name}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
               </View>
             </ImageBackground>
           </View>

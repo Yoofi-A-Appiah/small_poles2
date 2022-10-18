@@ -33,63 +33,121 @@ const Transfers = ({ route }) => {
   const [players, setPlayers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loader, showLoader, hideLoader] = UseFullPageLoader();
-  const gk1 = useSelector((state) => state.userReducer.player_gk1.player_id);
+  const gk1 =
+    useSelector((state) => state.transfersReducer.player_gk1.player_id) === "ID"
+      ? useSelector((state) => state.userReducer.player_gk1.player_id)
+      : useSelector((state) => state.transfersReducer.player_gk1.player_id);
   const gk1_value = useSelector(
     (state) => state.userReducer.player_gk1.player_value
   );
-  const gk2 = useSelector((state) => state.userReducer.player_gk2.player_id);
+  const gk2 =
+    useSelector((state) => state.transfersReducer.player_gk2.player_id) === "ID"
+      ? useSelector((state) => state.userReducer.player_gk2.player_id)
+      : useSelector((state) => state.transfersReducer.player_gk2.player_id);
   const gk2_value = useSelector(
     (state) => state.userReducer.player_gk2.player_value
   );
-  const def1 = useSelector((state) => state.userReducer.player_def1.player_id);
+  const def1 =
+    useSelector((state) => state.transfersReducer.player_def1.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_def1.player_id)
+      : useSelector((state) => state.transfersReducer.player_def1.player_id);
   const def1_value = useSelector(
     (state) => state.userReducer.player_def1.player_value
   );
-  const def2 = useSelector((state) => state.userReducer.player_def2.player_id);
+  const def2 =
+    useSelector((state) => state.transfersReducer.player_def2.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_def2.player_id)
+      : useSelector((state) => state.transfersReducer.player_def2.player_id);
   const def2_value = useSelector(
     (state) => state.userReducer.player_def2.player_value
   );
-  const def3 = useSelector((state) => state.userReducer.player_def3.player_id);
+  const def3 =
+    useSelector((state) => state.transfersReducer.player_def3.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_def3.player_id)
+      : useSelector((state) => state.transfersReducer.player_def3.player_id);
   const def3_value = useSelector(
     (state) => state.userReducer.player_def3.player_value
   );
-  const def4 = useSelector((state) => state.userReducer.player_def4.player_id);
+  const def4 =
+    useSelector((state) => state.transfersReducer.player_def4.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_def4.player_id)
+      : useSelector((state) => state.transfersReducer.player_def4.player_id);
   const def4_value = useSelector(
     (state) => state.userReducer.player_def4.player_value
   );
-  const def5 = useSelector((state) => state.userReducer.player_def5.player_id);
+  const def5 =
+    useSelector((state) => state.transfersReducer.player_def5.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_def5.player_id)
+      : useSelector((state) => state.transfersReducer.player_def5.player_id);
   const def5_value = useSelector(
     (state) => state.userReducer.player_def5.player_value
   );
-  const mid1 = useSelector((state) => state.userReducer.player_mid1.player_id);
+  const mid1 =
+    useSelector((state) => state.transfersReducer.player_mid1.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_mid1.player_id)
+      : useSelector((state) => state.transfersReducer.player_mid1.player_id);
   const mid1_value = useSelector(
     (state) => state.userReducer.player_mid1.player_value
   );
-  const mid2 = useSelector((state) => state.userReducer.player_mid2.player_id);
+  const mid2 =
+    useSelector((state) => state.transfersReducer.player_mid2.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_mid2.player_id)
+      : useSelector((state) => state.transfersReducer.player_mid2.player_id);
   const mid2_value = useSelector(
     (state) => state.userReducer.player_mid2.player_value
   );
-  const mid3 = useSelector((state) => state.userReducer.player_mid3.player_id);
+  const mid3 =
+    useSelector((state) => state.transfersReducer.player_mid3.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_mid3.player_id)
+      : useSelector((state) => state.transfersReducer.player_mid3.player_id);
   const mid3_value = useSelector(
     (state) => state.userReducer.player_mid3.player_value
   );
-  const mid4 = useSelector((state) => state.userReducer.player_mid4.player_id);
+  const mid4 =
+    useSelector((state) => state.transfersReducer.player_mid4.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_mid4.player_id)
+      : useSelector((state) => state.transfersReducer.player_mid4.player_id);
   const mid4_value = useSelector(
     (state) => state.userReducer.player_mid4.player_value
   );
-  const fwd1 = useSelector((state) => state.userReducer.player_fwd1.player_id);
+  const fwd1 =
+    useSelector((state) => state.transfersReducer.player_fwd1.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_fwd1.player_id)
+      : useSelector((state) => state.transfersReducer.player_fwd1.player_id);
   const fwd1_value = useSelector(
     (state) => state.userReducer.player_fwd1.player_value
   );
-  const fwd2 = useSelector((state) => state.userReducer.player_fwd2.player_id);
+  const fwd2 =
+    useSelector((state) => state.transfersReducer.player_fwd2.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_fwd2.player_id)
+      : useSelector((state) => state.transfersReducer.player_fwd2.player_id);
   const fwd2_value = useSelector(
     (state) => state.userReducer.player_fwd2.player_value
   );
-  const fwd3 = useSelector((state) => state.userReducer.player_fwd3.player_id);
+  const fwd3 =
+    useSelector((state) => state.transfersReducer.player_fwd3.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_fwd3.player_id)
+      : useSelector((state) => state.transfersReducer.player_fwd3.player_id);
   const fwd3_value = useSelector(
     (state) => state.userReducer.player_fwd3.player_value
   );
-  const fwd4 = useSelector((state) => state.userReducer.player_fwd4.player_id);
+  const fwd4 =
+    useSelector((state) => state.transfersReducer.player_fwd4.player_id) ===
+    "ID"
+      ? useSelector((state) => state.userReducer.player_fwd4.player_id)
+      : useSelector((state) => state.transfersReducer.player_fwd4.player_id);
   const fwd4_value = useSelector(
     (state) => state.userReducer.player_fwd4.player_value
   );

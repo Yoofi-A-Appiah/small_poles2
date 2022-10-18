@@ -25,6 +25,22 @@ import {
   GET_BUDGET,
   BALANCE,
   SET_USER_ID,
+  TRANSFER_PLAYER_GK1,
+  TRANSFER_PLAYER_GK2,
+  TRANSFER_PLAYER_DEF1,
+  TRANSFER_PLAYER_DEF2,
+  TRANSFER_PLAYER_DEF3,
+  TRANSFER_PLAYER_DEF4,
+  TRANSFER_PLAYER_DEF5,
+  TRANSFER_PLAYER_MID1,
+  TRANSFER_PLAYER_MID2,
+  TRANSFER_PLAYER_MID3,
+  TRANSFER_PLAYER_MID4,
+  TRANSFER_PLAYER_FWD1,
+  TRANSFER_PLAYER_FWD2,
+  TRANSFER_PLAYER_FWD3,
+  TRANSFER_PLAYER_FWD4,
+  CLEAR_TRANSFER_DATA,
 } from "./actions";
 
 const initialState = {
@@ -50,9 +66,23 @@ const initialState = {
   player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
 };
-// const homeState = {
-
-// }
+const transferState = {
+  player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_def2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_def3: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_def4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_def5: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+};
 export function signupReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER_ID:
@@ -61,11 +91,239 @@ export function signupReducer(state = initialState, action) {
       return state;
   }
 }
-// export function homepageReducer(state = homeState, action){
-//   switch (action.type){
-//     case
-//   }
-// }
+export function transfersReducer(state = transferState, action) {
+  switch (action.type) {
+    case TRANSFER_PLAYER_GK1: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_gk1: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_GK2: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_gk2: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_DEF1: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_def1: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_DEF2: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_def2: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_DEF3: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_def3: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_DEF4: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_def4: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_DEF5: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_def5: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_MID1: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_mid1: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_MID2: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_mid2: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_MID3: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_mid3: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_MID4: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_mid4: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_FWD1: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_fwd1: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_FWD2: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_fwd2: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_FWD3: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_fwd3: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case TRANSFER_PLAYER_FWD4: {
+      const player_id = action.player_id;
+      const player_name = action.player_name;
+      const player_value = action.player_value;
+      const newState = {
+        ...state,
+        player_fwd4: {
+          ...state,
+          player_id,
+          player_name,
+          player_value,
+        },
+      };
+      return newState;
+    }
+    case CLEAR_TRANSFER_DATA:
+      return initialState;
+    default:
+      return state;
+  }
+}
 
 export function userReducer(state = initialState, action) {
   switch (action.type) {
