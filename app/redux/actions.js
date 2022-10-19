@@ -41,9 +41,17 @@ export const TRANSFER_PLAYER_FWD1 = "TRANSFER_PLAYER_FWD1";
 export const TRANSFER_PLAYER_FWD2 = "TRANSFER_PLAYER_FWD2";
 export const TRANSFER_PLAYER_FWD3 = "TRANSFER_PLAYER_FWD3";
 export const TRANSFER_PLAYER_FWD4 = "TRANSFER_PLAYER_FWD4";
+export const TRANSFER_TEAM_VALUE = "TRANSFER_TEAM_VALUE";
 export const CLEAR_TRANSFER_DATA = "CLEAR_TRANSFER_DATA";
-
+export const TRANSFER_BALANCE = "TRANSFER_BALANCE";
+export const TRANSFER_BUDGET = "TRANSFER_BUDGET";
 //start transfer actions
+export const transfer_budget = (budget) => (dispatch) => {
+  dispatch({
+    type: TRANSFER_BUDGET,
+    budget: budget,
+  });
+};
 export const transfer_player_GK1 =
   (player_name, player_id, player_value) => (dispatch) => {
     dispatch({
@@ -180,6 +188,18 @@ export const transfer_player_FWD4 =
       player_value: player_value,
     });
   };
+export const transfer_team_value = (total_value) => (dispatch) => {
+  dispatch({
+    type: TRANSFER_TEAM_VALUE,
+    total_value: total_value,
+  });
+};
+export const transfer_balance = (balance) => (dispatch) => {
+  dispatch({
+    type: TRANSFER_BALANCE,
+    balance: balance,
+  });
+};
 export const clear_transfer_data = () => ({
   type: CLEAR_TRANSFER_DATA,
 });

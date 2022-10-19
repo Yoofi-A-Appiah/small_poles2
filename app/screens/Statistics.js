@@ -10,6 +10,7 @@ import {
   ImageBackground,
   Pressable,
   FlatList,
+  Alert,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 //import stateComparison from "./stateComparison";
@@ -43,7 +44,10 @@ import {
   transfer_player_FWD4,
   set_team_value,
   clear_transfer_data,
+  transfer_team_value,
+  transfer_budget,
 } from "../redux/actions";
+import calculateTeamValue from "./calculateValue";
 import _ from "lodash";
 
 const auth = getAuth(initializedBase);
@@ -95,6 +99,9 @@ const Statistics = ({ navigation, route }) => {
   let New_GK1_name = useSelector(
     (state) => state.transfersReducer.player_gk1.player_name
   );
+  let New_GK1_value = useSelector(
+    (state) => state.transfersReducer.player_gk1.player_value
+  );
 
   let GK2_name = useSelector(
     (state) => state.userReducer.player_gk2.player_name
@@ -102,6 +109,9 @@ const Statistics = ({ navigation, route }) => {
   let GK2_id = useSelector((state) => state.userReducer.player_gk2.player_id);
   let New_GK2_name = useSelector(
     (state) => state.transfersReducer.player_gk2.player_name
+  );
+  let New_GK2_value = useSelector(
+    (state) => state.transfersReducer.player_gk2.player_value
   );
 
   let DEF1_name = useSelector(
@@ -111,6 +121,9 @@ const Statistics = ({ navigation, route }) => {
   let New_DEF1_name = useSelector(
     (state) => state.transfersReducer.player_def1.player_name
   );
+  let New_DEF1_value = useSelector(
+    (state) => state.transfersReducer.player_def1.player_value
+  );
 
   let DEF2_name = useSelector(
     (state) => state.userReducer.player_def2.player_name
@@ -118,6 +131,9 @@ const Statistics = ({ navigation, route }) => {
   let DEF2_id = useSelector((state) => state.userReducer.player_def2.player_id);
   let New_DEF2_name = useSelector(
     (state) => state.transfersReducer.player_def2.player_name
+  );
+  let New_DEF2_value = useSelector(
+    (state) => state.transfersReducer.player_def2.player_value
   );
 
   let DEF3_name = useSelector(
@@ -127,6 +143,9 @@ const Statistics = ({ navigation, route }) => {
   let New_DEF3_name = useSelector(
     (state) => state.transfersReducer.player_def3.player_name
   );
+  let New_DEF3_value = useSelector(
+    (state) => state.transfersReducer.player_def3.player_value
+  );
 
   let DEF4_name = useSelector(
     (state) => state.userReducer.player_def4.player_name
@@ -134,6 +153,9 @@ const Statistics = ({ navigation, route }) => {
   let DEF4_id = useSelector((state) => state.userReducer.player_def4.player_id);
   let New_DEF4_name = useSelector(
     (state) => state.transfersReducer.player_def4.player_name
+  );
+  let New_DEF4_value = useSelector(
+    (state) => state.transfersReducer.player_def4.player_value
   );
 
   let DEF5_name = useSelector(
@@ -143,6 +165,9 @@ const Statistics = ({ navigation, route }) => {
   let New_DEF5_name = useSelector(
     (state) => state.transfersReducer.player_def5.player_name
   );
+  let New_DEF5_value = useSelector(
+    (state) => state.transfersReducer.player_def5.player_value
+  );
 
   let MID1_name = useSelector(
     (state) => state.userReducer.player_mid1.player_name
@@ -150,6 +175,9 @@ const Statistics = ({ navigation, route }) => {
   let MID1_id = useSelector((state) => state.userReducer.player_mid1.player_id);
   let New_MID1_name = useSelector(
     (state) => state.transfersReducer.player_mid1.player_name
+  );
+  let New_MID1_value = useSelector(
+    (state) => state.transfersReducer.player_mid1.player_value
   );
 
   let MID2_name = useSelector(
@@ -159,6 +187,9 @@ const Statistics = ({ navigation, route }) => {
   let New_MID2_name = useSelector(
     (state) => state.transfersReducer.player_mid2.player_name
   );
+  let New_MID2_value = useSelector(
+    (state) => state.transfersReducer.player_mid2.player_value
+  );
 
   let MID3_name = useSelector(
     (state) => state.userReducer.player_mid3.player_name
@@ -166,6 +197,9 @@ const Statistics = ({ navigation, route }) => {
   let MID3_id = useSelector((state) => state.userReducer.player_mid3.player_id);
   let New_MID3_name = useSelector(
     (state) => state.transfersReducer.player_mid3.player_name
+  );
+  let New_MID3_value = useSelector(
+    (state) => state.transfersReducer.player_mid3.player_value
   );
 
   let MID4_name = useSelector(
@@ -175,6 +209,9 @@ const Statistics = ({ navigation, route }) => {
   let New_MID4_name = useSelector(
     (state) => state.transfersReducer.player_mid4.player_name
   );
+  let New_MID4_value = useSelector(
+    (state) => state.transfersReducer.player_mid4.player_value
+  );
 
   let FWD1_name = useSelector(
     (state) => state.userReducer.player_fwd1.player_name
@@ -182,6 +219,9 @@ const Statistics = ({ navigation, route }) => {
   let FWD1_id = useSelector((state) => state.userReducer.player_fwd1.player_id);
   let New_FWD1_name = useSelector(
     (state) => state.transfersReducer.player_fwd1.player_name
+  );
+  let New_FWD1_value = useSelector(
+    (state) => state.transfersReducer.player_fwd1.player_value
   );
 
   let FWD2_name = useSelector(
@@ -191,6 +231,9 @@ const Statistics = ({ navigation, route }) => {
   let New_FWD2_name = useSelector(
     (state) => state.transfersReducer.player_fwd2.player_name
   );
+  let New_FWD2_value = useSelector(
+    (state) => state.transfersReducer.player_fwd2.player_value
+  );
 
   let FWD3_name = useSelector(
     (state) => state.userReducer.player_fwd3.player_name
@@ -199,6 +242,9 @@ const Statistics = ({ navigation, route }) => {
   let New_FWD3_name = useSelector(
     (state) => state.transfersReducer.player_fwd3.player_name
   );
+  let New_FWD3_value = useSelector(
+    (state) => state.transfersReducer.player_fwd3.player_value
+  );
 
   let FWD4_name = useSelector(
     (state) => state.userReducer.player_fwd4.player_name
@@ -206,6 +252,9 @@ const Statistics = ({ navigation, route }) => {
   let FWD4_id = useSelector((state) => state.userReducer.player_fwd4.player_id);
   let New_FWD4_name = useSelector(
     (state) => state.transfersReducer.player_fwd4.player_name
+  );
+  let New_FWD4_value = useSelector(
+    (state) => state.transfersReducer.player_fwd4.player_value
   );
 
   let idOfPlayers = [
@@ -225,8 +274,6 @@ const Statistics = ({ navigation, route }) => {
     FWD3_id,
     FWD4_id,
   ];
-  console.log(idOfPlayers);
-  //console.log(allPlayerIDs);
 
   let Value_GK1 = allPlayerIDs.filter(function (el) {
     return el.Player_id == GK1_id;
@@ -274,6 +321,11 @@ const Statistics = ({ navigation, route }) => {
     return el.Player_id == FWD4_id;
   });
   let transferState = useSelector((state) => state.transfersReducer);
+  let val_val = useSelector((state) => state.userReducer.balance);
+  const amountLeft = () => {
+    let a_left = val_val - calculateTeamValue();
+    return a_left;
+  };
   const [pushPlayers, setPushPlayers] = useState([]);
   const stateComparison = () => {
     const initialState = {
@@ -299,9 +351,39 @@ const Statistics = ({ navigation, route }) => {
     ) {
       setPushPlayers(transferState.player_gk1.player_name);
     }
-    console.log(pushPlayers);
-    // return pushPlayers;
   };
+  let calculateTeamValue = () => {
+    let value =
+      New_GK1_value +
+      New_GK2_value +
+      New_DEF1_value +
+      New_DEF2_value +
+      New_DEF3_value +
+      New_DEF4_value +
+      New_DEF5_value +
+      New_MID1_value +
+      New_MID2_value +
+      New_MID3_value +
+      New_MID4_value +
+      New_FWD1_value +
+      New_FWD2_value +
+      New_FWD3_value +
+      New_FWD4_value;
+    return value;
+  };
+  const isOverBudget = () => {
+    if (amountLeft() < 0) {
+      dispatch(transfer_budget(true)); //meaning user is overBudget
+    } else {
+      dispatch(transfer_budget(false)); //meaning user is under budget
+    }
+  };
+  const overBudgetAlert = () =>
+    Alert.alert(
+      "Your transfers exceed your budget",
+      "Make sure your balance is a positive value ",
+      [{ text: "Make Changes" }]
+    );
 
   let showContent = () => {
     return (
@@ -323,6 +405,12 @@ const Statistics = ({ navigation, route }) => {
                 return item.Team_Value;
               })}
             </Text>
+            {useSelector((state) => state.transfersReducer.budget) === false
+              ? ""
+              : overBudgetAlert()}
+
+            <Text>{val_val}</Text>
+            <Text>{amountLeft()}</Text>
 
             <ImageBackground
               source={image}
@@ -354,11 +442,12 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "GK",
                           reduxParams: transfer_player_GK1,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -394,11 +483,12 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "GK",
                           reduxParams: transfer_player_GK1,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -406,11 +496,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_GK1.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_GK1_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -437,11 +523,12 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF1,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -477,11 +564,12 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF1,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -489,11 +577,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_DEF1.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_DEF1_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -518,11 +602,12 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF2,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -558,11 +643,12 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF2,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -570,11 +656,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_DEF2.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_DEF2_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -599,11 +681,12 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF3,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -639,8 +722,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF3,
@@ -651,11 +734,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_DEF3.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_DEF3_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -680,8 +759,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF4,
@@ -720,8 +799,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF4,
@@ -732,11 +811,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_DEF4.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_DEF4_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -763,8 +838,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID1,
@@ -803,8 +878,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID1,
@@ -815,11 +890,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_MID1.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_MID1_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -844,8 +915,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID2,
@@ -884,8 +955,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID2,
@@ -896,11 +967,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_MID2.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_MID2_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -925,8 +992,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID3,
@@ -965,8 +1032,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID3,
@@ -977,11 +1044,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_MID3.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_MID3_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -1008,8 +1071,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD1,
@@ -1048,8 +1111,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD1,
@@ -1060,11 +1123,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_FWD1.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_MID4_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -1089,8 +1148,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD2,
@@ -1129,8 +1188,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD2,
@@ -1141,11 +1200,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_FWD2.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_FWD1_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -1170,8 +1225,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD3,
@@ -1210,8 +1265,8 @@ const Statistics = ({ navigation, route }) => {
                     <Pressable
                       style={HomeStyles.player_gk1}
                       onPress={() => {
-                        //dispatch(set_team_value(calculateTeamValue()));
-                        //dispatch(balance(amountLeft()));
+                        dispatch(transfer_team_value(calculateTeamValue()));
+                        isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD3,
@@ -1222,11 +1277,7 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
-                        {Value_FWD3.map((item) => {
-                          return item.Player_Value;
-                        })}
-                      </Text>
+                      <Text style={{ fontSize: 18 }}>{New_FWD2_value}</Text>
                       <View
                         style={{
                           backgroundColor: "white",
@@ -1262,8 +1313,8 @@ const Statistics = ({ navigation, route }) => {
                   <Pressable
                     style={HomeStyles.player_gk1}
                     onPress={() => {
-                      //dispatch(set_team_value(calculateTeamValue()));
-                      //dispatch(balance(amountLeft()));
+                      dispatch(transfer_team_value(calculateTeamValue()));
+                      isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "GK",
                         reduxParams: transfer_player_GK2,
@@ -1302,8 +1353,8 @@ const Statistics = ({ navigation, route }) => {
                   <Pressable
                     style={HomeStyles.player_gk1}
                     onPress={() => {
-                      //dispatch(set_team_value(calculateTeamValue()));
-                      //dispatch(balance(amountLeft()));
+                      dispatch(transfer_team_value(calculateTeamValue()));
+                      isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "GK",
                         reduxParams: transfer_player_GK2,
@@ -1314,11 +1365,7 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_GK2.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
+                    <Text style={{ fontSize: 18 }}>{New_GK2_value}</Text>
                     <View
                       style={{
                         backgroundColor: "white",
@@ -1343,8 +1390,8 @@ const Statistics = ({ navigation, route }) => {
                   <Pressable
                     style={HomeStyles.player_gk1}
                     onPress={() => {
-                      //dispatch(set_team_value(calculateTeamValue()));
-                      //dispatch(balance(amountLeft()));
+                      dispatch(transfer_team_value(calculateTeamValue()));
+                      isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "DEF",
                         reduxParams: transfer_player_DEF5,
@@ -1383,8 +1430,8 @@ const Statistics = ({ navigation, route }) => {
                   <Pressable
                     style={HomeStyles.player_gk1}
                     onPress={() => {
-                      //dispatch(set_team_value(calculateTeamValue()));
-                      //dispatch(balance(amountLeft()));
+                      dispatch(transfer_team_value(calculateTeamValue()));
+                      isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "DEF",
                         reduxParams: transfer_player_DEF5,
@@ -1395,11 +1442,7 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_DEF5.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
+                    <Text style={{ fontSize: 18 }}>{New_DEF5_value}</Text>
                     <View
                       style={{
                         backgroundColor: "white",
@@ -1424,8 +1467,8 @@ const Statistics = ({ navigation, route }) => {
                   <Pressable
                     style={HomeStyles.player_gk1}
                     onPress={() => {
-                      //dispatch(set_team_value(calculateTeamValue()));
-                      //dispatch(balance(amountLeft()));
+                      dispatch(transfer_team_value(calculateTeamValue()));
+                      isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "MID",
                         reduxParams: transfer_player_MID4,
@@ -1464,8 +1507,8 @@ const Statistics = ({ navigation, route }) => {
                   <Pressable
                     style={HomeStyles.player_gk1}
                     onPress={() => {
-                      //dispatch(set_team_value(calculateTeamValue()));
-                      //dispatch(balance(amountLeft()));
+                      dispatch(transfer_team_value(calculateTeamValue()));
+                      isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "MID",
                         reduxParams: transfer_player_MID4,
@@ -1476,11 +1519,7 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_MID4.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
+                    <Text style={{ fontSize: 18 }}>{New_MID4_value}</Text>
                     <View
                       style={{
                         backgroundColor: "white",
@@ -1505,8 +1544,8 @@ const Statistics = ({ navigation, route }) => {
                   <Pressable
                     style={HomeStyles.player_gk1}
                     onPress={() => {
-                      //dispatch(set_team_value(calculateTeamValue()));
-                      //dispatch(balance(amountLeft()));
+                      dispatch(transfer_team_value(calculateTeamValue()));
+                      isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "FWD",
                         reduxParams: transfer_player_FWD4,
@@ -1545,8 +1584,8 @@ const Statistics = ({ navigation, route }) => {
                   <Pressable
                     style={HomeStyles.player_gk1}
                     onPress={() => {
-                      //dispatch(set_team_value(calculateTeamValue()));
-                      //dispatch(balance(amountLeft()));
+                      dispatch(transfer_team_value(calculateTeamValue()));
+                      isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "FWD",
                         reduxParams: transfer_player_FWD4,
@@ -1557,11 +1596,7 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
-                      {Value_FWD4.map((item) => {
-                        return item.Player_Value;
-                      })}
-                    </Text>
+                    <Text style={{ fontSize: 18 }}>{New_FWD4_value}</Text>
                     <View
                       style={{
                         backgroundColor: "white",

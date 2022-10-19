@@ -44,6 +44,7 @@ import {
   set_player_fwd3,
   set_player_fwd4,
   set_team_value,
+  balance,
 } from "../redux/actions";
 const auth = getAuth(initializedBase);
 
@@ -81,8 +82,8 @@ const Home = ({ navigation, route }) => {
   //   setIsLoading(false);
   // };
   const dispatchingFunction = () => {
-    //console.log(currentPlayerValue);
     allPlayers.map((item) => {
+      dispatch(balance(item.Balance_left));
       dispatch(set_player_gk1(item.Player_GK1.Name, item.Player_GK1.Player_id));
       dispatch(set_player_gk2(item.Player_GK2.Name, item.Player_GK2.Player_id));
       dispatch(
@@ -151,6 +152,7 @@ const Home = ({ navigation, route }) => {
         Team_Value,
         Team_name,
         Favorite_team,
+        Balance_left,
       } = doc.data();
       players.push({
         id: doc.id,
@@ -172,6 +174,7 @@ const Home = ({ navigation, route }) => {
         Team_Value,
         Team_name,
         Favorite_team,
+        Balance_left,
       });
     });
     setAllPlayers(players);
@@ -212,7 +215,6 @@ const Home = ({ navigation, route }) => {
     setCurrentPlayerValue(
       players2.filter((item) => arr.includes(item.Player_id))
     );
-    // console.log(players2);
     dispatchingFunction();
     setIsLoading(false);
 
@@ -408,12 +410,7 @@ const Home = ({ navigation, route }) => {
                 return item.Team_Value;
               })}
             </Text>
-            <Text>
-              {/* {console.log(currentPlayerValue)} 
-              {"---"};{console.log(currentPlayerValue)}*/}
-              {/* {useSelector((state) => state.userReducer.player_gk1.player_name)} */}
-              {tester}
-            </Text>
+            <Text>{tester}</Text>
             <ImageBackground
               source={image}
               resizeMode="cover"

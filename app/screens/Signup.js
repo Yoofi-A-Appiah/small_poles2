@@ -289,26 +289,25 @@ const Login_Signup = ({ navigation }) => {
                 {!isRegistering ? "Forgot Password?" : null}
               </Text>
             </Pressable>
-
-            <Animated.View
-              style={[loginStyle.form_button, formButtonAnimationStyle]}
+            <Pressable
+              onPress={() => {
+                formButtonSize.value = withSequence(
+                  withSpring(1.5),
+                  withSpring(1)
+                );
+                isRegistering
+                  ? signUp(email, password, confirmPassword)
+                  : login(email, password);
+              }}
             >
-              <Pressable
-                onPress={() => {
-                  formButtonSize.value = withSequence(
-                    withSpring(1.5),
-                    withSpring(1)
-                  );
-                  isRegistering
-                    ? signUp(email, password, confirmPassword)
-                    : login(email, password);
-                }}
+              <Animated.View
+                style={[loginStyle.form_button, formButtonAnimationStyle]}
               >
                 <Text style={loginStyle.buttonText}>
                   {isRegistering ? "SIGNUP" : "LOGIN"}
                 </Text>
-              </Pressable>
-            </Animated.View>
+              </Animated.View>
+            </Pressable>
           </Animated.View>
         </View>
       </KeyboardAvoidingView>

@@ -41,6 +41,9 @@ import {
   TRANSFER_PLAYER_FWD3,
   TRANSFER_PLAYER_FWD4,
   CLEAR_TRANSFER_DATA,
+  TRANSFER_TEAM_VALUE,
+  TRANSFER_BALANCE,
+  TRANSFER_BUDGET,
 } from "./actions";
 
 const initialState = {
@@ -67,6 +70,9 @@ const initialState = {
   player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
 };
 const transferState = {
+  team_value: 0,
+  budget: false, //indicates that user is under budget by default
+  balance: 1000,
   player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
@@ -93,6 +99,12 @@ export function signupReducer(state = initialState, action) {
 }
 export function transfersReducer(state = transferState, action) {
   switch (action.type) {
+    case TRANSFER_TEAM_VALUE:
+      return { ...state, team_value: action.total_value };
+    case TRANSFER_BALANCE:
+      return { ...state, balance: action.balance };
+    case TRANSFER_BUDGET:
+      return { ...state, budget: action.budget };
     case TRANSFER_PLAYER_GK1: {
       const player_id = action.player_id;
       const player_name = action.player_name;

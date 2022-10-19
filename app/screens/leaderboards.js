@@ -186,6 +186,7 @@ const LeaderBoard = ({ route }) => {
       def2_value +
       def3_value +
       def4_value +
+      def5_value +
       mid1_value +
       mid2_value +
       mid3_value +

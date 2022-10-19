@@ -22,7 +22,8 @@ import {
   set_player_gk1,
   set_player_gk2,
 } from "../redux/actions";
-import { set_team_value } from "../redux/actions";
+import { transfer_team_value } from "../redux/actions";
+import calculateTeamValue from "./calculateValue";
 const auth = getAuth(initializedBase);
 import { db } from "../../initFirebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
@@ -37,120 +38,148 @@ const Transfers = ({ route }) => {
     useSelector((state) => state.transfersReducer.player_gk1.player_id) === "ID"
       ? useSelector((state) => state.userReducer.player_gk1.player_id)
       : useSelector((state) => state.transfersReducer.player_gk1.player_id);
-  const gk1_value = useSelector(
-    (state) => state.userReducer.player_gk1.player_value
-  );
+  const gk1_value =
+    useSelector((state) => state.transfersReducer.player_gk1.player_value) === 0
+      ? useSelector((state) => state.userReducer.player_gk1.player_value)
+      : useSelector((state) => state.transfersReducer.player_gk1.player_value);
   const gk2 =
     useSelector((state) => state.transfersReducer.player_gk2.player_id) === "ID"
       ? useSelector((state) => state.userReducer.player_gk2.player_id)
       : useSelector((state) => state.transfersReducer.player_gk2.player_id);
-  const gk2_value = useSelector(
-    (state) => state.userReducer.player_gk2.player_value
-  );
+  const gk2_value =
+    useSelector((state) => state.transfersReducer.player_gk2.player_value) === 0
+      ? useSelector((state) => state.userReducer.player_gk2.player_value)
+      : useSelector((state) => state.transfersReducer.player_gk2.player_value);
   const def1 =
     useSelector((state) => state.transfersReducer.player_def1.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_def1.player_id)
       : useSelector((state) => state.transfersReducer.player_def1.player_id);
-  const def1_value = useSelector(
-    (state) => state.userReducer.player_def1.player_value
-  );
+  const def1_value =
+    useSelector((state) => state.transfersReducer.player_def1.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_def1.player_value)
+      : useSelector((state) => state.transfersReducer.player_def1.player_value);
   const def2 =
     useSelector((state) => state.transfersReducer.player_def2.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_def2.player_id)
       : useSelector((state) => state.transfersReducer.player_def2.player_id);
-  const def2_value = useSelector(
-    (state) => state.userReducer.player_def2.player_value
-  );
+  const def2_value =
+    useSelector((state) => state.transfersReducer.player_def2.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_def2.player_value)
+      : useSelector((state) => state.transfersReducer.player_def2.player_value);
   const def3 =
     useSelector((state) => state.transfersReducer.player_def3.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_def3.player_id)
       : useSelector((state) => state.transfersReducer.player_def3.player_id);
-  const def3_value = useSelector(
-    (state) => state.userReducer.player_def3.player_value
-  );
+  const def3_value =
+    useSelector((state) => state.transfersReducer.player_def3.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_def3.player_value)
+      : useSelector((state) => state.transfersReducer.player_def3.player_value);
   const def4 =
     useSelector((state) => state.transfersReducer.player_def4.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_def4.player_id)
       : useSelector((state) => state.transfersReducer.player_def4.player_id);
-  const def4_value = useSelector(
-    (state) => state.userReducer.player_def4.player_value
-  );
+  const def4_value =
+    useSelector((state) => state.transfersReducer.player_def4.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_def4.player_value)
+      : useSelector((state) => state.transfersReducer.player_def4.player_value);
   const def5 =
     useSelector((state) => state.transfersReducer.player_def5.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_def5.player_id)
       : useSelector((state) => state.transfersReducer.player_def5.player_id);
-  const def5_value = useSelector(
-    (state) => state.userReducer.player_def5.player_value
-  );
+  const def5_value =
+    useSelector((state) => state.transfersReducer.player_def5.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_def5.player_value)
+      : useSelector((state) => state.transfersReducer.player_def5.player_value);
   const mid1 =
     useSelector((state) => state.transfersReducer.player_mid1.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_mid1.player_id)
       : useSelector((state) => state.transfersReducer.player_mid1.player_id);
-  const mid1_value = useSelector(
-    (state) => state.userReducer.player_mid1.player_value
-  );
+  const mid1_value =
+    useSelector((state) => state.transfersReducer.player_mid1.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_mid1.player_value)
+      : useSelector((state) => state.transfersReducer.player_mid1.player_value);
   const mid2 =
     useSelector((state) => state.transfersReducer.player_mid2.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_mid2.player_id)
       : useSelector((state) => state.transfersReducer.player_mid2.player_id);
-  const mid2_value = useSelector(
-    (state) => state.userReducer.player_mid2.player_value
-  );
+  const mid2_value =
+    useSelector((state) => state.transfersReducer.player_mid2.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_mid2.player_value)
+      : useSelector((state) => state.transfersReducer.player_mid2.player_value);
   const mid3 =
     useSelector((state) => state.transfersReducer.player_mid3.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_mid3.player_id)
       : useSelector((state) => state.transfersReducer.player_mid3.player_id);
-  const mid3_value = useSelector(
-    (state) => state.userReducer.player_mid3.player_value
-  );
+  const mid3_value =
+    useSelector((state) => state.transfersReducer.player_mid3.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_mid3.player_value)
+      : useSelector((state) => state.transfersReducer.player_mid3.player_value);
   const mid4 =
     useSelector((state) => state.transfersReducer.player_mid4.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_mid4.player_id)
       : useSelector((state) => state.transfersReducer.player_mid4.player_id);
-  const mid4_value = useSelector(
-    (state) => state.userReducer.player_mid4.player_value
-  );
+  const mid4_value =
+    useSelector((state) => state.transfersReducer.player_mid4.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_mid4.player_value)
+      : useSelector((state) => state.transfersReducer.player_mid4.player_value);
   const fwd1 =
     useSelector((state) => state.transfersReducer.player_fwd1.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_fwd1.player_id)
       : useSelector((state) => state.transfersReducer.player_fwd1.player_id);
-  const fwd1_value = useSelector(
-    (state) => state.userReducer.player_fwd1.player_value
-  );
+  const fwd1_value =
+    useSelector((state) => state.transfersReducer.player_fwd1.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_fwd1.player_value)
+      : useSelector((state) => state.transfersReducer.player_fwd1.player_value);
   const fwd2 =
     useSelector((state) => state.transfersReducer.player_fwd2.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_fwd2.player_id)
       : useSelector((state) => state.transfersReducer.player_fwd2.player_id);
-  const fwd2_value = useSelector(
-    (state) => state.userReducer.player_fwd2.player_value
-  );
+  const fwd2_value =
+    useSelector((state) => state.transfersReducer.player_fwd2.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_fwd2.player_value)
+      : useSelector((state) => state.transfersReducer.player_fwd2.player_value);
   const fwd3 =
     useSelector((state) => state.transfersReducer.player_fwd3.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_fwd3.player_id)
       : useSelector((state) => state.transfersReducer.player_fwd3.player_id);
-  const fwd3_value = useSelector(
-    (state) => state.userReducer.player_fwd3.player_value
-  );
+  const fwd3_value =
+    useSelector((state) => state.transfersReducer.player_fwd3.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_fwd3.player_value)
+      : useSelector((state) => state.transfersReducer.player_fwd3.player_value);
   const fwd4 =
     useSelector((state) => state.transfersReducer.player_fwd4.player_id) ===
     "ID"
       ? useSelector((state) => state.userReducer.player_fwd4.player_id)
       : useSelector((state) => state.transfersReducer.player_fwd4.player_id);
-  const fwd4_value = useSelector(
-    (state) => state.userReducer.player_fwd4.player_value
-  );
+  const fwd4_value =
+    useSelector((state) => state.transfersReducer.player_fwd4.player_value) ===
+    0
+      ? useSelector((state) => state.userReducer.player_fwd4.player_value)
+      : useSelector((state) => state.transfersReducer.player_fwd4.player_value);
   const parameterArray = [
     gk1,
     gk2,
@@ -228,36 +257,39 @@ const Transfers = ({ route }) => {
 
   //const [teamValue, setTeamValue] = useState(false);
   let curr_val = useSelector((state) => state.userReducer.team_value); //default is 0
-  let available_balance = useSelector((state) => state.userReducer.balance); //default is 1000
-  const isOverBudget = () => {
-    if (amountLeft() < 0) {
-      dispatch(get_budget(true)); //meaning user is overBudget
-    } else {
-      dispatch(get_budget(false)); //meaning user is under budget
-    }
-  };
-  let calculateTeamValue = () => {
-    let value =
-      gk1_value +
-      gk2_value +
-      def1_value +
-      def2_value +
-      def3_value +
-      def4_value +
-      mid1_value +
-      mid2_value +
-      mid3_value +
-      mid4_value +
-      fwd1_value +
-      fwd2_value +
-      fwd3_value +
-      fwd4_value;
-    return value;
-  };
-  const amountLeft = () => {
-    let amount = available_balance - calculateTeamValue();
-    return amount;
-  };
+  let available_balance = useSelector(
+    (state) => state.transfersReducer.balance
+  ); //default is 1000
+  // const isOverBudget = () => {
+  //   if (amountLeft() < 0) {
+  //     dispatch(get_budget(true)); //meaning user is overBudget
+  //   } else {
+  //     dispatch(get_budget(false)); //meaning user is under budget
+  //   }
+  // };
+  // let calculateTeamValue = () => {
+  //   let value =
+  //     gk1_value +
+  //     gk2_value +
+  //     def1_value +
+  //     def2_value +
+  //     def3_value +
+  //     def4_value +
+  //     def5_value +
+  //     mid1_value +
+  //     mid2_value +
+  //     mid3_value +
+  //     mid4_value +
+  //     fwd1_value +
+  //     fwd2_value +
+  //     fwd3_value +
+  //     fwd4_value;
+  //   return value;
+  // };
+  // const amountLeft = () => {
+  //   let amount = available_balance - calculateTeamValue();
+  //   return amount;
+  // };
   useEffect(() => {
     fetching();
     isOverBudget();
@@ -268,9 +300,9 @@ const Transfers = ({ route }) => {
       <Text>This is the Gameweek Transfers screen</Text>
       <Text>
         Current Team Value is{" "}
-        {useSelector((state) => state.userReducer.team_value)}{" "}
+        {useSelector((state) => state.transfersReducer.team_value)}{" "}
       </Text>
-      <Text>Available balance is {amountLeft()} </Text>
+      <Text>Available balance is {route.params.curr_bal} </Text>
 
       <Pressable onPress={() => fetching()}>
         <Text>PRESS</Text>
@@ -285,7 +317,7 @@ const Transfers = ({ route }) => {
           <Pressable
             style={LeaderBoardStyle.single_item}
             onPress={() => {
-              isOverBudget();
+              //isOverBudget();
               navigation.navigate("Statistics");
               dispatch(
                 route.params.reduxParams(
@@ -295,7 +327,7 @@ const Transfers = ({ route }) => {
                 )
                 //dispatch(balance(amountLeft()))
               );
-              dispatch(set_team_value(calculateTeamValue()));
+              //dispatch(transfer_team_value(calculateTeamValue()));
             }}
           >
             <View>
