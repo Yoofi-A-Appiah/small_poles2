@@ -83,6 +83,29 @@ const HomeStyles = StyleSheet.create({
     top: height / 18,
     //left: width / 10,
   },
+  confirmButton: {
+    position: "absolute",
+    left: width / 1.2,
+  },
+  declineButton: {
+    position: "absolute",
+    right: width / 1.2,
+  },
+  homeWelcome: {
+    justifyContent: "center",
+    alignSelf: "center",
+    fontSize: 20,
+  },
+  teamValue: {
+    position: "relative",
+    fontSize: 18,
+    padding: 5,
+    borderWidth: 1,
+    backgroundColor: "#749C75",
+    borderColor: "#749C75",
+    color: "white",
+    borderRadius: 15,
+  },
   player_text: {
     backgroundColor: "white",
     fontSize: 13,

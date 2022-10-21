@@ -292,7 +292,7 @@ const Transfers = ({ route }) => {
   // };
   useEffect(() => {
     fetching();
-    isOverBudget();
+    //isOverBudget();
   }, []);
   return (
     <View style={styles.center}>

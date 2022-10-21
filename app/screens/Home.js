@@ -54,77 +54,188 @@ const Home = ({ navigation, route }) => {
   const [allPlayerIDs, setAllPlayerIDs] = useState([]);
   const [currentPlayerValue, setCurrentPlayerValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [valueDispatch, setValueDispatch] = useState(true);
   const dispatch = useDispatch();
   let getUserid = useSelector((state) => state.signupReducer.user_id);
-  let tester = useSelector((state) => state.userReducer.player_gk1.player_id);
+  let tester = useSelector(
+    (state) => state.userReducer.player_gk1.player_value
+  );
   const q = query(
     collection(db, "Users"),
     where(firebase.firestore.FieldPath.documentId(), "==", getUserid)
   );
+
   const q2 = query(collection(db, "Players"));
-  // const fetchPoints = async () => {
-  //   const querySnapshot = await getDocs(q2);
-  //   const players = [];
-  //   querySnapshot.forEach((doc) => {
-  //     const { Player_Value, Player_id, Season_Points, Player_Name } =
-  //       doc.data();
-  //     players.push({
-  //       id: doc.id,
-  //       Player_Value,
-  //       Player_id,
-  //       Season_Points,
-  //       Player_Name,
-  //     });
-  //   });
-  //   setCurrentPlayerValue(
-  //     players.filter((item) => allPlayerIDs.includes(item.Player_id))
-  //   );
-  //   setIsLoading(false);
-  // };
+
   const dispatchingFunction = () => {
     allPlayers.map((item) => {
       dispatch(balance(item.Balance_left));
-      dispatch(set_player_gk1(item.Player_GK1.Name, item.Player_GK1.Player_id));
-      dispatch(set_player_gk2(item.Player_GK2.Name, item.Player_GK2.Player_id));
       dispatch(
-        set_player_def1(item.Player_DEF1.Name, item.Player_DEF1.Player_id)
+        set_player_gk1(
+          item.Player_GK1.Name,
+          item.Player_GK1.Player_id,
+          parseInt(
+            Points_GK1().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_def2(item.Player_DEF2.Name, item.Player_DEF2.Player_id)
+        set_player_gk2(
+          item.Player_GK2.Name,
+          item.Player_GK2.Player_id,
+          parseInt(
+            Points_GK2().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_def3(item.Player_DEF3.Name, item.Player_DEF3.Player_id)
+        set_player_def1(
+          item.Player_DEF1.Name,
+          item.Player_DEF1.Player_id,
+          parseInt(
+            Points_DEF1().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_def4(item.Player_DEF4.Name, item.Player_DEF4.Player_id)
+        set_player_def2(
+          item.Player_DEF2.Name,
+          item.Player_DEF2.Player_id,
+          parseInt(
+            Points_DEF2().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_def5(item.Player_DEF5.Name, item.Player_DEF5.Player_id)
+        set_player_def3(
+          item.Player_DEF3.Name,
+          item.Player_DEF3.Player_id,
+          parseInt(
+            Points_DEF3().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_mid1(item.Player_MID1.Name, item.Player_MID1.Player_id)
+        set_player_def4(
+          item.Player_DEF4.Name,
+          item.Player_DEF4.Player_id,
+          parseInt(
+            Points_DEF4().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_mid2(item.Player_MID2.Name, item.Player_MID2.Player_id)
+        set_player_def5(
+          item.Player_DEF5.Name,
+          item.Player_DEF5.Player_id,
+          parseInt(
+            Points_DEF5().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_mid3(item.Player_MID3.Name, item.Player_MID3.Player_id)
+        set_player_mid1(
+          item.Player_MID1.Name,
+          item.Player_MID1.Player_id,
+          parseInt(
+            Points_MID1().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_mid4(item.Player_MID4.Name, item.Player_MID4.Player_id)
+        set_player_mid2(
+          item.Player_MID2.Name,
+          item.Player_MID2.Player_id,
+          parseInt(
+            Points_MID2().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_fwd1(item.Player_FWD1.Name, item.Player_FWD1.Player_id)
+        set_player_mid3(
+          item.Player_MID3.Name,
+          item.Player_MID3.Player_id,
+          parseInt(
+            Points_MID3().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_fwd2(item.Player_FWD2.Name, item.Player_FWD2.Player_id)
+        set_player_mid4(
+          item.Player_MID4.Name,
+          item.Player_MID4.Player_id,
+          parseInt(
+            Points_MID4().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_fwd3(item.Player_FWD3.Name, item.Player_FWD3.Player_id)
+        set_player_fwd1(
+          item.Player_FWD1.Name,
+          item.Player_FWD1.Player_id,
+          parseInt(
+            Points_FWD1().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
       dispatch(
-        set_player_fwd4(item.Player_FWD4.Name, item.Player_FWD4.Player_id)
+        set_player_fwd2(
+          item.Player_FWD2.Name,
+          item.Player_FWD2.Player_id,
+          parseInt(
+            Points_FWD2().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
       );
+      dispatch(
+        set_player_fwd3(
+          item.Player_FWD3.Name,
+          item.Player_FWD3.Player_id,
+          parseInt(
+            Points_FWD3().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
+      );
+      dispatch(
+        set_player_fwd4(
+          item.Player_FWD4.Name,
+          item.Player_FWD4.Player_id,
+          parseInt(
+            Points_FWD4().map((item) => {
+              return item.Player_Value;
+            })
+          )
+        )
+      );
+      setValueDispatch(false);
     });
   };
   const getPlayers = async () => {
@@ -215,14 +326,15 @@ const Home = ({ navigation, route }) => {
     setCurrentPlayerValue(
       players2.filter((item) => arr.includes(item.Player_id))
     );
-    dispatchingFunction();
     setIsLoading(false);
+    dispatchingFunction();
 
     //setAllPlayerIDs(arr);
   };
   useEffect(() => {
     getPlayers();
-  }, [isLoading]);
+  }, [isLoading, valueDispatch]);
+  //console.log(currentPlayerValue);
   const playerIcon = require("../../assets/football-player.png");
   // const getGK1_id = () => {
   //   const temp = allPlayers.map((item) => {
@@ -230,24 +342,15 @@ const Home = ({ navigation, route }) => {
   //   });
   //   return temp;
   // };
+
   let Points_GK1 = () => {
-    // let arr = [];
     const temp = allPlayers.map((item) => {
       return item.Player_GK1.Player_id;
     });
-    //currentPlayerValue.length === 0 ? getPlayers() : "";
-    // if (currentPlayerValue.length === 0) {
-    //   getPlayers();
     let arr = currentPlayerValue.filter(function (el) {
       return el.Player_id == temp;
     });
     return arr;
-    // } else {
-    //   let arr = currentPlayerValue.filter(function (el) {
-    //     return el.Player_id == temp;
-    //   });
-    //   return arr;
-    // }
   };
   let Points_GK2 = () => {
     // let arr = [];
@@ -396,21 +499,17 @@ const Home = ({ navigation, route }) => {
         {isLoading && <Text>Loading</Text>}
         {!isLoading && (
           <View style={{ flex: 1 }}>
-            <Text>
-              {" "}
-              Team Name:{" "}
-              {allPlayers.map((item) => {
-                return item.Team_name;
-              })}
-            </Text>
-            <Text>
-              {" "}
-              Team Value:{" "}
+            <Text style={HomeStyles.teamValue}>
               {allPlayers.map((item) => {
                 return item.Team_Value;
               })}
             </Text>
-            <Text>{tester}</Text>
+            <Text style={HomeStyles.homeWelcome}>
+              {allPlayers.map((item) => {
+                return item.Team_name;
+              })}
+            </Text>
+
             <ImageBackground
               source={image}
               resizeMode="cover"

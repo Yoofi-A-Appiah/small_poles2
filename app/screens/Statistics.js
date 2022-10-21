@@ -391,51 +391,39 @@ const Statistics = ({ navigation, route }) => {
         {isLoading && <Text>Loading</Text>}
         {!isLoading && (
           <View style={{ flex: 1 }}>
-            <Text>
-              {" "}
-              Team Name:{" "}
-              {allPlayers.map((item) => {
-                return item.Team_name;
-              })}
-            </Text>
-            <Text>
-              {" "}
-              Team Value:{" "}
-              {allPlayers.map((item) => {
-                return item.Team_Value;
-              })}
-            </Text>
             {useSelector((state) => state.transfersReducer.budget) === false
               ? ""
               : overBudgetAlert()}
 
-            <Text>{val_val}</Text>
-            <Text>{amountLeft()}</Text>
+            <Text style={HomeStyles.teamValue}>Initial Balance: {val_val}</Text>
+            <Text style={HomeStyles.teamValue}>
+              Balance Left: {amountLeft()}
+            </Text>
 
             <ImageBackground
               source={image}
               resizeMode="cover"
               style={{ flex: 1 }}
             >
+              <MaterialIcons
+                name="check-circle"
+                size={50}
+                color={"black"}
+                style={HomeStyles.confirmButton}
+                onPress={() => {
+                  stateComparison();
+                }}
+              ></MaterialIcons>
+              <MaterialIcons
+                name="cancel"
+                size={50}
+                color={"black"}
+                style={HomeStyles.declineButton}
+                onPress={() => {
+                  dispatch(clear_transfer_data());
+                }}
+              ></MaterialIcons>
               <SafeAreaView style={HomeStyles.mainContainer}>
-                <MaterialIcons
-                  name="check-circle"
-                  size={40}
-                  color={"black"}
-                  //style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    stateComparison();
-                  }}
-                ></MaterialIcons>
-                <MaterialIcons
-                  name="cancel"
-                  size={40}
-                  color={"black"}
-                  //style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(clear_transfer_data());
-                  }}
-                ></MaterialIcons>
                 {/* <View style={HomeStyles.mainContainer}> */}
                 <View style={HomeStyles.subContainer1}>
                   {New_GK1_name === "N@me" ? (
