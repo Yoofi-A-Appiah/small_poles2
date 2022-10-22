@@ -55,10 +55,14 @@ const Home = ({ navigation, route }) => {
   const [currentPlayerValue, setCurrentPlayerValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [valueDispatch, setValueDispatch] = useState(true);
+  const [transferOccur, setTransferOccur] = useState(false);
   const dispatch = useDispatch();
   let getUserid = useSelector((state) => state.signupReducer.user_id);
   let tester = useSelector(
     (state) => state.userReducer.player_gk1.player_value
+  );
+  let transfer_occur = useSelector(
+    (state) => state.transfersReducer.transfer_made
   );
   const q = query(
     collection(db, "Users"),
@@ -308,6 +312,7 @@ const Home = ({ navigation, route }) => {
         item.Player_FWD3.Player_id,
         item.Player_FWD4.Player_id
       );
+      setTransferOccur(transfer_occur);
     });
     //fetchPoints();
     const querySnapshot2 = await getDocs(q2);
@@ -333,7 +338,7 @@ const Home = ({ navigation, route }) => {
   };
   useEffect(() => {
     getPlayers();
-  }, [isLoading, valueDispatch]);
+  }, [isLoading, valueDispatch, transferOccur]);
   //console.log(currentPlayerValue);
   const playerIcon = require("../../assets/football-player.png");
   // const getGK1_id = () => {
@@ -497,7 +502,7 @@ const Home = ({ navigation, route }) => {
     return (
       <View style={{ flex: 1 }}>
         {isLoading && <Text>Loading</Text>}
-        {!isLoading && (
+        {!isLoading && !valueDispatch && (
           <View style={{ flex: 1 }}>
             <Text style={HomeStyles.teamValue}>
               {allPlayers.map((item) => {

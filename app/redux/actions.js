@@ -26,6 +26,7 @@ export const SET_PLAYER_FWD2 = "SET_PLAYER_FWD2";
 export const SET_PLAYER_FWD3 = "SET_PLAYER_FWD3";
 export const SET_PLAYER_FWD4 = "SET_PLAYER_FWD4";
 // Setting transfer store values to be compared witht the initial state
+export const TRANSFER_MADE = "TRANSFER_MADE";
 export const TRANSFER_PLAYER_GK1 = "TRANSFER_PLAYER_GK1";
 export const TRANSFER_PLAYER_GK2 = "TRANSFER_PLAYER_GK2";
 export const TRANSFER_PLAYER_DEF1 = "TRANSFER_PLAYER_DEF1";
@@ -50,6 +51,12 @@ export const transfer_budget = (budget) => (dispatch) => {
   dispatch({
     type: TRANSFER_BUDGET,
     budget: budget,
+  });
+};
+export const transfer_made = (transfer_made) => (dispatch) => {
+  dispatch({
+    type: TRANSFER_MADE,
+    transfer_made: transfer_made,
   });
 };
 export const transfer_player_GK1 =
