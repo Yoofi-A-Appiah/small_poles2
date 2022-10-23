@@ -50,6 +50,7 @@ import {
   transfer_player_FWD2,
   transfer_player_FWD3,
   transfer_player_FWD4,
+  transfer_balance,
   set_team_value,
   set_transfer,
   clear_transfer_data,
@@ -93,13 +94,13 @@ const Statistics = ({ navigation, route }) => {
     );
   };
 
-  //MOdified fields array
-  const modFields = () => {};
-
   useEffect(() => {
     getPlayersValues();
     hasTransferBeenMade();
-  }, [transferMade]);
+  }, [
+    transferMade,
+    useSelector((state) => state.transfersReducer.transfer_made),
+  ]);
   const playerIcon = require("../../assets/football-player.png");
   // const getGK1_id = () => {
   //   const temp = allPlayers.map((item) => {
@@ -322,8 +323,6 @@ const Statistics = ({ navigation, route }) => {
   ];
 
   let transferState = useSelector((state) => state.transfersReducer);
-  //let initialState = useSelector((state) => state.userReducer);
-  //console.log(initialState);
 
   let val_val = useSelector((state) => state.userReducer.balance);
   const amountLeft = () => {
@@ -447,8 +446,21 @@ const Statistics = ({ navigation, route }) => {
       (state) => state.transfersReducer.player_fwd4.player_name
     ),
   };
+  console.log("Value" + useSelector((state) => state.userReducer.team_value));
+  console.log(
+    "Balance" + useSelector((state) => state.transfersReducer.balance)
+  );
+  console.log(
+    "User balance " + useSelector((state) => state.userReducer.balance)
+  );
+  console.log("budget" + useSelector((state) => state.userReducer.budget));
+  let check_budget = useSelector((state) => state.transfersReducer.budget);
+  let new_balance = useSelector((state) => state.transfersReducer.balance);
+  let old_balance = useSelector((state) => state.userReducer.balance);
+  let old_team_value = useSelector((state) => state.userReducer.team_value);
+
   const stateComparison = () => {
-    if (isOverBudget === true) {
+    if (check_budget === false) {
       const initialState = {
         player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
         player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
@@ -542,6 +554,13 @@ const Statistics = ({ navigation, route }) => {
       ) {
         upload_array["Player_FWD4"] = FWD4_state;
       }
+
+      let final_balance = old_balance - new_balance;
+      let new_team_value = old_team_value + (old_balance - new_balance);
+      console.log(final_balance);
+      console.log(new_team_value);
+      upload_array["Balance_left"] = final_balance;
+      upload_array["Team_Value"] = new_team_value;
       setPushPlayers(upload_array);
       console.log(pushPlayers);
       //console.log(upload_array);
@@ -657,6 +676,10 @@ const Statistics = ({ navigation, route }) => {
       "Make more transfers or check out other features ",
       [{ text: "Ok" }]
     );
+  console.log(
+    "checking balance ... " +
+      useSelector((state) => state.transfersReducer.balance)
+  );
 
   let showContent = () => {
     return (
@@ -678,38 +701,40 @@ const Statistics = ({ navigation, route }) => {
               resizeMode="cover"
               style={{ flex: 1 }}
             >
-              {/* {transferMade === true ? ( */}
-              <Pressable
-                onPress={() => {
-                  stateComparison();
-                }}
-              >
-                <MaterialIcons
-                  name="check-circle"
-                  size={50}
-                  color={"black"}
-                  style={HomeStyles.confirmButton}
-                ></MaterialIcons>
-              </Pressable>
-              {/* ) : (
-                 ""
-               ) */}
-              {/* {transferMade === true ? ( */}
-              <Pressable
-                onPress={() => {
-                  dispatch(clear_transfer_data());
-                }}
-              >
-                <MaterialIcons
-                  name="cancel"
-                  size={50}
-                  color={"black"}
-                  style={HomeStyles.declineButton}
-                ></MaterialIcons>
-              </Pressable>
-              {/* ) : (
-               ""
-             ) */}
+              {transferMade === true ? (
+                <Pressable
+                  onPress={() => {
+                    dispatch(transfer_balance(amountLeft())).then(
+                      stateComparison()
+                    );
+                  }}
+                >
+                  <MaterialIcons
+                    name="check-circle"
+                    size={50}
+                    color={"black"}
+                    style={HomeStyles.confirmButton}
+                  ></MaterialIcons>
+                </Pressable>
+              ) : (
+                ""
+              )}
+              {transferMade === true ? (
+                <Pressable
+                  onPress={() => {
+                    dispatch(clear_transfer_data());
+                  }}
+                >
+                  <MaterialIcons
+                    name="cancel"
+                    size={50}
+                    color={"black"}
+                    style={HomeStyles.declineButton}
+                  ></MaterialIcons>
+                </Pressable>
+              ) : (
+                ""
+              )}
               <SafeAreaView style={HomeStyles.mainContainer}>
                 {/* <View style={HomeStyles.mainContainer}> */}
                 <View style={HomeStyles.subContainer1}>
@@ -718,6 +743,8 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "GK",
@@ -762,6 +789,8 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "GK",
@@ -808,6 +837,8 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
@@ -849,6 +880,8 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
@@ -892,6 +925,8 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
@@ -933,6 +968,8 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
@@ -976,6 +1013,8 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
@@ -1017,10 +1056,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF3,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1031,7 +1073,7 @@ const Statistics = ({ navigation, route }) => {
                       <Text style={{ fontSize: 18 }}>
                         {useSelector(
                           (state) =>
-                            state.transfersReducer.player_def2.player_value
+                            state.transfersReducer.player_def3.player_value
                         )}
                       </Text>
                       <View
@@ -1059,10 +1101,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF4,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1099,10 +1144,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "DEF",
                           reduxParams: transfer_player_DEF4,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1143,10 +1191,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID1,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1183,10 +1234,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID1,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1225,10 +1279,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID2,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1265,10 +1322,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID2,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1307,10 +1367,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID3,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1347,10 +1410,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "MID",
                           reduxParams: transfer_player_MID3,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1391,10 +1457,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD1,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1431,10 +1500,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD1,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1473,10 +1545,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD2,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1513,10 +1588,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD2,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1555,10 +1633,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD3,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1595,10 +1676,13 @@ const Statistics = ({ navigation, route }) => {
                       style={HomeStyles.player_gk1}
                       onPress={() => {
                         dispatch(transfer_team_value(calculateTeamValue()));
+                        dispatch(transfer_balance(amountLeft()));
+
                         isOverBudget();
                         navigation.navigate("GameWeek Transfers", {
                           paramKey: "FWD",
                           reduxParams: transfer_player_FWD3,
+                          curr_bal: amountLeft(),
                         });
                       }}
                     >
@@ -1648,10 +1732,14 @@ const Statistics = ({ navigation, route }) => {
                     style={HomeStyles.player_gk1}
                     onPress={() => {
                       dispatch(transfer_team_value(calculateTeamValue()));
+                      dispatch(transfer_balance(amountLeft()));
+
                       isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "GK",
                         reduxParams: transfer_player_GK2,
+
+                        curr_bal: amountLeft(),
                       });
                     }}
                   >
@@ -1688,10 +1776,14 @@ const Statistics = ({ navigation, route }) => {
                     style={HomeStyles.player_gk1}
                     onPress={() => {
                       dispatch(transfer_team_value(calculateTeamValue()));
+                      dispatch(transfer_balance(amountLeft()));
+
                       isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "GK",
                         reduxParams: transfer_player_GK2,
+
+                        curr_bal: amountLeft(),
                       });
                     }}
                   >
@@ -1730,10 +1822,13 @@ const Statistics = ({ navigation, route }) => {
                     style={HomeStyles.player_gk1}
                     onPress={() => {
                       dispatch(transfer_team_value(calculateTeamValue()));
+                      dispatch(transfer_balance(amountLeft()));
+
                       isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "DEF",
                         reduxParams: transfer_player_DEF5,
+                        curr_bal: amountLeft(),
                       });
                     }}
                   >
@@ -1770,10 +1865,13 @@ const Statistics = ({ navigation, route }) => {
                     style={HomeStyles.player_gk1}
                     onPress={() => {
                       dispatch(transfer_team_value(calculateTeamValue()));
+                      dispatch(transfer_balance(amountLeft()));
+
                       isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "DEF",
                         reduxParams: transfer_player_DEF5,
+                        curr_bal: amountLeft(),
                       });
                     }}
                   >
@@ -1812,10 +1910,13 @@ const Statistics = ({ navigation, route }) => {
                     style={HomeStyles.player_gk1}
                     onPress={() => {
                       dispatch(transfer_team_value(calculateTeamValue()));
+                      dispatch(transfer_balance(amountLeft()));
+
                       isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "MID",
                         reduxParams: transfer_player_MID4,
+                        curr_bal: amountLeft(),
                       });
                     }}
                   >
@@ -1852,10 +1953,13 @@ const Statistics = ({ navigation, route }) => {
                     style={HomeStyles.player_gk1}
                     onPress={() => {
                       dispatch(transfer_team_value(calculateTeamValue()));
+                      dispatch(transfer_balance(amountLeft()));
+
                       isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "MID",
                         reduxParams: transfer_player_MID4,
+                        curr_bal: amountLeft(),
                       });
                     }}
                   >
@@ -1895,10 +1999,13 @@ const Statistics = ({ navigation, route }) => {
                     style={HomeStyles.player_gk1}
                     onPress={() => {
                       dispatch(transfer_team_value(calculateTeamValue()));
+                      dispatch(transfer_balance(amountLeft()));
+
                       isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "FWD",
                         reduxParams: transfer_player_FWD4,
+                        curr_bal: amountLeft(),
                       });
                     }}
                   >
@@ -1935,10 +2042,13 @@ const Statistics = ({ navigation, route }) => {
                     style={HomeStyles.player_gk1}
                     onPress={() => {
                       dispatch(transfer_team_value(calculateTeamValue()));
+                      dispatch(transfer_balance(amountLeft()));
+
                       isOverBudget();
                       navigation.navigate("GameWeek Transfers", {
                         paramKey: "FWD",
                         reduxParams: transfer_player_FWD4,
+                        curr_bal: amountLeft(),
                       });
                     }}
                   >

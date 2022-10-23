@@ -336,7 +336,7 @@ export function transfersReducer(state = transferState, action) {
       return newState;
     }
     case CLEAR_TRANSFER_DATA:
-      return initialState;
+      return transferState;
     default:
       return state;
   }

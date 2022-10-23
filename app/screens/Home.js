@@ -74,6 +74,7 @@ const Home = ({ navigation, route }) => {
   const dispatchingFunction = () => {
     allPlayers.map((item) => {
       dispatch(balance(item.Balance_left));
+      dispatch(set_team_value(item.Team_Value));
       dispatch(
         set_player_gk1(
           item.Player_GK1.Name,
