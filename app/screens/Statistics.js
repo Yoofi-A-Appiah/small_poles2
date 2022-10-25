@@ -74,6 +74,9 @@ const Statistics = ({ navigation, route }) => {
   const dispatch = useDispatch();
   //const [check] = stateComparison();
   let getUserid = useSelector((state) => state.signupReducer.user_id);
+  let new_balance = useSelector((state) => state.transfersReducer.balance);
+  let old_balance = useSelector((state) => state.userReducer.balance);
+  let old_team_value = useSelector((state) => state.userReducer.team_value);
   const q2 = query(collection(db, "Players"));
   const getPlayersValues = async () => {
     //showLoader();
@@ -448,19 +451,18 @@ const Statistics = ({ navigation, route }) => {
   };
   console.log("Value" + useSelector((state) => state.userReducer.team_value));
   console.log(
-    "Balance" + useSelector((state) => state.transfersReducer.balance)
+    "Transfer Balance " + useSelector((state) => state.transfersReducer.balance)
   );
   console.log(
     "User balance " + useSelector((state) => state.userReducer.balance)
   );
-  console.log("budget" + useSelector((state) => state.userReducer.budget));
+  console.log(
+    "budget value" + useSelector((state) => state.userReducer.budget)
+  );
   let check_budget = useSelector((state) => state.transfersReducer.budget);
-  let new_balance = useSelector((state) => state.transfersReducer.balance);
-  let old_balance = useSelector((state) => state.userReducer.balance);
-  let old_team_value = useSelector((state) => state.userReducer.team_value);
 
   const stateComparison = () => {
-    if (check_budget === false) {
+    if (amountLeft() >= 0) {
       const initialState = {
         player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
         player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
@@ -554,16 +556,14 @@ const Statistics = ({ navigation, route }) => {
       ) {
         upload_array["Player_FWD4"] = FWD4_state;
       }
-
       let final_balance = old_balance - new_balance;
-      let new_team_value = old_team_value + (old_balance - new_balance);
-      console.log(final_balance);
-      console.log(new_team_value);
+      let new_team_value = old_team_value + final_balance;
+      console.log("  Inside function - final balance " + final_balance);
+      console.log("Inside function - New team balance " + new_team_value);
       upload_array["Balance_left"] = final_balance;
       upload_array["Team_Value"] = new_team_value;
       setPushPlayers(upload_array);
       console.log(pushPlayers);
-      //console.log(upload_array);
 
       const docRef = doc(db, "Users", getUserid);
       setDoc(docRef, upload_array, { merge: true })
@@ -573,8 +573,11 @@ const Statistics = ({ navigation, route }) => {
           console.log(
             "Document Field" + getUserid + " has been updated successfully"
           );
-
-          //dispatch(transfer_made(true));
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Home" }],
+          });
+          dispatch(clear_transfer_data());
         })
         .catch((error) => {
           console.log(error);
@@ -676,10 +679,23 @@ const Statistics = ({ navigation, route }) => {
       "Make more transfers or check out other features ",
       [{ text: "Ok" }]
     );
-  console.log(
-    "checking balance ... " +
-      useSelector((state) => state.transfersReducer.balance)
-  );
+  console.log("------------------");
+
+  const [temp, setTemp] = useState(false);
+  const confirmTransfers = () => {
+    setTemp(true);
+    Alert.alert(
+      "Transfers Complete",
+      "Are you sure you want to save these transfers",
+      [
+        { text: "Cancel" },
+        {
+          text: "Save",
+          onPress: () => stateComparison(),
+        },
+      ]
+    );
+  };
 
   let showContent = () => {
     return (
@@ -695,6 +711,9 @@ const Statistics = ({ navigation, route }) => {
             <Text style={HomeStyles.teamValue}>
               Balance Left: {amountLeft()}
             </Text>
+            <Text>
+              new b: {useSelector((state) => state.transfersReducer.balance)}
+            </Text>
 
             <ImageBackground
               source={image}
@@ -704,9 +723,8 @@ const Statistics = ({ navigation, route }) => {
               {transferMade === true ? (
                 <Pressable
                   onPress={() => {
-                    dispatch(transfer_balance(amountLeft())).then(
-                      stateComparison()
-                    );
+                    dispatch(transfer_balance(amountLeft()));
+                    confirmTransfers();
                   }}
                 >
                   <MaterialIcons

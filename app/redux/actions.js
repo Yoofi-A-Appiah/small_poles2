@@ -201,14 +201,16 @@ export const transfer_team_value = (total_value) => (dispatch) => {
     total_value: total_value,
   });
 };
-export const transfer_balance = (balance) => (dispatch) =>
-  new Promise((resolve, reject) => {
+export const transfer_balance =
+  (balance) => (dispatch) => // new Promise((resolve, reject) =>
+  {
     dispatch({
       type: TRANSFER_BALANCE,
       balance: balance,
     });
-    resolve();
-  });
+    //resolve();
+  };
+//);
 export const clear_transfer_data = () => ({
   type: CLEAR_TRANSFER_DATA,
 });

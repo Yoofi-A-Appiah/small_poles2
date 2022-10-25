@@ -308,6 +308,8 @@ const FirstTimeUser = ({ route }) => {
         Favortie_team: favorite_team,
         Balance_left: amountLeft(),
         Team_Value: 1000 - amountLeft(),
+        Season_Points: 0,
+        Game_Week_Points: 0,
         Player_GK1: {
           Name: player_gk1,
           Player_id: player_gk1_id,
@@ -444,7 +446,7 @@ const FirstTimeUser = ({ route }) => {
       {useSelector((state) => state.userReducer.budget) === false
         ? ""
         : overBudgetAlert()}
-      <Text>Balance: {amountLeft()}</Text>
+      <Text style={FirstTimeUserStyle.balance}>Balance: {amountLeft()}</Text>
       {/* <Text>Balance: {useSelector((state) => state.userReducer.balance)}</Text> */}
 
       {/* <Text>Value: {useSelector((state) => state.userReducer.team_value)}</Text> */}

@@ -396,7 +396,7 @@ const Transfers = ({ route }) => {
             onPress={() => {
               //isOverBudget();
               navigation.navigate("Statistics");
-              //dispatch(transfer_balance(amountLeft()));
+              dispatch(transfer_balance(update_balance - item.Player_Value));
               dispatch(
                 route.params.reduxParams(
                   item.Player_Name,

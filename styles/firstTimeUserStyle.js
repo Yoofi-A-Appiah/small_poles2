@@ -191,5 +191,18 @@ const FirstTimeUserStyle = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
+  balance: {
+    top: 50,
+    position: "absolute",
+    color: "#ffffff",
+    alignSelf: "center",
+    backgroundColor: "#000000",
+    padding: 5,
+    fontSize: 20,
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: "#F6F930",
+    overflow: "hidden",
+  },
 });
 export default FirstTimeUserStyle;
