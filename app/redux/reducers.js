@@ -45,6 +45,8 @@ import {
   TRANSFER_BALANCE,
   TRANSFER_BUDGET,
   TRANSFER_MADE,
+  SEASON_PONTS,
+  GAME_WEEK_POINTS,
 } from "./actions";
 
 const initialState = {
@@ -55,6 +57,8 @@ const initialState = {
   balance: 1000,
   user_id: "",
   all_player_value: 0,
+  season_points: 0,
+  game_week_points: 0,
   player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
@@ -348,6 +352,10 @@ export function userReducer(state = initialState, action) {
       return { ...state, name: action.payload };
     case SET_FAV_TEAM:
       return { ...state, fav: action.payload };
+    case SEASON_PONTS:
+      return { ...state, season_points: action.season_points };
+    case GAME_WEEK_POINTS:
+      return { ...state, game_week_points: action.game_week_points };
     case CLEAR_DATA:
       return initialState;
     case GET_ALL_PLAYERS:

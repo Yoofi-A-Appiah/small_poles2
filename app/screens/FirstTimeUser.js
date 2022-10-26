@@ -10,6 +10,7 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   ImageBackground,
+  SafeAreaView,
   Alert,
 } from "react-native";
 import TextTicker from "react-native-text-ticker";
@@ -329,8 +330,33 @@ const FirstTimeUser = ({ route }) => {
         Player_FWD3: { Name: player_fwd3, Player_id: player_fwd3_id },
         Player_FWD4: { Name: player_fwd4, Player_id: player_fwd4_id },
       })
+      .then(addToGlobalLeague())
+      .catch((e) => {
+        console.log(e);
+        undoAmountLeft();
+      });
+  };
+
+  const addToGlobalLeague = () => {
+    //dispatch(balance(amountLeft()));
+    //let u_id = upload_id;
+    let uploading_array = {};
+    uploading_array[upload_id] = {
+      Team_name: team_name,
+      Season_Points: 0,
+      Game_Week_Points: 0,
+      Rankings: 0,
+    };
+
+    showLoader();
+    firebase
+      .firestore()
+      .collection("Leagues")
+      .doc("OVERALL_LEAGUE")
+      .set({ uploading_array })
       .then(
         hideLoader(),
+        dispatch(clear_data()),
         navigation.reset({
           index: 0,
           routes: [{ name: "Home" }],
@@ -435,10 +461,6 @@ const FirstTimeUser = ({ route }) => {
           </View>
         </View>
       </Modal>
-      <Text style={{ fontSize: 16, marginTop: 2, marginBottom: 2 }}>
-        You selected {useSelector((state) => state.userReducer.fav)} as your
-        favorite team
-      </Text>
       {/* <Text style={{ fontSize: 16, marginTop: 2, marginBottom: 2 }}>
         Current team value is{" "}
         {useSelector((state) => state.userReducer.team_value)}
@@ -446,11 +468,24 @@ const FirstTimeUser = ({ route }) => {
       {useSelector((state) => state.userReducer.budget) === false
         ? ""
         : overBudgetAlert()}
-      <Text style={FirstTimeUserStyle.balance}>Balance: {amountLeft()}</Text>
+      <View style={FirstTimeUserStyle.balance}>
+        <Text>{amountLeft()}</Text>
+        <Text>Budget balance</Text>
+      </View>
+      <View style={FirstTimeUserStyle.favTeam}>
+        <Text style={FirstTimeUserStyle.favTeam1}>
+          {useSelector((state) => state.userReducer.fav)}
+        </Text>
+        <Text style={FirstTimeUserStyle.favTeam2}> Favorite Team</Text>
+      </View>
       {/* <Text>Balance: {useSelector((state) => state.userReducer.balance)}</Text> */}
 
       {/* <Text>Value: {useSelector((state) => state.userReducer.team_value)}</Text> */}
-      <ImageBackground source={image} resizeMode="cover">
+      <ImageBackground
+        source={image}
+        resizeMode="cover"
+        style={FirstTimeUserStyle.backImg}
+      >
         <View style={FirstTimeUserStyle.mainContainer}>
           <View style={FirstTimeUserStyle.subContainer1}>
             {player_gk1 === "N@me" ? (
@@ -1199,7 +1234,6 @@ const FirstTimeUser = ({ route }) => {
       </ImageBackground>
       <View
         style={{
-          flex: 1,
           flexDirection: "row",
           width: 300,
           justifyContent: "space-evenly",

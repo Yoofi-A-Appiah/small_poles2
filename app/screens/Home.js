@@ -45,6 +45,8 @@ import {
   set_player_fwd4,
   set_team_value,
   balance,
+  set_game_week_points,
+  set_season_points,
 } from "../redux/actions";
 const auth = getAuth(initializedBase);
 
@@ -75,6 +77,8 @@ const Home = ({ navigation, route }) => {
     allPlayers.map((item) => {
       dispatch(balance(item.Balance_left));
       dispatch(set_team_value(item.Team_Value));
+      dispatch(set_game_week_points(item.Game_Week_Points));
+      dispatch(set_season_points(item.Season_Points));
       dispatch(
         set_player_gk1(
           item.Player_GK1.Name,
@@ -269,6 +273,8 @@ const Home = ({ navigation, route }) => {
         Team_name,
         Favorite_team,
         Balance_left,
+        Season_Points,
+        Game_Week_Points,
       } = doc.data();
       players.push({
         id: doc.id,
@@ -291,6 +297,8 @@ const Home = ({ navigation, route }) => {
         Team_name,
         Favorite_team,
         Balance_left,
+        Season_Points,
+        Game_Week_Points,
       });
     });
     setAllPlayers(players);
@@ -513,6 +521,18 @@ const Home = ({ navigation, route }) => {
             <Text style={HomeStyles.homeWelcome}>
               {allPlayers.map((item) => {
                 return item.Team_name;
+              })}
+            </Text>
+            <Text style={HomeStyles.teamValue}>
+              Season_Points:{" "}
+              {allPlayers.map((item) => {
+                return item.Season_Points;
+              })}
+            </Text>
+            <Text style={HomeStyles.teamValue}>
+              Game Week Points:{" "}
+              {allPlayers.map((item) => {
+                return item.Game_Week_Points;
               })}
             </Text>
 

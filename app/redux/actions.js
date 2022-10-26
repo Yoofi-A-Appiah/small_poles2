@@ -46,11 +46,25 @@ export const TRANSFER_TEAM_VALUE = "TRANSFER_TEAM_VALUE";
 export const CLEAR_TRANSFER_DATA = "CLEAR_TRANSFER_DATA";
 export const TRANSFER_BALANCE = "TRANSFER_BALANCE";
 export const TRANSFER_BUDGET = "TRANSFER_BUDGET";
+export const SEASON_PONTS = "SEASON_POINTS";
+export const GAME_WEEK_POINTS = "GAME_WEEK_POINTS";
 //start transfer actions
 export const transfer_budget = (budget) => (dispatch) => {
   dispatch({
     type: TRANSFER_BUDGET,
     budget: budget,
+  });
+};
+export const set_season_points = (season_points) => (dispatch) => {
+  dispatch({
+    type: SEASON_PONTS,
+    season_points: season_points,
+  });
+};
+export const set_game_week_points = (game_week_points) => (dispatch) => {
+  dispatch({
+    type: GAME_WEEK_POINTS,
+    game_week_points: game_week_points,
   });
 };
 export const transfer_made = (transfer_made) => (dispatch) => {
@@ -202,8 +216,10 @@ export const transfer_team_value = (total_value) => (dispatch) => {
   });
 };
 export const transfer_balance =
-  (balance) => (dispatch) => // new Promise((resolve, reject) =>
-  {
+  (balance) =>
+  (
+    dispatch // new Promise((resolve, reject) =>
+  ) => {
     dispatch({
       type: TRANSFER_BALANCE,
       balance: balance,

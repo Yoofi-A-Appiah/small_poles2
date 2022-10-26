@@ -4,10 +4,10 @@ const { width, height } = Dimensions.get("window");
 const FirstTimeUserStyle = StyleSheet.create({
   container: {
     flex: 0.7,
-
+    top: 40,
     alignItems: "center",
-    top: 50,
   },
+
   picker: {
     margin: 20,
     backgroundColor: "white",
@@ -192,17 +192,50 @@ const FirstTimeUserStyle = StyleSheet.create({
     marginRight: 10,
   },
   balance: {
-    top: 50,
+    //flexDirection: "column",
+    //justifyContent: "center",
+    //alignContent: "center",
     position: "absolute",
-    color: "#ffffff",
-    alignSelf: "center",
-    backgroundColor: "#000000",
+    right: 0,
+    margin: 3,
+    top: 125,
+    color: "#F6F930",
+    alignItems: "center",
+    backgroundColor: "#F6F930",
     padding: 5,
     fontSize: 20,
     borderWidth: 2,
     borderRadius: 15,
     borderColor: "#F6F930",
     overflow: "hidden",
+    zIndex: 1,
+    elevation: 1,
+    fontSize: 20,
+  },
+  balance1: { color: "#F6F930", fontSize: 20 },
+  balance2: { color: "#F6F930", fontSize: 20 },
+  favTeam: {
+    top: 0,
+    width: width,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignContent: "center",
+    position: "relative",
+    color: "#ffffff",
+    alignItems: "center",
+
+    padding: 5,
+    fontSize: 20,
+
+    overflow: "hidden",
+    marginTop: 2,
+    marginBottom: 2,
+  },
+  favTeam1: { fontSize: 18, color: "#000000" },
+  favTeam2: { color: "#000000" },
+  backImg: {
+    borderWidth: 2,
+    borderColor: "black",
   },
 });
 export default FirstTimeUserStyle;

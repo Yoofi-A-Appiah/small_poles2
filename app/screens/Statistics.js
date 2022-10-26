@@ -711,9 +711,6 @@ const Statistics = ({ navigation, route }) => {
             <Text style={HomeStyles.teamValue}>
               Balance Left: {amountLeft()}
             </Text>
-            <Text>
-              new b: {useSelector((state) => state.transfersReducer.balance)}
-            </Text>
 
             <ImageBackground
               source={image}
