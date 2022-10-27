@@ -336,24 +336,23 @@ const FirstTimeUser = ({ route }) => {
         undoAmountLeft();
       });
   };
-
+  //const [pushToGlobal, setPushToGlobal] = useState([]);
   const addToGlobalLeague = () => {
     //dispatch(balance(amountLeft()));
     //let u_id = upload_id;
-    let uploading_array = {};
-    uploading_array[upload_id] = {
-      Team_name: team_name,
-      Season_Points: 0,
-      Game_Week_Points: 0,
-      Rankings: 0,
-    };
-
     showLoader();
     firebase
       .firestore()
       .collection("Leagues")
-      .doc("OVERALL_LEAGUE")
-      .set({ uploading_array })
+      .doc("PUBLIC_LEAGUES")
+      .collection("OVERALL_LEAGUE")
+      .doc(upload_id)
+      .set({
+        Team_name: team_name,
+        Season_Points: 0,
+        Game_Week_Points: 0,
+        Rankings: 0,
+      })
       .then(
         hideLoader(),
         dispatch(clear_data()),
@@ -516,7 +515,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{gk1_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -565,7 +564,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{gk2_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -616,7 +615,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{def1_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -665,7 +664,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{def2_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -714,7 +713,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{def3_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -763,7 +762,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{def4_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -812,7 +811,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{def5_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -863,7 +862,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{mid1_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -912,7 +911,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{mid2_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -961,7 +960,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{mid3_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1010,7 +1009,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{mid4_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1061,7 +1060,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{fwd1_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1110,7 +1109,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{fwd2_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1159,7 +1158,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{fwd3_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1208,7 +1207,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-
+                <Text>{fwd4_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",

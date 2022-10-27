@@ -381,9 +381,9 @@ const Transfers = ({ route }) => {
       </Text>
       <Text>Available balance is {route.params.curr_bal} </Text>
 
-      <Pressable onPress={() => fetching()}>
+      {/* <Pressable onPress={() => fetching()}>
         <Text>PRESS</Text>
-      </Pressable>
+      </Pressable> */}
       <FlatList
         style={{ flex: 1, height: 100 }}
         data={test}

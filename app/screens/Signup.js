@@ -37,7 +37,7 @@ import {
 // import { mainAuth } from "../../initFirebase";
 import { initializedBase } from "../../initFirebase";
 import { firebase } from "../../initFirebase";
-import { set_user_id } from "../redux/actions";
+import { clear_data, set_user_id } from "../redux/actions";
 import { useDispatch } from "react-redux";
 const auth = getAuth(initializedBase);
 onAuthStateChanged(auth, (user) => {
@@ -92,6 +92,7 @@ const Login_Signup = ({ navigation }) => {
           .then((userCredential) => {
             // Signed in
             dispatch(set_user_id(userCredential.user.uid));
+            dispatch(clear_data());
             sendEmailVerification(auth.currentUser);
             navigation.navigate("FirstTimeUser", {
               user: userCredential.user,
