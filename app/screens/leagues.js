@@ -26,33 +26,91 @@ import {
 import { db } from "../../initFirebase";
 import { useSelector, useDispatch } from "react-redux";
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
+import _ from "lodash";
 
 const auth = getAuth(initializedBase);
 const Leagues = () => {
   const [globalLeague, setGlobalLeague] = useState([]);
+  const [leagueNames, setLeagueNames] = useState([]);
 
   let getUserid = useSelector((state) => state.signupReducer.user_id);
 
-  const q1 = query(collectionGroup(db, "OVERALL_LEAGUE"));
+  const q1 = query(collection(db, "Leagues"));
+  const q2 = query(collection(db, "Names_of_leagues"));
+  const [ldata, setLdata] = useState([]);
 
+  const getLeagueData = async () => {
+    let all_data = [];
+    leagueNames.forEach(async (l_name) => {
+      const querySnapshot = await getDocs(
+        query(collectionGroup(db, l_name.League_Name))
+      );
+      querySnapshot.forEach((doc) => {
+        const { Team_name, Season_Points } = doc.data();
+        all_data.push({
+          id: doc.id,
+          Team_name,
+          Season_Points,
+        });
+      });
+    });
+    setLdata(all_data);
+    console.log(ldata);
+  };
+  //const q3 = query(collectionGroup(db, ""));
   const getGlobalRankings = async () => {
     const querySnapshot = await getDocs(q1);
     // playerData.onSnapshot((querySnapshot) => {
 
     const players = [];
     querySnapshot.forEach((doc) => {
-      const { Game_Week_Points, Rankings, Season_Points, Team_name } =
-        doc.data();
+      const {} = doc.data();
       players.push({
         id: doc.id,
-        Game_Week_Points,
-        Rankings,
-        Season_Points,
-        Team_name,
+        data: doc.data(),
       });
     });
     setGlobalLeague(players);
-    console.log(players);
+    //console.log(players);
+    const querySnapshot2 = await getDocs(q2);
+    const names_of_leagues = [];
+    querySnapshot2.forEach((doc) => {
+      const { League_Name, isPrivate } = doc.data();
+      names_of_leagues.push({
+        id: doc.id,
+        League_Name,
+        isPrivate,
+      });
+    });
+    setLeagueNames(names_of_leagues);
+    //console.log(...leagueNames);
+    let all_data = [];
+    leagueNames.forEach(async (l_name) => {
+      const querySnapshot3 = await getDocs(
+        query(collectionGroup(db, l_name.League_Name))
+      );
+      querySnapshot3.forEach((doc) => {
+        const { Team_name, Season_Points } = doc.data();
+        all_data.push({
+          id: doc.id,
+          Team_name,
+          Season_Points,
+        });
+
+        if (
+          _.isEqual(
+            (all_data.map((all) => {
+              all.id;
+            }),
+            getUserid)
+          ) === false
+        ) {
+          all_data.shift();
+        }
+      });
+    });
+    setLdata(all_data);
+    console.log(...ldata);
   };
   //console.log(globalLeague);
   useEffect(() => {
@@ -84,7 +142,10 @@ const Leagues = () => {
           onRefresh={onRefresh}
           numColumns={1}
           renderItem={({ item }) => (
-            <Pressable style={LeaderBoardStyle.single_item}>
+            <Pressable
+              style={LeaderBoardStyle.single_item}
+              onPress={() => navigation.navigate("League_details")}
+            >
               {/* <View>
               <Text>Team Name: {item.Team_name}</Text>
               <Text>Rank: {item.Rankings}</Text>
@@ -94,20 +155,10 @@ const Leagues = () => {
               </View> */}
               <View style={LeaderBoardStyle.firstSection}>
                 <Text style={LeaderBoardStyle.ovr_points}>
-                  Team Name: {item.Team_name}
-                </Text>
-                <Text style={LeaderBoardStyle.ovr_points}>
-                  Rank: {item.Rankings}{" "}
+                  League Type: {item.id}
                 </Text>
               </View>
-              <View style={LeaderBoardStyle.secondsection}>
-                <Text style={LeaderBoardStyle.ovr_points}>
-                  SP {item.Season_Points}
-                </Text>
-                <Text style={LeaderBoardStyle.gw_points}>
-                  GP {item.Game_Week_Points}
-                </Text>
-              </View>
+              <View style={LeaderBoardStyle.secondsection}></View>
             </Pressable>
           )}
         />

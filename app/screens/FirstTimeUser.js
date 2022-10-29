@@ -21,6 +21,7 @@ import FirstTimeUserStyle from "../../styles/firstTimeUserStyle";
 import { MaterialIcons } from "react-native-vector-icons";
 import { Ionicons } from "react-native-vector-icons";
 import { useSelector, useDispatch } from "react-redux";
+import { collection, setDoc } from "firebase/firestore";
 import {
   set_team_name,
   set_fav_team,
@@ -344,8 +345,8 @@ const FirstTimeUser = ({ route }) => {
     firebase
       .firestore()
       .collection("Leagues")
-      .doc("PUBLIC_LEAGUES")
-      .collection("OVERALL_LEAGUE")
+      .doc("Public Leagues")
+      .collection("Global League")
       .doc(upload_id)
       .set({
         Team_name: team_name,
