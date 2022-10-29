@@ -21,7 +21,7 @@ import FirstTimeUserStyle from "../../styles/firstTimeUserStyle";
 import { MaterialIcons } from "react-native-vector-icons";
 import { Ionicons } from "react-native-vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { collection, setDoc } from "firebase/firestore";
+import { collection, setDoc, arrayUnion, updateDoc } from "firebase/firestore";
 import {
   set_team_name,
   set_fav_team,
@@ -344,15 +344,10 @@ const FirstTimeUser = ({ route }) => {
     showLoader();
     firebase
       .firestore()
-      .collection("Leagues")
-      .doc("Public Leagues")
-      .collection("Global League")
-      .doc(upload_id)
-      .set({
-        Team_name: team_name,
-        Season_Points: 0,
-        Game_Week_Points: 0,
-        Rankings: 0,
+      .collection("Names_of_leagues")
+      .doc("Pk8RNuutxOqi9webyITL") //Global league id
+      .update({
+        members: arrayUnion(upload_id),
       })
       .then(
         hideLoader(),
@@ -367,6 +362,7 @@ const FirstTimeUser = ({ route }) => {
         undoAmountLeft();
       });
   };
+  const addToNamesOfLeagues = () => {};
   // const overBudget = () => {
   //   useSelector((state) => state.userReducer.budget);
   // };

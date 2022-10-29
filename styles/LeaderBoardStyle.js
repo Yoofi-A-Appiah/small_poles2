@@ -18,7 +18,8 @@ const LeaderBoardStyle = StyleSheet.create({
     flex: 1,
     height: 100,
     width: width,
-    padding: 5,
+    padding: 0,
+    backgroundColor: "rgba(52, 52, 52, 0.8)",
   },
   single_item: {
     flexDirection: "row",
@@ -32,8 +33,18 @@ const LeaderBoardStyle = StyleSheet.create({
   },
   title: {
     color: "#ffffff",
+    backgroundColor: "rgba(52, 52, 52, 0.8)",
+    width: width,
+    textAlign: "center",
     fontSize: 20,
     padding: 10,
+  },
+  subtitle: {
+    color: "#000000",
+    width: width,
+    fontSize: 20,
+    padding: 10,
+    backgroundColor: "#ffffff",
   },
   bottom_stack: {
     flex: 1,
@@ -51,11 +62,15 @@ const LeaderBoardStyle = StyleSheet.create({
   firstSection: {
     textAlign: "left",
     left: 0,
-
     width: width / 2,
     padding: 10,
   },
   gw_points: { fontSize: 18 },
   ovr_points: { fontSize: 18 },
+  generalLeague: {
+    textAlign: "center",
+    height: 30,
+    margin: 5,
+  },
 });
 export default LeaderBoardStyle;

@@ -31,88 +31,46 @@ import _ from "lodash";
 const auth = getAuth(initializedBase);
 const Leagues = () => {
   const [globalLeague, setGlobalLeague] = useState([]);
-  const [leagueNames, setLeagueNames] = useState([]);
+  const [privateLeague, setPrivateLeague] = useState([]);
 
   let getUserid = useSelector((state) => state.signupReducer.user_id);
 
-  const q1 = query(collection(db, "Leagues"));
-  const q2 = query(collection(db, "Names_of_leagues"));
+  //const q1 = query(collection(db, "Leagues"));
+  const q2 = query(
+    collection(db, "Names_of_leagues"),
+    where("members", "array-contains", getUserid)
+  );
   const [ldata, setLdata] = useState([]);
 
-  const getLeagueData = async () => {
-    let all_data = [];
-    leagueNames.forEach(async (l_name) => {
-      const querySnapshot = await getDocs(
-        query(collectionGroup(db, l_name.League_Name))
-      );
-      querySnapshot.forEach((doc) => {
-        const { Team_name, Season_Points } = doc.data();
-        all_data.push({
-          id: doc.id,
-          Team_name,
-          Season_Points,
-        });
-      });
-    });
-    setLdata(all_data);
-    console.log(ldata);
-  };
   //const q3 = query(collectionGroup(db, ""));
   const getGlobalRankings = async () => {
-    const querySnapshot = await getDocs(q1);
+    const querySnapshot = await getDocs(q2);
     // playerData.onSnapshot((querySnapshot) => {
 
     const players = [];
     querySnapshot.forEach((doc) => {
-      const {} = doc.data();
+      const { League_Name, isPrivate, members } = doc.data();
       players.push({
-        id: doc.id,
-        data: doc.data(),
-      });
-    });
-    setGlobalLeague(players);
-    //console.log(players);
-    const querySnapshot2 = await getDocs(q2);
-    const names_of_leagues = [];
-    querySnapshot2.forEach((doc) => {
-      const { League_Name, isPrivate } = doc.data();
-      names_of_leagues.push({
         id: doc.id,
         League_Name,
         isPrivate,
+        members,
       });
     });
-    setLeagueNames(names_of_leagues);
-    //console.log(...leagueNames);
-    let all_data = [];
-    leagueNames.forEach(async (l_name) => {
-      const querySnapshot3 = await getDocs(
-        query(collectionGroup(db, l_name.League_Name))
-      );
-      querySnapshot3.forEach((doc) => {
-        const { Team_name, Season_Points } = doc.data();
-        all_data.push({
-          id: doc.id,
-          Team_name,
-          Season_Points,
-        });
+    let private_arr = [];
+    let public_arr = [];
 
-        if (
-          _.isEqual(
-            (all_data.map((all) => {
-              all.id;
-            }),
-            getUserid)
-          ) === false
-        ) {
-          all_data.shift();
-        }
-      });
-    });
-    setLdata(all_data);
-    console.log(...ldata);
+    //Segmenting Leagues into private and public
+    for (const player in players) {
+      if (players[player].isPrivate === true) {
+        private_arr.push(players[player]);
+      } else {
+        public_arr.push(players[player]);
+      }
+    }
+    setGlobalLeague(public_arr);
+    setPrivateLeague(private_arr);
   };
-  //console.log(globalLeague);
   useEffect(() => {
     getGlobalRankings();
   }, []);
@@ -134,7 +92,8 @@ const Leagues = () => {
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
       <View style={LeaderBoardStyle.outercontainer}>
-        <Text style={LeaderBoardStyle.title}>Global League</Text>
+        <Text style={LeaderBoardStyle.title}>LEAGUES</Text>
+        <Text style={LeaderBoardStyle.subtitle}>Public Leagues</Text>
         <FlatList
           style={LeaderBoardStyle.mainContainer}
           data={globalLeague}
@@ -144,7 +103,11 @@ const Leagues = () => {
           renderItem={({ item }) => (
             <Pressable
               style={LeaderBoardStyle.single_item}
-              onPress={() => navigation.navigate("League_details")}
+              onPress={() =>
+                navigation.navigate("League Details", {
+                  leagueName: item.League_Name,
+                })
+              }
             >
               {/* <View>
               <Text>Team Name: {item.Team_name}</Text>
@@ -152,13 +115,37 @@ const Leagues = () => {
               <View style={LeaderBoardStyle.secondsection}>
                 <Text>{item.Season_Points}</Text>
                 <Text>{item.Game_Week_Points}</Text>
-              </View> */}
-              <View style={LeaderBoardStyle.firstSection}>
+          </View> */}
+              <View style={LeaderBoardStyle.generalLeague}>
                 <Text style={LeaderBoardStyle.ovr_points}>
-                  League Type: {item.id}
+                  League Name: {item.League_Name}
                 </Text>
               </View>
-              <View style={LeaderBoardStyle.secondsection}></View>
+            </Pressable>
+          )}
+        />
+        <Text style={LeaderBoardStyle.subtitle}>Private Leagues</Text>
+
+        <FlatList
+          style={LeaderBoardStyle.mainContainer}
+          data={privateLeague}
+          refreshing={isRefreshing} // Added pull to refesh state
+          onRefresh={onRefresh}
+          numColumns={1}
+          renderItem={({ item }) => (
+            <Pressable
+              style={LeaderBoardStyle.single_item}
+              onPress={() =>
+                navigation.navigate("League Details", {
+                  leagueName: item.League_Name,
+                })
+              }
+            >
+              <View style={LeaderBoardStyle.generalLeague}>
+                <Text style={LeaderBoardStyle.ovr_points}>
+                  League Name: {item.League_Name}
+                </Text>
+              </View>
             </Pressable>
           )}
         />

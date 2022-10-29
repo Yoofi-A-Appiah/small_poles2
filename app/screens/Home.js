@@ -513,29 +513,19 @@ const Home = ({ navigation, route }) => {
         {isLoading && <Text>Loading</Text>}
         {!isLoading && !valueDispatch && (
           <View style={{ flex: 1 }}>
-            <Text style={HomeStyles.teamValue}>
-              {allPlayers.map((item) => {
-                return item.Team_Value;
-              })}
-            </Text>
-            <Text style={HomeStyles.homeWelcome}>
-              {allPlayers.map((item) => {
-                return item.Team_name;
-              })}
-            </Text>
-            <Text style={HomeStyles.teamValue}>
-              Season_Points:{" "}
-              {allPlayers.map((item) => {
-                return item.Season_Points;
-              })}
-            </Text>
-            <Text style={HomeStyles.teamValue}>
-              Game Week Points:{" "}
-              {allPlayers.map((item) => {
-                return item.Game_Week_Points;
-              })}
-            </Text>
-
+            <View style={HomeStyles.topDesign}>
+              <Text style={HomeStyles.homeWelcome}>
+                {allPlayers.map((item) => {
+                  return item.Team_name;
+                })}
+              </Text>
+              <Text style={HomeStyles.teamValue}>
+                Team Value: &#8373;
+                {allPlayers.map((item) => {
+                  return item.Team_Value;
+                })}
+              </Text>
+            </View>
             <ImageBackground
               source={image}
               resizeMode="cover"
@@ -543,13 +533,25 @@ const Home = ({ navigation, route }) => {
             >
               <SafeAreaView style={HomeStyles.mainContainer}>
                 {/* <View style={HomeStyles.mainContainer}> */}
+                <Text style={HomeStyles.game_week_points}>
+                  <Text style={{ fontSize: 10 }}>Game Week Points: </Text>
+                  {allPlayers.map((item) => {
+                    return item.Game_Week_Points;
+                  })}
+                </Text>
+                <Text style={HomeStyles.season_points}>
+                  <Text style={{ fontSize: 10 }}>Season Points: </Text>
+                  {allPlayers.map((item) => {
+                    return item.Season_Points;
+                  })}
+                </Text>
                 <View style={HomeStyles.subContainer1}>
                   <Pressable style={HomeStyles.player_gk1}>
                     <Image
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_GK1().map((item) => {
                         return item.Season_Points;
                       })}
@@ -587,7 +589,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_DEF1().map((item) => {
                         return item.Season_Points;
                       })}
@@ -618,7 +620,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_DEF2().map((item) => {
                         return item.Season_Points;
                       })}
@@ -649,7 +651,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_DEF3().map((item) => {
                         return item.Season_Points;
                       })}
@@ -680,7 +682,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_DEF4().map((item) => {
                         return item.Season_Points;
                       })}
@@ -713,7 +715,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_MID1().map((item) => {
                         return item.Season_Points;
                       })}
@@ -744,7 +746,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_MID2().map((item) => {
                         return item.Season_Points;
                       })}
@@ -775,7 +777,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_MID3().map((item) => {
                         return item.Season_Points;
                       })}
@@ -808,7 +810,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_FWD1().map((item) => {
                         return item.Season_Points;
                       })}
@@ -839,7 +841,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_FWD2().map((item) => {
                         return item.Season_Points;
                       })}
@@ -870,7 +872,7 @@ const Home = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_points}>
                       {Points_FWD3().map((item) => {
                         return item.Season_Points;
                       })}
@@ -906,13 +908,12 @@ const Home = ({ navigation, route }) => {
                 </View>
               </SafeAreaView>
               <View style={HomeStyles.substitues}>
-                <Text style={HomeStyles.substituesText}>SUBSTITUES</Text>
                 <Pressable style={HomeStyles.player_gk1}>
                   <Image
                     style={{ width: 60, height: 60 }}
                     source={playerIcon}
                   />
-                  <Text style={{ fontSize: 18 }}>
+                  <Text style={HomeStyles.player_points}>
                     {Points_GK2().map((item) => {
                       return item.Season_Points;
                     })}
@@ -943,7 +944,7 @@ const Home = ({ navigation, route }) => {
                     style={{ width: 60, height: 60 }}
                     source={playerIcon}
                   />
-                  <Text style={{ fontSize: 18 }}>
+                  <Text style={HomeStyles.player_points}>
                     {Points_DEF5().map((item) => {
                       return item.Season_Points;
                     })}
@@ -974,7 +975,7 @@ const Home = ({ navigation, route }) => {
                     style={{ width: 60, height: 60 }}
                     source={playerIcon}
                   />
-                  <Text style={{ fontSize: 18 }}>
+                  <Text style={HomeStyles.player_points}>
                     {Points_MID4().map((item) => {
                       return item.Season_Points;
                     })}
@@ -1005,7 +1006,7 @@ const Home = ({ navigation, route }) => {
                     style={{ width: 60, height: 60 }}
                     source={playerIcon}
                   />
-                  <Text style={{ fontSize: 18 }}>
+                  <Text style={HomeStyles.player_points}>
                     {Points_FWD4().map((item) => {
                       return item.Season_Points;
                     })}

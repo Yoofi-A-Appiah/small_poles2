@@ -772,7 +772,9 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        {" "}
+                        &#8373;
                         {/* {Value_GK1.map((item) => {
                           return item.Player_Value;
                         })} */}
@@ -818,7 +820,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {/* {New_GK1_value} */}
                         {useSelector(
                           (state) =>
@@ -866,7 +869,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_def1.player_value
                         )}
@@ -909,7 +913,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_def1.player_value
@@ -954,7 +959,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_def2.player_value
                         )}
@@ -997,7 +1003,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_def2.player_value
@@ -1042,7 +1049,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_def3.player_value
                         )}
@@ -1085,7 +1093,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_def3.player_value
@@ -1130,7 +1139,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_def4.player_value
                         )}
@@ -1173,7 +1183,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_def4.player_value
@@ -1220,7 +1231,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_mid1.player_value
                         )}
@@ -1263,7 +1275,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_mid1.player_value
@@ -1308,7 +1321,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_mid2.player_value
                         )}
@@ -1351,7 +1365,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_mid2.player_value
@@ -1396,7 +1411,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_mid3.player_value
                         )}
@@ -1439,7 +1455,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_mid3.player_value
@@ -1486,7 +1503,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_fwd1.player_value
                         )}
@@ -1529,7 +1547,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_fwd1.player_value
@@ -1574,7 +1593,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_fwd2.player_value
                         )}
@@ -1617,7 +1637,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_fwd2.player_value
@@ -1662,7 +1683,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) => state.userReducer.player_fwd3.player_value
                         )}
@@ -1705,7 +1727,8 @@ const Statistics = ({ navigation, route }) => {
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
-                      <Text style={{ fontSize: 18 }}>
+                      <Text style={HomeStyles.player_value}>
+                        &#8373;
                         {useSelector(
                           (state) =>
                             state.transfersReducer.player_fwd3.player_value
@@ -1741,7 +1764,6 @@ const Statistics = ({ navigation, route }) => {
                 </View>
               </SafeAreaView>
               <View style={HomeStyles.substitues}>
-                <Text style={HomeStyles.substituesText}>SUBSTITUES</Text>
                 {New_GK2_name === "N@me" ? (
                   <Pressable
                     style={HomeStyles.player_gk1}
@@ -1762,7 +1784,8 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_value}>
+                      &#8373;
                       {useSelector(
                         (state) => state.userReducer.player_gk2.player_value
                       )}
@@ -1806,7 +1829,8 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_value}>
+                      &#8373;
                       {useSelector(
                         (state) =>
                           state.transfersReducer.player_gk2.player_value
@@ -1851,7 +1875,8 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_value}>
+                      &#8373;
                       {useSelector(
                         (state) => state.userReducer.player_def5.player_value
                       )}
@@ -1894,7 +1919,8 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_value}>
+                      &#8373;
                       {useSelector(
                         (state) =>
                           state.transfersReducer.player_def5.player_value
@@ -1939,7 +1965,8 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_value}>
+                      &#8373;
                       {useSelector(
                         (state) => state.userReducer.player_mid4.player_value
                       )}
@@ -1982,8 +2009,8 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
-                      {" "}
+                    <Text style={HomeStyles.player_value}>
+                      &#8373;{" "}
                       {useSelector(
                         (state) =>
                           state.transfersReducer.player_mid4.player_value
@@ -2028,7 +2055,8 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_value}>
+                      &#8373;
                       {useSelector(
                         (state) => state.userReducer.player_fwd4.player_value
                       )}
@@ -2071,7 +2099,8 @@ const Statistics = ({ navigation, route }) => {
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
                     />
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={HomeStyles.player_value}>
+                      &#8373;
                       {useSelector(
                         (state) =>
                           state.transfersReducer.player_fwd4.player_value

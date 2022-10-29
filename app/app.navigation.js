@@ -5,6 +5,8 @@ import BottomNavigator from "./bottomNavigator";
 import MaterialTabs from "./materialBottomTabs";
 import SignOut from "./screens/Signout";
 import Home from "./screens/Home";
+import CreateLeague from "./screens/createLeague";
+import JoinLeagues from "./screens/joinLeague";
 const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
   return (
@@ -14,6 +16,8 @@ const DrawerNavigator = () => {
         component={MaterialTabs}
         options={{ title: "Small Poles Arena" }}
       />
+      <Drawer.Screen name="Create League" component={CreateLeague} />
+      <Drawer.Screen name="Join League" component={JoinLeagues} />
       <Drawer.Screen name="Settings" component={SignOut} />
     </Drawer.Navigator>
   );

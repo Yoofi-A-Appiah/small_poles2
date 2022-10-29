@@ -10,6 +10,7 @@ import FirstTimeUser from "./app/screens/FirstTimeUser";
 import BottomNavigator from "./app/bottomNavigator";
 import LeaderBoard from "./app/screens/leaderboards";
 import Transfers from "./app/screens/transfers";
+import League_details from "./app/screens/league_details";
 import { Provider } from "react-redux";
 import { Store } from "./app/redux/store";
 
@@ -52,6 +53,11 @@ export default function App() {
           <Stack.Screen
             name="GameWeek Transfers"
             component={Transfers}
+            options={{ headerShown: true }}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="League Details"
+            component={League_details}
             options={{ headerShown: true }}
           ></Stack.Screen>
         </Stack.Navigator>
