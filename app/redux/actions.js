@@ -48,7 +48,21 @@ export const TRANSFER_BALANCE = "TRANSFER_BALANCE";
 export const TRANSFER_BUDGET = "TRANSFER_BUDGET";
 export const SEASON_PONTS = "SEASON_POINTS";
 export const GAME_WEEK_POINTS = "GAME_WEEK_POINTS";
+export const LEAGUE_NAME = "LEAGUE_NAME";
+export const LEAGUE_ID = "LEAGUE_ID";
 //start transfer actions
+export const set_league_name = (league_name) => (dispatch) => {
+  dispatch({
+    type: LEAGUE_NAME,
+    league_name: league_name,
+  });
+};
+export const set_league_id = (league_id) => (dispatch) => {
+  dispatch({
+    type: LEAGUE_ID,
+    league_name: league_id,
+  });
+};
 export const transfer_budget = (budget) => (dispatch) => {
   dispatch({
     type: TRANSFER_BUDGET,

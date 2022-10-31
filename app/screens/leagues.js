@@ -40,7 +40,6 @@ const Leagues = () => {
     collection(db, "Names_of_leagues"),
     where("members", "array-contains", getUserid)
   );
-  const [ldata, setLdata] = useState([]);
 
   //const q3 = query(collectionGroup(db, ""));
   const getGlobalRankings = async () => {

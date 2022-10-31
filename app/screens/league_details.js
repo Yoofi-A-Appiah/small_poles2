@@ -56,7 +56,7 @@ const League_details = ({ route }) => {
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
-    getGlobalRankings();
+    fetchLeagueDetails();
     wait(2000).then(() => setIsRefreshing(false));
   }, []);
   useEffect(() => {

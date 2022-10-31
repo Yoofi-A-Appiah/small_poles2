@@ -47,6 +47,7 @@ import {
   balance,
   set_game_week_points,
   set_season_points,
+  set_team_name,
 } from "../redux/actions";
 const auth = getAuth(initializedBase);
 
@@ -75,6 +76,7 @@ const Home = ({ navigation, route }) => {
 
   const dispatchingFunction = () => {
     allPlayers.map((item) => {
+      dispatch(set_team_name(item.Team_name));
       dispatch(balance(item.Balance_left));
       dispatch(set_team_value(item.Team_Value));
       dispatch(set_game_week_points(item.Game_Week_Points));

@@ -9,7 +9,6 @@ const FirstTimeUserStyle = StyleSheet.create({
   },
 
   picker: {
-    margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
@@ -24,7 +23,8 @@ const FirstTimeUserStyle = StyleSheet.create({
     elevation: 5,
   },
   centeredView: {
-    flex: 1,
+    position: "absolute",
+    bottom: 0,
     justifyContent: "center",
     alignItems: "center",
   },

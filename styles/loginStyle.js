@@ -119,7 +119,7 @@ const loginStyle = StyleSheet.create({
     top: -30,
   },
   x_style: {
-    fontSize: 30,
+    fontSize: 50,
   },
 });
 export default loginStyle;

@@ -47,6 +47,8 @@ import {
   TRANSFER_MADE,
   SEASON_PONTS,
   GAME_WEEK_POINTS,
+  LEAGUE_NAME,
+  LEAGUE_ID,
 } from "./actions";
 
 const initialState = {
@@ -96,6 +98,20 @@ const transferState = {
   player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
   player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
 };
+const leagueState = {
+  league_name: "",
+  league_id: "",
+};
+export function leagueReducer(state = leagueState, action) {
+  switch (action.type) {
+    case LEAGUE_NAME:
+      return { ...state, league_name: action.league_name };
+    case LEAGUE_ID:
+      return { ...state, league_id: action.league_id };
+    default:
+      return state;
+  }
+}
 export function signupReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER_ID:

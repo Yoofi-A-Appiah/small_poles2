@@ -27,6 +27,7 @@ import Animated, {
   withSpring,
   color,
 } from "react-native-reanimated";
+import { Ionicons } from "react-native-vector-icons";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -210,7 +211,11 @@ const Login_Signup = ({ navigation }) => {
         <Animated.View
           style={[loginStyle.closeContainer, closeButtonContainerStyle]}
         >
-          <Text
+          <Ionicons
+            name="close"
+            size={40}
+            color={"black"}
+            style={loginStyle.x_style}
             onPress={() => {
               imagePosition.value = 1;
               setEmail("");
@@ -218,10 +223,7 @@ const Login_Signup = ({ navigation }) => {
               setConfirmPassword("");
               setValidationMessage("");
             }}
-            style={loginStyle.x_style}
-          >
-            X
-          </Text>
+          ></Ionicons>
         </Animated.View>
       </Animated.View>
       <KeyboardAvoidingView

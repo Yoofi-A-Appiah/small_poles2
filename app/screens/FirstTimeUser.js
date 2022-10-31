@@ -435,14 +435,25 @@ const FirstTimeUser = ({ route }) => {
               onPress={() => setIsPickerVisible(!isPickerVisible)}
               style={{ flexDirection: "column" }}
             >
-              <MaterialIcons name="close" size={30} color={"red"}>
-                {" "}
-              </MaterialIcons>
-              <Text style={{ color: "red" }}>CLOSE</Text>
+              <Text
+                style={{
+                  color: "white",
+                  borderColor: "#6AB547",
+                  borderWidth: "1",
+                  width: 300,
+                  height: 50,
+                  fontSize: 35,
+                  textAlign: "center",
+                  backgroundColor: "#6AB547",
+                  padding: 5,
+                }}
+              >
+                DONE
+              </Text>
             </Pressable>
             <Picker
               selectedValue={useSelector((state) => state.userReducer.fav)}
-              style={{ height: 120, width: 250 }}
+              style={{ height: 200, width: 250 }}
               onValueChange={(value, index) => dispatch(set_fav_team(value))}
               mode="dropdown"
             >
