@@ -22,6 +22,8 @@ import {
   limit,
   collectionGroup,
 } from "firebase/firestore";
+import { AntDesign } from "react-native-vector-icons";
+
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
 const League_details = ({ route }) => {
   const navigation = useNavigation();
@@ -72,13 +74,24 @@ const League_details = ({ route }) => {
         numColumns={1}
         renderItem={({ item }) => (
           <Pressable style={LeaderBoardStyle.single_item}>
-            <View>
+            <View style={LeaderBoardStyle.firstSection}>
               <Text>Team Name: {item.Team_name}</Text>
-              <View style={LeaderBoardStyle.secondsection}>
-                <Text>SP {item.Season_Points}</Text>
-                <Text>GWP {item.Game_Week_Points}</Text>
-              </View>
+
+              <Text>SP {item.Season_Points}</Text>
+              <Text>GWP {item.Game_Week_Points}</Text>
             </View>
+
+            <AntDesign
+              name="message1"
+              size={35}
+              style={LeaderBoardStyle.secondsection}
+              color={"black"}
+              onPress={() =>
+                navigation.navigate("UserChat", {
+                  usersID: item.id,
+                })
+              }
+            ></AntDesign>
           </Pressable>
         )}
       />

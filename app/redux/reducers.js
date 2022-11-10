@@ -49,10 +49,12 @@ import {
   GAME_WEEK_POINTS,
   LEAGUE_NAME,
   LEAGUE_ID,
+  SAVE_EMAIL,
 } from "./actions";
 
 const initialState = {
   name: "",
+  email: "heo",
   fav: "___",
   team_value: 0,
   budget: false, //indicates that user is under budget by default
@@ -366,6 +368,8 @@ export function userReducer(state = initialState, action) {
   switch (action.type) {
     case SET_TEAM_NAME:
       return { ...state, name: action.payload };
+    case SAVE_EMAIL:
+      return { ...state, email: action.email };
     case SET_FAV_TEAM:
       return { ...state, fav: action.payload };
     case SEASON_PONTS:

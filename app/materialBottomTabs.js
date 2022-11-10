@@ -5,6 +5,7 @@ import Splash from "./screens/splash.screen";
 import Fixtures from "./screens/fixtures";
 import Leagues from "./screens/leagues";
 import Statistics from "./screens/Statistics";
+import SettingsScreen from "./screens/splash.screen";
 const Tab = createMaterialBottomTabNavigator();
 
 const MaterialTabs = () => {
@@ -64,8 +65,8 @@ const MaterialTabs = () => {
       />
 
       <Tab.Screen
-        name="Splash"
-        component={Splash}
+        name="SettingsScreen"
+        component={SettingsScreen}
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (

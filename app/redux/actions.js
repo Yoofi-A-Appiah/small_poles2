@@ -50,6 +50,7 @@ export const SEASON_PONTS = "SEASON_POINTS";
 export const GAME_WEEK_POINTS = "GAME_WEEK_POINTS";
 export const LEAGUE_NAME = "LEAGUE_NAME";
 export const LEAGUE_ID = "LEAGUE_ID";
+export const SAVE_EMAIL = "SAVE_EMAIL";
 //start transfer actions
 export const set_league_name = (league_name) => (dispatch) => {
   dispatch({
@@ -57,10 +58,16 @@ export const set_league_name = (league_name) => (dispatch) => {
     league_name: league_name,
   });
 };
+export const save_email = (email) => (dispatch) => {
+  dispatch({
+    type: SAVE_EMAIL,
+    email: email,
+  });
+};
 export const set_league_id = (league_id) => (dispatch) => {
   dispatch({
     type: LEAGUE_ID,
-    league_name: league_id,
+    league_id: league_id,
   });
 };
 export const transfer_budget = (budget) => (dispatch) => {
