@@ -13,7 +13,7 @@ import { getAuth, signOut, sendEmailVerification } from "firebase/auth";
 import initializedBase from "../../initFirebase";
 //import firestore from "firebase/firestore";
 import { firebase } from "../../initFirebase";
-import { onSnapshot, QuerySnapshot } from "firebase/firestore";
+import { doc, onSnapshot, QuerySnapshot } from "firebase/firestore";
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { transfer_made } from "../redux/actions";
@@ -21,9 +21,17 @@ import { transfer_balance } from "../redux/actions";
 import calculateTeamValue from "./calculateValue";
 const auth = getAuth(initializedBase);
 import { db } from "../../initFirebase";
-import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
+import {
+  collection,
+  collectionGroup,
+  query,
+  where,
+  getDocs,
+  limit,
+} from "firebase/firestore"; //const firestore = Firestore();
 import UseFullPageLoader from "../hooks/useFullPageLoader";
 import { not } from "react-native-reanimated";
+import axios from "axios";
 const Transfers = ({ route }) => {
   const navigation = useNavigation();
   const [players, setPlayers] = useState([]);
@@ -193,47 +201,86 @@ const Transfers = ({ route }) => {
     fwd4,
   ];
 
-  const q = query(
-    collection(db, "Players"),
-    where("Position", "==", route.params.paramKey)
-  );
+  const firstFetch = async () => {
+    const getTeamNames = {
+      method: "GET",
+      url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/Teams`,
+    };
+    var allNames = [];
 
-  const playerData = firebase.firestore().collection("Players");
-  const dispatch = useDispatch();
-
-  const fetching = async () => {
-    //showLoader();
-    const querySnapshot = await getDocs(q);
-    // playerData.onSnapshot((querySnapshot) => {
-    const players = [];
-    querySnapshot.forEach((doc) => {
-      const {
-        Player_Name,
-        Team_id,
-        Player_Value,
-        Position,
-        Player_id,
-        Team_Name,
-      } = doc.data();
-      players.push({
-        id: doc.id,
-        Player_Name,
-        Team_id,
-        Player_Value,
-        Position,
-        Player_id,
-        Team_Name,
+    await axios.request(getTeamNames).then(async function (response) {
+      response.data.documents.forEach((val) => {
+        allNames.push(val.fields.Team_name.stringValue);
       });
-    });
+      var newNames = [];
+      for (const ele of allNames) {
+        const playerData = firebase
+          .firestore()
+          .collection("TeamPlayers")
+          .doc("Players")
+          .collection(`${ele}`)
+          .where("Position", "==", route.params.paramKey);
+        // const q = query(
+        //   collectionGroup(db, `${ele}`),
+        //   where("Position", "==", route.params.paramKey)
+        // );
+        // const docRef = query(
+        //   collection(db, "TeamPlayers"),
+        //   where("Position", "==", route.params.paramKey)
+        //   // doc("Players"),
+        //   // collection(`${ele}`)
+        // );
 
-    setTest(() =>
-      players.filter((item) => !parameterArray.includes(item.Player_id))
-    );
-    setPlayers(players);
-    setIsLoading(true);
-    //hideLoader();
-    //});
+        //const fetching = async () => {
+        showLoader();
+        const querySnapshot = await getDocs(docRef);
+        playerData.onSnapshot((querySnapshot) => {
+          const newplayers = [];
+          querySnapshot.forEach((doc) => {
+            const {
+              Player_Name,
+              Team_id,
+              Player_Value,
+              Position,
+              Player_id,
+              Team_Name,
+            } = doc.data();
+            newplayers.push({
+              id: doc.id,
+              Player_Name,
+              ele,
+              Player_Value,
+              Position,
+              Player_id,
+              Team_Name,
+            });
+          });
+          newplayers.forEach((val) => {
+            newNames.push(val);
+            //console.log(val.fields.Team_Name.stringValue);
+          });
+          // const getPlayers = {
+          //   method: "GET",
+          //   url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/TeamPlayers/Players/${ele}`,
+          // };
+          // var allNames = [];
+
+          // await axios.request(getPlayers).then(async function (response) {
+
+          // })
+
+          setPlayers(players);
+          setIsLoading(true);
+          hideLoader();
+        });
+        //};
+        setTest(() =>
+          newNames.filter((item) => !parameterArray.includes(item.Player_id))
+        );
+      }
+    });
   };
+  const dispatch = useDispatch();
 
   const [test, setTest] = useState([]);
 
@@ -367,7 +414,8 @@ const Transfers = ({ route }) => {
   };
 
   useEffect(() => {
-    fetching();
+    //fetching();
+    firstFetch();
     //isOverBudget();
   }, []);
   let update_balance = route.params.curr_bal;
@@ -411,7 +459,7 @@ const Transfers = ({ route }) => {
             <View>
               <Text>Name: {item.Player_Name}</Text>
               <Text>Value: ${item.Player_Value}M</Text>
-              <Text>Team Name: {item.Team_Name}</Text>
+              <Text>Team Name: {item.ele}</Text>
               <Text>Position: {item.Position}</Text>
             </View>
           </Pressable>

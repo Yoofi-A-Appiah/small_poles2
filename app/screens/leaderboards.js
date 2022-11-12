@@ -28,6 +28,7 @@ import { db } from "../../initFirebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
 import UseFullPageLoader from "../hooks/useFullPageLoader";
 import { not } from "react-native-reanimated";
+import axios from "axios";
 const LeaderBoard = ({ route }) => {
   const navigation = useNavigation();
   const [players, setPlayers] = useState([]);
@@ -110,49 +111,66 @@ const LeaderBoard = ({ route }) => {
     fwd3,
     fwd4,
   ];
+  const firstFetch = async () => {
+    const getTeamNames = {
+      method: "GET",
+      url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/Teams`,
+    };
+    var allNames = [];
 
-  const q = query(
-    collection(db, "Players"),
-    where("Position", "==", route.params.paramKey)
-  );
-
-  const playerData = firebase.firestore().collection("Players");
-  const dispatch = useDispatch();
-
-  const fetching = async () => {
-    //showLoader();
-    const querySnapshot = await getDocs(q);
-    // playerData.onSnapshot((querySnapshot) => {
-    const players = [];
-    querySnapshot.forEach((doc) => {
-      const {
-        Player_Name,
-        Team_id,
-        Player_Value,
-        Position,
-        Player_id,
-        Team_Name,
-      } = doc.data();
-      players.push({
-        id: doc.id,
-        Player_Name,
-        Team_id,
-        Player_Value,
-        Position,
-        Player_id,
-        Team_Name,
+    await axios.request(getTeamNames).then(async function (response) {
+      response.data.documents.forEach((val) => {
+        allNames.push(val.fields.Team_name.stringValue);
       });
-    });
+      var newNames = [];
+      for (const ele of allNames) {
+        const playerData = firebase
+          .firestore()
+          .collection("TeamPlayers")
+          .doc("Players")
+          .collection(`${ele}`)
+          .where("Position", "==", route.params.paramKey);
+        showLoader();
+        //const querySnapshot = await getDocs(docRef);
+        playerData.onSnapshot((querySnapshot) => {
+          const newplayers = [];
+          querySnapshot.forEach((doc) => {
+            const { Player_Name, Team_id, Player_Value, Position, Player_id } =
+              doc.data();
+            newplayers.push({
+              id: doc.id,
+              Player_Name,
+              ele,
+              Player_Value,
+              Position,
+              Player_id,
+            });
+          });
+          newplayers.forEach((val) => {
+            newNames.push(val);
+          });
+          // const getPlayers = {
+          //   method: "GET",
+          //   url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/TeamPlayers/Players/${ele}`,
+          // };
+          // var allNames = [];
 
-    setTest(() =>
-      players.filter((item) => !parameterArray.includes(item.Player_id))
-    );
-    setPlayers(players);
-    setIsLoading(true);
-    //hideLoader();
-    //});
+          // await axios.request(getPlayers).then(async function (response) {
+
+          // })
+          setTest(() =>
+            newNames.filter((item) => !parameterArray.includes(item.Player_id))
+          );
+          setPlayers(players);
+          setIsLoading(true);
+          hideLoader();
+        });
+        // console.log(newNames);
+      }
+    });
   };
 
+  const dispatch = useDispatch();
   const [test, setTest] = useState([]);
 
   const wait = (timeout) => {
@@ -202,7 +220,8 @@ const LeaderBoard = ({ route }) => {
     return amount;
   };
   useEffect(() => {
-    fetching();
+    //fetching();
+    firstFetch();
     isOverBudget();
   }, []);
   return (
@@ -244,7 +263,7 @@ const LeaderBoard = ({ route }) => {
             <View>
               <Text>Name: {item.Player_Name}</Text>
               <Text>Value: ${item.Player_Value}M</Text>
-              <Text>Team Name: {item.Team_Name}</Text>
+              <Text>Team Name: {item.ele}</Text>
               <Text>Position: {item.Position}</Text>
             </View>
           </Pressable>
