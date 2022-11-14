@@ -154,13 +154,15 @@ const HomeStyles = StyleSheet.create({
   },
   teamValue: {
     position: "relative",
+    // justifyContent: "center",
+    // alignSelf: "center",
+    textAlign: "center",
     fontSize: 18,
     padding: 5,
     borderWidth: 1,
     backgroundColor: "#749C75",
     borderColor: "#749C75",
     color: "white",
-    borderRadius: 15,
   },
   player_text: {
     backgroundColor: "white",

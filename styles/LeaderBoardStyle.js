@@ -52,8 +52,13 @@ const LeaderBoardStyle = StyleSheet.create({
     bottom: -280,
     right: 10,
   },
+  pIcon: {
+    justifyContent: "space-evenly",
+  },
   secondsection: {
     textAlign: "right",
+    justifyContent: "space-evenly",
+
     right: 0,
 
     width: width / 3,
@@ -61,9 +66,15 @@ const LeaderBoardStyle = StyleSheet.create({
   },
   firstSection: {
     textAlign: "left",
+    justifyContent: "space-evenly",
+
     left: 0,
     width: width / 2,
     padding: 10,
+  },
+  insidetext: {
+    padding: 2,
+    fontSize: 16,
   },
   gw_points: { fontSize: 18 },
   ovr_points: { fontSize: 18 },

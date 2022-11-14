@@ -49,6 +49,8 @@ import {
   set_season_points,
   set_team_name,
 } from "../redux/actions";
+import UseFullPageLoader from "../hooks/useFullPageLoader";
+import axios from "axios";
 const auth = getAuth(initializedBase);
 
 const Home = ({ navigation, route }) => {
@@ -59,10 +61,12 @@ const Home = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [valueDispatch, setValueDispatch] = useState(true);
   const [transferOccur, setTransferOccur] = useState(false);
+  const [loader, showLoader, hideLoader] = UseFullPageLoader();
+
   const dispatch = useDispatch();
   let getUserid = useSelector((state) => state.signupReducer.user_id);
   let tester = useSelector(
-    (state) => state.userReducer.player_gk1.player_value
+    (state) => state.userReducer.player_gk1.pmlayer_value
   );
   let transfer_occur = useSelector(
     (state) => state.transfersReducer.transfer_made
@@ -71,8 +75,6 @@ const Home = ({ navigation, route }) => {
     collection(db, "Users"),
     where(firebase.firestore.FieldPath.documentId(), "==", getUserid)
   );
-
-  const q2 = query(collection(db, "Players"));
 
   const dispatchingFunction = () => {
     allPlayers.map((item) => {
@@ -326,26 +328,44 @@ const Home = ({ navigation, route }) => {
       setTransferOccur(transfer_occur);
     });
     //fetchPoints();
-    const querySnapshot2 = await getDocs(q2);
-    const players2 = [];
-    querySnapshot2.forEach((doc) => {
-      const { Player_Value, Player_id, Season_Points, Player_Name } =
-        doc.data();
-      players2.push({
-        id: doc.id,
-        Player_Value,
-        Player_id,
-        Season_Points,
-        Player_Name,
-      });
-    });
-    setCurrentPlayerValue(
-      players2.filter((item) => arr.includes(item.Player_id))
-    );
-    setIsLoading(false);
-    dispatchingFunction();
+    const getTeamNames = {
+      method: "GET",
+      url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/Teams`,
+    };
+    var allNames = [];
 
+    await axios.request(getTeamNames).then(async function (response) {
+      response.data.documents.forEach((val) => {
+        allNames.push(val.fields.Team_name.stringValue);
+      });
+      var collectedPlayers = [];
+
+      for (const ele of allNames) {
+        const q2 = query(collection(db, `TeamPlayers/Players/${ele}`));
+        const querySnapshot2 = await getDocs(q2);
+        const players2 = [];
+        querySnapshot2.forEach((doc) => {
+          const { Player_Value, Player_id, Season_Points, Player_Name } =
+            doc.data();
+          players2.push({
+            id: doc.id,
+            Player_Value,
+            Player_id,
+            Season_Points,
+            Player_Name,
+          });
+        });
+        players2.forEach((val) => {
+          collectedPlayers.push(val);
+        });
+      }
+      setCurrentPlayerValue(
+        collectedPlayers.filter((item) => arr.includes(item.Player_id))
+      );
+      dispatchingFunction();
+    });
     //setAllPlayerIDs(arr);
+    setIsLoading(false);
   };
   useEffect(() => {
     getPlayers();
@@ -512,7 +532,7 @@ const Home = ({ navigation, route }) => {
   let showContent = () => {
     return (
       <View style={{ flex: 1 }}>
-        {isLoading && <Text>Loading</Text>}
+        {isLoading && <Text style={{ alignText: "center" }}>Loading</Text>}
         {!isLoading && !valueDispatch && (
           <View style={{ flex: 1 }}>
             <View style={HomeStyles.topDesign}>

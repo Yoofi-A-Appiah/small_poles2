@@ -28,6 +28,7 @@ import { db } from "../../initFirebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
 import UseFullPageLoader from "../hooks/useFullPageLoader";
 import { not } from "react-native-reanimated";
+import HomeStyles from "../../styles/homeStyles";
 import axios from "axios";
 const LeaderBoard = ({ route }) => {
   const navigation = useNavigation();
@@ -130,41 +131,54 @@ const LeaderBoard = ({ route }) => {
           .doc("Players")
           .collection(`${ele}`)
           .where("Position", "==", route.params.paramKey);
+        const docRef = query(
+          collection(db, `TeamPlayers/Players/${ele}`),
+          where("Position", "==", route.params.paramKey)
+          // doc("Players"),
+          // collection(`${ele}`)
+        );
         showLoader();
-        //const querySnapshot = await getDocs(docRef);
-        playerData.onSnapshot((querySnapshot) => {
-          const newplayers = [];
-          querySnapshot.forEach((doc) => {
-            const { Player_Name, Team_id, Player_Value, Position, Player_id } =
-              doc.data();
-            newplayers.push({
-              id: doc.id,
-              Player_Name,
-              ele,
-              Player_Value,
-              Position,
-              Player_id,
-            });
+        const querySnapshot = await getDocs(docRef);
+        //playerData.onSnapshot((querySnapshot) => {
+        const newplayers = [];
+        querySnapshot.forEach((doc) => {
+          const {
+            Player_Name,
+            Team_id,
+            Player_Value,
+            Position,
+            Player_id,
+            Player_Image,
+          } = doc.data();
+          newplayers.push({
+            id: doc.id,
+            Player_Name,
+            ele,
+            Player_Value,
+            Position,
+            Player_id,
+            Player_Image,
           });
-          newplayers.forEach((val) => {
-            newNames.push(val);
-          });
-          // const getPlayers = {
-          //   method: "GET",
-          //   url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/TeamPlayers/Players/${ele}`,
-          // };
-          // var allNames = [];
-
-          // await axios.request(getPlayers).then(async function (response) {
-
-          // })
-          setTest(() =>
-            newNames.filter((item) => !parameterArray.includes(item.Player_id))
-          );
-          setPlayers(players);
-          setIsLoading(true);
-          hideLoader();
         });
+        newplayers.forEach((val) => {
+          newNames.push(val);
+        });
+        // const getPlayers = {
+        //   method: "GET",
+        //   url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/TeamPlayers/Players/${ele}`,
+        // };
+        // var allNames = [];
+
+        // await axios.request(getPlayers).then(async function (response) {
+
+        // })
+        setTest(() =>
+          newNames.filter((item) => !parameterArray.includes(item.Player_id))
+        );
+        setPlayers(players);
+        setIsLoading(true);
+        hideLoader();
+        //});
         // console.log(newNames);
       }
     });
@@ -182,7 +196,7 @@ const LeaderBoard = ({ route }) => {
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
-    fetching();
+    firstFetch();
     wait(2000).then(() => setIsRefreshing(false));
   }, []);
 
@@ -226,19 +240,25 @@ const LeaderBoard = ({ route }) => {
   }, []);
   return (
     <View style={styles.center}>
-      {loader}
-      <Text>This is the Transfers screen</Text>
-      <Text>
-        Current Team Value is{" "}
-        {useSelector((state) => state.userReducer.team_value)}{" "}
-      </Text>
-      <Text>Available balance is {amountLeft()} </Text>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        {loader}
+      </View>
 
-      <Pressable onPress={() => fetching()}>
+      <View style={HomeStyles.teamValue}>
+        <Text style={HomeStyles.teamValue}>
+          Current Team Value: &#8373;
+          {useSelector((state) => state.userReducer.team_value)}{" "}
+        </Text>
+        <Text style={HomeStyles.teamValue}>
+          Available balance: &#8373;{amountLeft()}{" "}
+        </Text>
+      </View>
+
+      {/* <Pressable onPress={() => fetching()}>
         <Text>PRESS</Text>
-      </Pressable>
+      </Pressable> */}
       <FlatList
-        style={{ flex: 1, height: 100 }}
+        style={LeaderBoardStyle.mainContainer}
         data={test}
         refreshing={isRefreshing} // Added pull to refesh state
         onRefresh={onRefresh}
@@ -260,11 +280,27 @@ const LeaderBoard = ({ route }) => {
               dispatch(set_team_value(calculateTeamValue()));
             }}
           >
-            <View>
-              <Text>Name: {item.Player_Name}</Text>
-              <Text>Value: ${item.Player_Value}M</Text>
-              <Text>Team Name: {item.ele}</Text>
-              <Text>Position: {item.Position}</Text>
+            <View style={LeaderBoardStyle.pIcon}>
+              <Image
+                style={{ width: 40, height: 40 }}
+                source={{ uri: item.Player_Image }}
+              />
+            </View>
+            <View style={LeaderBoardStyle.firstSection}>
+              <Text style={LeaderBoardStyle.insidetext}>
+                Name: {item.Player_Name}
+              </Text>
+              <Text style={LeaderBoardStyle.insidetext}>
+                Team Name: {item.ele}
+              </Text>
+            </View>
+            <View style={LeaderBoardStyle.secondsection}>
+              <Text style={LeaderBoardStyle.insidetext}>
+                Value: ${item.Player_Value}M
+              </Text>
+              <Text style={LeaderBoardStyle.insidetext}>
+                Position: {item.Position}
+              </Text>
             </View>
           </Pressable>
         )}
@@ -276,8 +312,7 @@ const LeaderBoard = ({ route }) => {
 const styles = StyleSheet.create({
   center: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+
     padding: -100,
   },
 });

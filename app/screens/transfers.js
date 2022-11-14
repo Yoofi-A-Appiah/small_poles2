@@ -15,6 +15,7 @@ import initializedBase from "../../initFirebase";
 import { firebase } from "../../initFirebase";
 import { doc, onSnapshot, QuerySnapshot } from "firebase/firestore";
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
+import HomeStyles from "../../styles/homeStyles";
 import { useDispatch, useSelector } from "react-redux";
 import { transfer_made } from "../redux/actions";
 import { transfer_balance } from "../redux/actions";
@@ -224,55 +225,59 @@ const Transfers = ({ route }) => {
         //   collectionGroup(db, `${ele}`),
         //   where("Position", "==", route.params.paramKey)
         // );
-        // const docRef = query(
-        //   collection(db, "TeamPlayers"),
-        //   where("Position", "==", route.params.paramKey)
-        //   // doc("Players"),
-        //   // collection(`${ele}`)
-        // );
+        const docRef = query(
+          collection(db, `TeamPlayers/Players/${ele}`),
+          where("Position", "==", route.params.paramKey)
+          // doc("Players"),
+          // collection(`${ele}`)
+        );
 
         //const fetching = async () => {
         showLoader();
         const querySnapshot = await getDocs(docRef);
-        playerData.onSnapshot((querySnapshot) => {
-          const newplayers = [];
-          querySnapshot.forEach((doc) => {
-            const {
-              Player_Name,
-              Team_id,
-              Player_Value,
-              Position,
-              Player_id,
-              Team_Name,
-            } = doc.data();
-            newplayers.push({
-              id: doc.id,
-              Player_Name,
-              ele,
-              Player_Value,
-              Position,
-              Player_id,
-              Team_Name,
-            });
+        //console.log("a");
+        //playerData.onSnapshot((querySnapshot) => {
+        //querySnapshot.onSnapshot((querySnapshot) => {
+        const newplayers = [];
+        querySnapshot.forEach((doc) => {
+          const {
+            Player_Name,
+            Team_id,
+            Player_Value,
+            Position,
+            Player_id,
+            Team_Name,
+            Player_Image,
+          } = doc.data();
+          newplayers.push({
+            id: doc.id,
+            Player_Name,
+            ele,
+            Player_Value,
+            Position,
+            Player_id,
+            Team_Name,
+            Player_Image,
           });
-          newplayers.forEach((val) => {
-            newNames.push(val);
-            //console.log(val.fields.Team_Name.stringValue);
-          });
-          // const getPlayers = {
-          //   method: "GET",
-          //   url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/TeamPlayers/Players/${ele}`,
-          // };
-          // var allNames = [];
-
-          // await axios.request(getPlayers).then(async function (response) {
-
-          // })
-
-          setPlayers(players);
-          setIsLoading(true);
-          hideLoader();
         });
+        newplayers.forEach((val) => {
+          newNames.push(val);
+          //console.log(val.fields.Team_Name.stringValue);
+        });
+        // const getPlayers = {
+        //   method: "GET",
+        //   url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/TeamPlayers/Players/${ele}`,
+        // };
+        // var allNames = [];
+
+        // await axios.request(getPlayers).then(async function (response) {
+
+        // })
+
+        setPlayers(players);
+        setIsLoading(true);
+        hideLoader();
+        //});
         //};
         setTest(() =>
           newNames.filter((item) => !parameterArray.includes(item.Player_id))
@@ -293,7 +298,7 @@ const Transfers = ({ route }) => {
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
-    fetching();
+    firstFetch();
     wait(2000).then(() => setIsRefreshing(false));
   }, []);
 
@@ -412,6 +417,7 @@ const Transfers = ({ route }) => {
     let a_left = val_val - calculateTeamValue();
     return a_left;
   };
+  const playerIcon = require("../../assets/football-player.png");
 
   useEffect(() => {
     //fetching();
@@ -422,18 +428,20 @@ const Transfers = ({ route }) => {
   return (
     <View style={styles.center}>
       {loader}
-      <Text>This is the Gameweek Transfers screen</Text>
-      <Text>
-        Current Team Value is{" "}
-        {useSelector((state) => state.transfersReducer.team_value)}{" "}
-      </Text>
-      <Text>Available balance is {route.params.curr_bal} </Text>
-
+      <View style={HomeStyles.teamValue}>
+        <Text style={HomeStyles.teamValue}>
+          Current Transfers Value : &#8373;{" "}
+          {useSelector((state) => state.transfersReducer.team_value)}{" "}
+        </Text>
+        <Text style={HomeStyles.teamValue}>
+          Available balance: &#8373;{route.params.curr_bal}{" "}
+        </Text>
+      </View>
       {/* <Pressable onPress={() => fetching()}>
         <Text>PRESS</Text>
       </Pressable> */}
       <FlatList
-        style={{ flex: 1, height: 100 }}
+        style={LeaderBoardStyle.mainContainer}
         data={test}
         refreshing={isRefreshing} // Added pull to refesh state
         onRefresh={onRefresh}
@@ -456,11 +464,27 @@ const Transfers = ({ route }) => {
               //dispatch(transfer_team_value(calculateTeamValue()));
             }}
           >
-            <View>
-              <Text>Name: {item.Player_Name}</Text>
-              <Text>Value: ${item.Player_Value}M</Text>
-              <Text>Team Name: {item.ele}</Text>
-              <Text>Position: {item.Position}</Text>
+            <View style={LeaderBoardStyle.pIcon}>
+              <Image
+                style={{ width: 40, height: 40 }}
+                source={{ uri: item.Player_Image }}
+              />
+            </View>
+            <View style={LeaderBoardStyle.firstSection}>
+              <Text style={LeaderBoardStyle.insidetext}>
+                Name: {item.Player_Name}
+              </Text>
+              <Text style={LeaderBoardStyle.insidetext}>
+                Team Name: {item.ele}
+              </Text>
+            </View>
+            <View style={LeaderBoardStyle.secondsection}>
+              <Text style={LeaderBoardStyle.insidetext}>
+                Value: ${item.Player_Value}M
+              </Text>
+              <Text style={LeaderBoardStyle.insidetext}>
+                Position: {item.Position}
+              </Text>
             </View>
           </Pressable>
         )}
@@ -472,8 +496,6 @@ const Transfers = ({ route }) => {
 const styles = StyleSheet.create({
   center: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     padding: -100,
   },
 });

@@ -45,6 +45,7 @@ import {
 } from "../redux/actions";
 import UseFullPageLoader from "../hooks/useFullPageLoader";
 import { set_team_value } from "../redux/actions";
+import HomeStyles from "../../styles/homeStyles";
 const FirstTimeUser = ({ route }) => {
   const navigation = useNavigation();
   const [favteam, setFavTeam] = useState("");
@@ -349,6 +350,25 @@ const FirstTimeUser = ({ route }) => {
       .update({
         members: arrayUnion(upload_id),
       })
+      .then(addToNamesOfLeagues())
+      .catch((e) => {
+        console.log(e);
+        undoAmountLeft();
+      });
+  };
+  const addToNamesOfLeagues = () => {
+    firebase
+      .firestore()
+      .collection("Leagues")
+      .doc("Public Leagues") //Global league id
+      .collection("Global League")
+      .doc(upload_id)
+      .set({
+        Game_Week_Points: 0,
+        Rankings: 0,
+        Season_Points: 0,
+        Team_name: team_name,
+      })
       .then(
         hideLoader(),
         dispatch(clear_data()),
@@ -356,13 +376,8 @@ const FirstTimeUser = ({ route }) => {
           index: 0,
           routes: [{ name: "Home" }],
         })
-      )
-      .catch((e) => {
-        console.log(e);
-        undoAmountLeft();
-      });
+      );
   };
-  const addToNamesOfLeagues = () => {};
   // const overBudget = () => {
   //   useSelector((state) => state.userReducer.budget);
   // };
@@ -523,7 +538,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{gk1_value}</Text>
+                <Text style={HomeStyles.player_value}> &#8373;{gk1_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -572,7 +587,7 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{gk2_value}</Text>
+                <Text style={HomeStyles.player_value}> &#8373;{gk2_value}</Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -623,7 +638,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{def1_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{def1_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -672,7 +690,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{def2_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{def2_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -721,7 +742,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{def3_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{def3_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -770,7 +794,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{def4_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{def4_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -819,7 +846,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{def5_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{def5_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -870,7 +900,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{mid1_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{mid1_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -919,7 +952,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{mid2_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{mid2_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -968,7 +1004,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{mid3_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{mid3_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1017,7 +1056,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{mid4_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{mid4_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1068,7 +1110,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{fwd1_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{fwd1_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1117,7 +1162,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{fwd2_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{fwd2_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1166,7 +1214,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{fwd3_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{fwd3_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",
@@ -1215,7 +1266,10 @@ const FirstTimeUser = ({ route }) => {
                 }}
               >
                 <Image style={{ width: 60, height: 60 }} source={playerIcon} />
-                <Text>{fwd4_value}</Text>
+                <Text style={HomeStyles.player_value}>
+                  {" "}
+                  &#8373;{fwd4_value}
+                </Text>
                 <View
                   style={{
                     backgroundColor: "white",

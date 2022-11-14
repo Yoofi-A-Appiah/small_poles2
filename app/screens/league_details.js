@@ -76,9 +76,8 @@ const League_details = ({ route }) => {
           <Pressable style={LeaderBoardStyle.single_item}>
             <View style={LeaderBoardStyle.firstSection}>
               <Text>Team Name: {item.Team_name}</Text>
-
-              <Text>SP {item.Season_Points}</Text>
-              <Text>GWP {item.Game_Week_Points}</Text>
+              <Text>Season Points: {item.Season_Points}</Text>
+              <Text>Game Week Points: {item.Game_Week_Points}</Text>
             </View>
 
             <AntDesign
