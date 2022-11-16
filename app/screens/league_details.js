@@ -12,6 +12,7 @@ import {
 import { firebase } from "../../initFirebase";
 import { getAuth } from "firebase/auth";
 import { initializedBase } from "../../initFirebase";
+import { useSelector } from "react-redux";
 const auth = getAuth(initializedBase);
 import { db } from "../../initFirebase";
 import {
@@ -29,6 +30,7 @@ const League_details = ({ route }) => {
   const navigation = useNavigation();
   const [leagueDetails, setLeagueDetails] = useState([]);
   const q = query(collectionGroup(db, route.params.leagueName));
+  let getUserid = useSelector((state) => state.signupReducer.user_id);
 
   //const playerData = firebase.firestore().collection("Players");
   //const dispatch = useDispatch();
@@ -46,7 +48,9 @@ const League_details = ({ route }) => {
         Season_Points,
         Team_name,
       });
-      setLeagueDetails(leagueUsers);
+      setLeagueDetails(
+        leagueUsers.filter((item) => !getUserid.includes(item.id))
+      );
     });
   };
   const wait = (timeout) => {
@@ -79,18 +83,19 @@ const League_details = ({ route }) => {
               <Text>Season Points: {item.Season_Points}</Text>
               <Text>Game Week Points: {item.Game_Week_Points}</Text>
             </View>
-
-            <AntDesign
-              name="message1"
-              size={35}
-              style={LeaderBoardStyle.secondsection}
-              color={"black"}
-              onPress={() =>
-                navigation.navigate("UserChat", {
-                  usersID: item.id,
-                })
-              }
-            ></AntDesign>
+            {route.params.checkPrivate && (
+              <AntDesign
+                name="message1"
+                size={35}
+                style={LeaderBoardStyle.secondsection}
+                color={"black"}
+                onPress={() =>
+                  navigation.navigate("UserChat", {
+                    usersID: item.id,
+                  })
+                }
+              ></AntDesign>
+            )}
           </Pressable>
         )}
       />

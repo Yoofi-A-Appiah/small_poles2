@@ -83,5 +83,32 @@ const LeaderBoardStyle = StyleSheet.create({
     height: 30,
     margin: 5,
   },
+  fixturesMainContainer: {
+    height: height,
+    width: width,
+    padding: 0,
+    backgroundColor: "rgba(52, 52, 52, 0.8)",
+  },
+  matchweek: {
+    fontSize: 18,
+    backgroundColor: "#387262",
+    color: "white",
+    padding: 14,
+    width: width,
+    textAlign: "center",
+  },
+  fixturesSingleItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 20,
+    borderColor: "black",
+    borderWidth: 2,
+    margin: 1,
+    borderRadius: 1,
+    backgroundColor: "#ffffff",
+  },
+  awayTeam: {},
+  homeTeamColor: {},
+  awayTeamColor: {},
 });
 export default LeaderBoardStyle;

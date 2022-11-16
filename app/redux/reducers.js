@@ -50,9 +50,11 @@ import {
   LEAGUE_NAME,
   LEAGUE_ID,
   SAVE_EMAIL,
+  FIXTURES_GW,
 } from "./actions";
 
 const initialState = {
+  fixturesGW: 7,
   name: "",
   email: "heo",
   fav: "___",
@@ -368,6 +370,8 @@ export function userReducer(state = initialState, action) {
   switch (action.type) {
     case SET_TEAM_NAME:
       return { ...state, name: action.payload };
+    case FIXTURES_GW:
+      return { ...state, fixturesGW: action.fixturesGW };
     case SAVE_EMAIL:
       return { ...state, email: action.email };
     case SET_FAV_TEAM:

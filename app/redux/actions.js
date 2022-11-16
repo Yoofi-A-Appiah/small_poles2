@@ -51,11 +51,18 @@ export const GAME_WEEK_POINTS = "GAME_WEEK_POINTS";
 export const LEAGUE_NAME = "LEAGUE_NAME";
 export const LEAGUE_ID = "LEAGUE_ID";
 export const SAVE_EMAIL = "SAVE_EMAIL";
+export const FIXTURES_GW = "FIXTURES_GW";
 //start transfer actions
 export const set_league_name = (league_name) => (dispatch) => {
   dispatch({
     type: LEAGUE_NAME,
     league_name: league_name,
+  });
+};
+export const set_fixtures_gw = (fixturesGW) => (dispatch) => {
+  dispatch({
+    type: FIXTURES_GW,
+    fixturesGW: fixturesGW,
   });
 };
 export const save_email = (email) => (dispatch) => {

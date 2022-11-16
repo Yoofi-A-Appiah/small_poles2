@@ -105,6 +105,7 @@ const Leagues = () => {
               onPress={() =>
                 navigation.navigate("League Details", {
                   leagueName: item.League_Name,
+                  checkPrivate: item.isPrivate,
                 })
               }
             >
