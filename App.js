@@ -12,6 +12,7 @@ import LeaderBoard from "./app/screens/leaderboards";
 import Transfers from "./app/screens/transfers";
 import League_details from "./app/screens/league_details";
 import UserChat from "./app/screens/UserChat";
+import LeagueSettings from "./app/screens/leagueSettings";
 import { Provider } from "react-redux";
 import { Store } from "./app/redux/store";
 
@@ -64,6 +65,11 @@ export default function App() {
           <Stack.Screen
             name="UserChat"
             component={UserChat}
+            options={{ headerShown: true }}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="League Settings"
+            component={LeagueSettings}
             options={{ headerShown: true }}
           ></Stack.Screen>
         </Stack.Navigator>

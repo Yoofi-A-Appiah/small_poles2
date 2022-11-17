@@ -11,6 +11,7 @@ import {
   Pressable,
   ImageBackground,
   Alert,
+  KeyboardAvoidingView,
 } from "react-native";
 import LeagueStyle from "../../styles/leaguestyle";
 import { getAuth, signOut, sendEmailVerification } from "firebase/auth";
@@ -156,33 +157,38 @@ const CreateLeague = () => {
 
   return (
     <View style={styles.center}>
-      <SafeAreaView style={LeagueStyle.bottomContainer}>
-        <View style={LeagueStyle.form}>
-          <Text style={LeagueStyle.smallText}>
-            You are allowed to create up to five (5) Leagues
-          </Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : ""}
+        keyboardVerticalOffset={Platform.OS === "android" ? 20 : 200}
+      >
+        <SafeAreaView style={LeagueStyle.bottomContainer}>
+          <View style={LeagueStyle.form}>
+            <Text style={LeagueStyle.smallText}>
+              You are allowed to create up to five (5) Leagues
+            </Text>
 
-          <TextInput
-            placeholder="Enter League Name"
-            placeholderTextColor={"black"}
-            value={leagueName}
-            onChangeText={setLeagueName}
-            style={LeagueStyle.text_input}
-          ></TextInput>
-          <Pressable
-            style={LeagueStyle.button}
-            onPress={() => {
-              formButtonSize.value = withSequence(
-                withSpring(1.5),
-                withSpring(1)
-              );
-              checkNumber();
-            }}
-          >
-            <Text style={LeagueStyle.buttonText}>Create</Text>
-          </Pressable>
-        </View>
-      </SafeAreaView>
+            <TextInput
+              placeholder="Enter League Name"
+              placeholderTextColor={"black"}
+              value={leagueName}
+              onChangeText={setLeagueName}
+              style={LeagueStyle.text_input}
+            ></TextInput>
+            <Pressable
+              style={LeagueStyle.button}
+              onPress={() => {
+                formButtonSize.value = withSequence(
+                  withSpring(1.5),
+                  withSpring(1)
+                );
+                checkNumber();
+              }}
+            >
+              <Text style={LeagueStyle.buttonText}>Create</Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     </View>
   );
 };

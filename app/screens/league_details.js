@@ -8,6 +8,7 @@ import {
   Image,
   FlatList,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { firebase } from "../../initFirebase";
 import { getAuth } from "firebase/auth";
@@ -23,6 +24,7 @@ import {
   limit,
   collectionGroup,
 } from "firebase/firestore";
+import { Ionicons } from "react-native-vector-icons";
 import { AntDesign } from "react-native-vector-icons";
 
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
@@ -70,6 +72,29 @@ const League_details = ({ route }) => {
   }, []);
   return (
     <View style={styles.center}>
+      <View style={{ alignItems: "center" }}>
+        <Text style={{ fontSize: 20 }}>{route.params.leagueName}</Text>
+      </View>
+      <View style={LeaderBoardStyle.leagueDetails}>
+        <Text style={{ fontStyle: "italic" }}>
+          Code: {route.params.inviteCode}
+        </Text>
+        <Text>
+          {route.params.admin === getUserid ? (
+            <TouchableOpacity
+              style={{ padding: 20 }}
+              onPress={() => {
+                navigation.navigate("League Settings");
+              }}
+            >
+              <Ionicons name="settings" size={25} color={"black"}></Ionicons>
+            </TouchableOpacity>
+          ) : (
+            ""
+          )}
+        </Text>
+      </View>
+
       <FlatList
         style={LeaderBoardStyle.mainContainer}
         data={leagueDetails}
@@ -106,9 +131,6 @@ const League_details = ({ route }) => {
 const styles = StyleSheet.create({
   center: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
   },
 });
 

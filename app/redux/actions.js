@@ -52,11 +52,18 @@ export const LEAGUE_NAME = "LEAGUE_NAME";
 export const LEAGUE_ID = "LEAGUE_ID";
 export const SAVE_EMAIL = "SAVE_EMAIL";
 export const FIXTURES_GW = "FIXTURES_GW";
+export const HOME_GAME_WEEK = "HOME_GAME_WEEK";
 //start transfer actions
 export const set_league_name = (league_name) => (dispatch) => {
   dispatch({
     type: LEAGUE_NAME,
     league_name: league_name,
+  });
+};
+export const set_home_game_week = (homeGW) => (dispatch) => {
+  dispatch({
+    type: HOME_GAME_WEEK,
+    homeGW: homeGW,
   });
 };
 export const set_fixtures_gw = (fixturesGW) => (dispatch) => {

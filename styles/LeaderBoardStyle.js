@@ -97,6 +97,13 @@ const LeaderBoardStyle = StyleSheet.create({
     width: width,
     textAlign: "center",
   },
+  leagueDetails: {
+    fontSize: 18,
+    color: "white",
+    padding: 6,
+    width: width,
+    alignItems: "flex-end",
+  },
   fixturesSingleItem: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -11,6 +11,7 @@ import {
   Pressable,
   TextInput,
   Alert,
+  KeyboardAvoidingView,
 } from "react-native";
 import { getAuth, signOut, sendEmailVerification } from "firebase/auth";
 import { initializedBase } from "../../initFirebase";
@@ -126,29 +127,34 @@ const JoinLeagues = () => {
   return (
     <View style={styles.center}>
       {leagueFound === false ? (
-        <SafeAreaView style={LeagueStyle.bottomContainer}>
-          <View style={LeagueStyle.form}>
-            <Text style={LeagueStyle.smallText}>
-              You must obtain the invite code of the league you want to join
-            </Text>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : ""}
+          keyboardVerticalOffset={Platform.OS === "android" ? 20 : 200}
+        >
+          <SafeAreaView style={LeagueStyle.bottomContainer}>
+            <View style={LeagueStyle.form}>
+              <Text style={LeagueStyle.smallText}>
+                You must obtain the invite code of the league you want to join
+              </Text>
 
-            <TextInput
-              placeholder="Enter invite code"
-              placeholderTextColor={"black"}
-              value={inviteCode}
-              onChangeText={setCode}
-              style={LeagueStyle.text_input}
-            ></TextInput>
-            <Pressable
-              style={LeagueStyle.button}
-              onPress={() => {
-                intermediate();
-              }}
-            >
-              <Text style={LeagueStyle.buttonText}>Search</Text>
-            </Pressable>
-          </View>
-        </SafeAreaView>
+              <TextInput
+                placeholder="Enter invite code"
+                placeholderTextColor={"black"}
+                value={inviteCode}
+                onChangeText={setCode}
+                style={LeagueStyle.text_input}
+              ></TextInput>
+              <Pressable
+                style={LeagueStyle.button}
+                onPress={() => {
+                  intermediate();
+                }}
+              >
+                <Text style={LeagueStyle.buttonText}>Search</Text>
+              </Pressable>
+            </View>
+          </SafeAreaView>
+        </KeyboardAvoidingView>
       ) : (
         <SafeAreaView>
           <View style={LeagueStyle.form}>

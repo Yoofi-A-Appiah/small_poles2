@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
+  ScrollView,
   ImageBackground,
   Pressable,
   FlatList,
@@ -699,7 +700,7 @@ const Statistics = ({ navigation, route }) => {
 
   let showContent = () => {
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         {isLoading && <Text>Loading</Text>}
         {!isLoading && (
           <View style={{ flex: 1 }}>
@@ -2130,7 +2131,7 @@ const Statistics = ({ navigation, route }) => {
             </ImageBackground>
           </View>
         )}
-      </View>
+      </ScrollView>
     );
   };
   let showSendVerificationEmail = () => {

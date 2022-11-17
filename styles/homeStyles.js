@@ -70,13 +70,12 @@ const HomeStyles = StyleSheet.create({
   },
   player_value: {
     backgroundColor: "#93C48B",
-    borderRadius: 7,
-    borderWidth: 1,
+    borderRadius: 5,
     borderColor: "black",
     color: "black",
     overflow: "hidden",
-    padding: 1,
-    fontSize: 20,
+    padding: 4,
+    fontSize: 15,
     position:
       "absolute" /* Position the badge within the relatively positioned button */,
     top: 0,

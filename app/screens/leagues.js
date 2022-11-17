@@ -48,11 +48,13 @@ const Leagues = () => {
 
     const players = [];
     querySnapshot.forEach((doc) => {
-      const { League_Name, isPrivate, members } = doc.data();
+      const { League_Name, isPrivate, admin, inviteCode, members } = doc.data();
       players.push({
         id: doc.id,
         League_Name,
         isPrivate,
+        admin,
+        inviteCode,
         members,
       });
     });
@@ -118,7 +120,7 @@ const Leagues = () => {
           </View> */}
               <View style={LeaderBoardStyle.generalLeague}>
                 <Text style={LeaderBoardStyle.ovr_points}>
-                  League Name: {item.League_Name}
+                  {item.League_Name}
                 </Text>
               </View>
             </Pressable>
@@ -138,12 +140,15 @@ const Leagues = () => {
               onPress={() =>
                 navigation.navigate("League Details", {
                   leagueName: item.League_Name,
+                  checkPrivate: item.isPrivate,
+                  inviteCode: item.inviteCode,
+                  admin: item.admin,
                 })
               }
             >
               <View style={LeaderBoardStyle.generalLeague}>
                 <Text style={LeaderBoardStyle.ovr_points}>
-                  League Name: {item.League_Name}
+                  {item.League_Name}
                 </Text>
               </View>
             </Pressable>

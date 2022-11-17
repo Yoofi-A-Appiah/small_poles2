@@ -19,6 +19,7 @@ import FirstTimeUserStyle from "../../styles/firstTimeUserStyle";
 import { db } from "../../initFirebase";
 import { query, collection, getDocs } from "firebase/firestore";
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
+import { Ionicons } from "react-native-vector-icons";
 
 const Fixtures = () => {
   const [isPickerVisible, setIsPickerVisible] = useState(false);
@@ -72,7 +73,7 @@ const Fixtures = () => {
   useEffect(() => {
     fetching();
   }, [fixturesGW]);
-  console.log(showFixtures);
+  // console.log(showFixtures);
 
   return (
     <View>
@@ -80,6 +81,11 @@ const Fixtures = () => {
         <Pressable onPress={() => setIsPickerVisible(true)}>
           <Text style={LeaderBoardStyle.matchweek}>
             Match Week {fixturesGW}
+            <Ionicons
+              name="caret-down-circle"
+              size={25}
+              color={"white"}
+            ></Ionicons>
           </Text>
         </Pressable>
       </View>
@@ -135,18 +141,18 @@ const Fixtures = () => {
           keyExtractor={(item, index) => item.id}
           renderItem={({ item }) => (
             <View style={LeaderBoardStyle.fixturesSingleItem}>
-              <Text
+              {/* <Text
                 style={{ backgroundColor: `${item.HomeTeamColor}`, padding: 5 }}
-              ></Text>
+              ></Text> */}
               <Text style={LeaderBoardStyle.ovr_points}>
                 {item.HomeTeamName}
               </Text>
               <Text style={LeaderBoardStyle.ovr_points}>
                 {""}-{""}
               </Text>
-              <Text
+              {/* <Text
                 style={{ backgroundColor: `${item.AwayTeamColor}`, padding: 5 }}
-              ></Text>
+              ></Text> */}
               <Text style={LeaderBoardStyle.ovr_points}>
                 {item.AwayTeamName}
               </Text>
