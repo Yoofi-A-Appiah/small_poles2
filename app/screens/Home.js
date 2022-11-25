@@ -336,6 +336,7 @@ const Home = ({ navigation, route }) => {
       setTransferOccur(transfer_occur);
     });
     //fetchPoints();
+    // CAN seperate here ****************
     const getTeamNames = {
       method: "GET",
       url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/Teams`,
@@ -349,6 +350,7 @@ const Home = ({ navigation, route }) => {
       var collectedPlayers = [];
 
       for (const ele of allNames) {
+        //allNames.forEach(async (ele) => {
         const q2 = query(collection(db, `TeamPlayers/Players/${ele}`));
         const querySnapshot2 = await getDocs(q2);
         const players2 = [];
@@ -368,6 +370,7 @@ const Home = ({ navigation, route }) => {
           collectedPlayers.push(val);
         });
       }
+      //);
       setCurrentPlayerValue(
         collectedPlayers.filter((item) => arr.includes(item.Player_id))
       );
@@ -383,12 +386,13 @@ const Home = ({ navigation, route }) => {
       setGameWN(gameweekNumbers);
       dispatchingFunction();
       getGWPoints();
+      setIsLoading(false);
     });
     //setAllPlayerIDs(arr);
-    setIsLoading(false);
   };
   const getGWPoints = async () => {
     //console.log("Start");
+
     var searchParams = [];
 
     // for (const element in currentPlayerValue) {
@@ -767,11 +771,123 @@ const Home = ({ navigation, route }) => {
     });
     return arr;
   };
+  const thesource = require("../../assets/playerswarming.gif");
+  const OVR_GW = () => {
+    var gk1_points = {
+      Points: Points_GK1().map((item) => {
+        return item.Points;
+        //return item.Points;
+      }),
+    };
+    var gk2_points = {
+      Points: Points_GK2().map((item) => {
+        return item.Points;
+      }),
+    };
 
+    var def1_points = {
+      Points: Points_DEF1().map((item) => {
+        return item.Points;
+      }),
+    };
+    var def2_points = {
+      Points: Points_DEF2().map((item) => {
+        return item.Points;
+      }),
+    };
+    var def3_points = {
+      Points: Points_DEF3().map((item) => {
+        return item.Points;
+      }),
+    };
+    var def4_points = {
+      Points: Points_DEF4().map((item) => {
+        return item.Points;
+      }),
+    };
+    var def5_points = {
+      Points: Points_DEF5().map((item) => {
+        return item.Points;
+      }),
+    };
+    var mid1_points = {
+      Points: Points_MID1().map((item) => {
+        return item.Points;
+      }),
+    };
+    var mid2_points = {
+      Points: Points_MID2().map((item) => {
+        return item.Points;
+      }),
+    };
+
+    var mid3_points = {
+      Points: Points_MID3().map((item) => {
+        //console.log(item.Points);
+        return item.Points == undefined ? 0 : item.Points;
+      }),
+    };
+    var mid4_points = {
+      Points: Points_MID4().map((item) => {
+        return item.Points;
+      }),
+    };
+    var fwd1_points = {
+      Points: Points_FWD1().map((item) => {
+        return item.Points;
+      }),
+    };
+    var fwd2_points = {
+      Points: Points_FWD2().map((item) => {
+        return item.Points;
+      }),
+    };
+    var fwd3_points = {
+      Points: Points_FWD3().map((item) => {
+        return item.Points;
+      }),
+    };
+    var fwd4_points = {
+      Points: Points_FWD4().map((item) => {
+        return item.Points;
+      }),
+    };
+    const totalPoints =
+      parseInt(gk1_points.Points) +
+      parseInt(gk2_points.Points) +
+      parseInt(def1_points.Points) +
+      parseInt(def2_points.Points) +
+      parseInt(def3_points.Points) +
+      parseInt(def4_points.Points) +
+      parseInt(def5_points.Points) +
+      parseInt(mid1_points.Points) +
+      parseInt(mid2_points.Points) +
+      parseInt(mid3_points.Points) +
+      parseInt(mid4_points.Points) +
+      parseInt(fwd1_points.Points) +
+      parseInt(fwd2_points.Points) +
+      parseInt(fwd3_points.Points) +
+      parseInt(fwd4_points.Points);
+    let test =
+      parseInt(gk1_points.Points) +
+      parseInt(gk2_points.Points) +
+      parseInt(def1_points.Points) +
+      parseInt(def2_points.Points) +
+      parseInt(def3_points.Points) +
+      parseInt(def4_points.Points) +
+      parseInt(def5_points.Points) +
+      parseInt(mid1_points.Points) +
+      parseInt(mid2_points.Points) +
+      parseInt(mid3_points.Points);
+    //console.log(mid3_points.Points == "");
+    return test;
+  };
   let showContent = () => {
     return (
       <View style={{ flex: 1 }}>
-        {isLoading && <Text style={{ alignText: "center" }}>Loading</Text>}
+        {isLoading && valueDispatch && (
+          <Image source={thesource} style={{ alignText: "center" }}></Image>
+        )}
         {!isLoading && !valueDispatch && (
           <View style={{ flex: 1 }}>
             <View style={HomeStyles.topDesign}>
@@ -856,9 +972,10 @@ const Home = ({ navigation, route }) => {
                   {/* <View style={HomeStyles.mainContainer}> */}
                   <Text style={HomeStyles.game_week_points}>
                     <Text style={{ fontSize: 10 }}>Game Week Points: </Text>
-                    {allPlayers.map((item) => {
+                    {OVR_GW()}
+                    {/* {allPlayers.map((item) => {
                       return item.Game_Week_Points;
-                    })}
+                    })} */}
                   </Text>
                   <Text style={HomeStyles.season_points}>
                     <Text style={{ fontSize: 10 }}>Season Points: </Text>

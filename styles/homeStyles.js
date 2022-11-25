@@ -60,9 +60,9 @@ const HomeStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ffffff",
     color: "black",
-    overflow: "hidden",
-    padding: 3,
-    fontSize: 20,
+    padding: 2,
+    textAlign: "center",
+    fontSize: 15,
     position:
       "absolute" /* Position the badge within the relatively positioned button */,
     top: 0,
@@ -74,12 +74,13 @@ const HomeStyles = StyleSheet.create({
     borderColor: "black",
     color: "black",
     overflow: "hidden",
-    padding: 4,
+    padding: 2,
     fontSize: 15,
     position:
       "absolute" /* Position the badge within the relatively positioned button */,
     top: 0,
     right: 10,
+    width: 50,
   },
   game_week_points: {
     backgroundColor: "#ffffff",
@@ -166,7 +167,6 @@ const HomeStyles = StyleSheet.create({
   player_text: {
     backgroundColor: "white",
     fontSize: 13,
-    height: 15,
     width: 50,
     borderRadius: 5,
   },
