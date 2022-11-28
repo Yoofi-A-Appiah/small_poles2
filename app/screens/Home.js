@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useEffect, useState,useRef } from "react";
 import {
   View,
   Button,
@@ -60,7 +60,7 @@ const auth = getAuth(initializedBase);
 const Home = ({ navigation, route }) => {
   //const navigation = useNavigation();
   const [allPlayers, setAllPlayers] = useState([]);
-  const [allPlayerIDs, setAllPlayerIDs] = useState([]);
+  const [gettingPoints, setGettingPoints] = useState(true);
   const [currentPlayerValue, setCurrentPlayerValue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [valueDispatch, setValueDispatch] = useState(true);
@@ -102,6 +102,7 @@ const Home = ({ navigation, route }) => {
           )
         )
       );
+      console.log(Value_GK1());
       dispatch(
         set_player_gk2(
           item.Player_GK2.Name,
@@ -256,7 +257,7 @@ const Home = ({ navigation, route }) => {
           )
         )
       );
-      setValueDispatch(false);
+    setValueDispatch(false);
     });
   };
   const getPlayers = async () => {
@@ -386,8 +387,8 @@ const Home = ({ navigation, route }) => {
       setGameWN(gameweekNumbers);
       dispatchingFunction();
       getGWPoints();
-      setIsLoading(false);
     });
+    setIsLoading(false);
     //setAllPlayerIDs(arr);
   };
   const getGWPoints = async () => {
@@ -772,83 +773,87 @@ const Home = ({ navigation, route }) => {
     return arr;
   };
   const thesource = require("../../assets/playerswarming.gif");
+  const thesecondsource = require("../../assets/greenLoader.gif");
+
   const OVR_GW = () => {
     var gk1_points = {
-      Points: Points_GK1().map((item) => {
+      Points: Object.keys(Points_GK1()).length == 0 ? 0 : Points_GK1().map((item) => {
         return item.Points;
         //return item.Points;
       }),
     };
     var gk2_points = {
-      Points: Points_GK2().map((item) => {
+      Points: Object.keys(Points_GK2()).length == 0 ? 0 : Points_GK2().map((item) => {
         return item.Points;
       }),
     };
 
     var def1_points = {
-      Points: Points_DEF1().map((item) => {
+      Points: Object.keys(Points_DEF1()).length == 0 ? 0 : Points_DEF1().map((item) => {
         return item.Points;
       }),
     };
     var def2_points = {
-      Points: Points_DEF2().map((item) => {
+      Points: Object.keys(Points_DEF2()).length == 0 ? 0 : Points_DEF2().map((item) => {
         return item.Points;
       }),
     };
     var def3_points = {
-      Points: Points_DEF3().map((item) => {
+      Points: Object.keys(Points_DEF3()).length == 0 ? 0 : Points_DEF3().map((item) => {
         return item.Points;
       }),
     };
     var def4_points = {
-      Points: Points_DEF4().map((item) => {
+      Points: Object.keys(Points_DEF4()).length == 0 ? 0 : Points_DEF4().map((item) => {
         return item.Points;
       }),
     };
     var def5_points = {
-      Points: Points_DEF5().map((item) => {
+      Points: Object.keys(Points_DEF5()).length == 0 ? 0 : Points_DEF5().map((item) => {
         return item.Points;
       }),
     };
     var mid1_points = {
-      Points: Points_MID1().map((item) => {
+      Points: Object.keys(Points_MID1()).length == 0 ? 0 : Points_MID1().map((item) => {
         return item.Points;
       }),
     };
     var mid2_points = {
-      Points: Points_MID2().map((item) => {
+      Points: Object.keys(Points_MID2()).length == 0 ? 0 : Points_MID2().map((item) => {
         return item.Points;
       }),
     };
-
+//console.log(Points_MID3());
     var mid3_points = {
-      Points: Points_MID3().map((item) => {
+      Points: Object.keys(Points_MID3()).length == 0 ? 0 : Points_MID3().map((item) => {
         //console.log(item.Points);
-        return item.Points == undefined ? 0 : item.Points;
+        return item.Points;
+       // return JSON.stringify(item.Points) === '{}' ? 0 : item.Points;
       }),
     };
+   //console.log(mid3_points)
     var mid4_points = {
-      Points: Points_MID4().map((item) => {
+      Points: Object.keys(Points_MID4()).length == 0 ? 0 : Points_MID4().map((item) => {
         return item.Points;
       }),
     };
     var fwd1_points = {
-      Points: Points_FWD1().map((item) => {
+      Points: Object.keys(Points_FWD1()).length == 0 ? 0 : Points_FWD1().map((item) => {
         return item.Points;
       }),
     };
     var fwd2_points = {
-      Points: Points_FWD2().map((item) => {
+      Points: Object.keys(Points_FWD2()).length == 0 ? 0 : Points_FWD2().map((item) => {
         return item.Points;
       }),
     };
     var fwd3_points = {
-      Points: Points_FWD3().map((item) => {
+      Points: Object.keys(Points_FWD3()).length == 0 ? 0 : Points_FWD3().map((item) => {
         return item.Points;
       }),
     };
     var fwd4_points = {
-      Points: Points_FWD4().map((item) => {
+      Points: Object.keys(Points_FWD4()).length == 0 ? 0 : Points_FWD4().map((item) => {
         return item.Points;
       }),
     };
@@ -868,27 +873,24 @@ const Home = ({ navigation, route }) => {
       parseInt(fwd2_points.Points) +
       parseInt(fwd3_points.Points) +
       parseInt(fwd4_points.Points);
-    let test =
-      parseInt(gk1_points.Points) +
-      parseInt(gk2_points.Points) +
-      parseInt(def1_points.Points) +
-      parseInt(def2_points.Points) +
-      parseInt(def3_points.Points) +
-      parseInt(def4_points.Points) +
-      parseInt(def5_points.Points) +
-      parseInt(mid1_points.Points) +
-      parseInt(mid2_points.Points) +
-      parseInt(mid3_points.Points);
-    //console.log(mid3_points.Points == "");
-    return test;
+    
+    return totalPoints;
   };
+
+  
   let showContent = () => {
     return (
       <View style={{ flex: 1 }}>
-        {isLoading && valueDispatch && (
-          <Image source={thesource} style={{ alignText: "center" }}></Image>
+        {isLoading && valueDispatch &&(
+              <View style={ HomeStyles.gifLoader}>
+
+              <Image source={thesource} style={{ alignText: "center" }}></Image>
+              <Image source={thesecondsource} style={{ alignText: "center" }}></Image>
+    </View>
+
         )}
-        {!isLoading && !valueDispatch && (
+        
+        {!isLoading && !valueDispatch && gettingPoints && (
           <View style={{ flex: 1 }}>
             <View style={HomeStyles.topDesign}>
               <Text style={HomeStyles.homeWelcome}>
@@ -990,8 +992,9 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_GK1().map((item) => {
-                          return item.Points;
+                        {
+      Object.keys(Points_GK1()).length == 0 ? 0 : Points_GK1().map((item) => {
+        return item.Points;
                         })}
                       </Text>
                       <View
@@ -1022,13 +1025,14 @@ const Home = ({ navigation, route }) => {
                     </Pressable>
                   </View>
                   <View style={HomeStyles.subContainer2}>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable style={HomeStyles.player_gk1} 
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_DEF1().map((item) => {
+                      {Object.keys(Points_DEF1()).length == 0 ? 0 : Points_DEF1().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1060,7 +1064,7 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_DEF2().map((item) => {
+                      {Object.keys(Points_DEF2()).length == 0 ? 0 : Points_DEF2().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1091,7 +1095,7 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_DEF3().map((item) => {
+                      {Object.keys(Points_DEF3()).length == 0 ? 0 : Points_DEF3().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1122,7 +1126,7 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_DEF4().map((item) => {
+                      {Object.keys(Points_DEF4()).length == 0 ? 0 : Points_DEF4().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1155,7 +1159,7 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_MID1().map((item) => {
+                      {Object.keys(Points_MID1()).length == 0 ? 0 : Points_MID1().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1186,7 +1190,7 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_MID2().map((item) => {
+                      {Object.keys(Points_MID2()).length == 0 ? 0 : Points_MID2().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1217,7 +1221,7 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_MID3().map((item) => {
+                      {Object.keys(Points_MID3()).length == 0 ? 0 : Points_MID3().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1250,7 +1254,7 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_FWD1().map((item) => {
+                      {Object.keys(Points_FWD1()).length == 0 ? 0 : Points_FWD1().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1282,7 +1286,7 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_FWD2().map((item) => {
+                      {Object.keys(Points_FWD2()).length == 0 ? 0 : Points_FWD2().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1313,7 +1317,7 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {Points_FWD3().map((item) => {
+                      {Object.keys(Points_FWD3()).length == 0 ? 0 : Points_FWD3().map((item) => {
                           return item.Points;
                         })}
                       </Text>
@@ -1354,7 +1358,7 @@ const Home = ({ navigation, route }) => {
                       source={playerIcon}
                     />
                     <Text style={HomeStyles.player_points}>
-                      {Points_GK2().map((item) => {
+                    {Object.keys(Points_GK2()).length == 0 ? 0 : Points_GK2().map((item) => {
                         return item.Points;
                       })}
                     </Text>
@@ -1385,7 +1389,7 @@ const Home = ({ navigation, route }) => {
                       source={playerIcon}
                     />
                     <Text style={HomeStyles.player_points}>
-                      {Points_DEF5().map((item) => {
+                    {Object.keys(Points_DEF5()).length == 0 ? 0 : Points_DEF5().map((item) => {
                         return item.Points;
                       })}
                     </Text>
@@ -1416,7 +1420,7 @@ const Home = ({ navigation, route }) => {
                       source={playerIcon}
                     />
                     <Text style={HomeStyles.player_points}>
-                      {Points_MID4().map((item) => {
+                    {Object.keys(Points_MID4()).length == 0 ? 0 : Points_MID4().map((item) => {
                         return item.Points;
                       })}
                     </Text>
@@ -1447,7 +1451,7 @@ const Home = ({ navigation, route }) => {
                       source={playerIcon}
                     />
                     <Text style={HomeStyles.player_points}>
-                      {Points_FWD4().map((item) => {
+                    {Object.keys(Points_FWD4()).length == 0 ? 0 : Points_FWD4().map((item) => {
                         return item.Points;
                       })}
                     </Text>

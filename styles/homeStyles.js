@@ -31,6 +31,12 @@ const HomeStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  gifLoader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
   text_input: {
     height: 50,
     borderWidth: 2,
