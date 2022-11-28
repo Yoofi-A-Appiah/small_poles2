@@ -95,7 +95,7 @@ const Login_Signup = ({ navigation }) => {
             dispatch(set_user_id(userCredential.user.uid));
             dispatch(clear_data());
             sendEmailVerification(auth.currentUser);
-            navigation.navigate("FirstTimeUser", {
+            navigation.replace("FirstTimeUser", {
               user: userCredential.user,
             });
 

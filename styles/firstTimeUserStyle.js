@@ -3,9 +3,11 @@ const { width, height } = Dimensions.get("window");
 
 const FirstTimeUserStyle = StyleSheet.create({
   container: {
-    flex: 0.7,
+    zIndex: -10,
+    flex: 0.95,
     top: 40,
     alignItems: "center",
+    backgroundColor: "#CFCFCF",
   },
 
   picker: {
@@ -28,6 +30,20 @@ const FirstTimeUserStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  FTUcenteredView: {
+    // position: "absolute",
+    // bottom: 0,
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
+  FTUcenteredView: {
+    position: "relative",
+    height: height,
+    bottom: 0,
+    zIndex: 10,
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
   text_input: {
     height: 50,
     borderWidth: 2,
@@ -38,7 +54,7 @@ const FirstTimeUserStyle = StyleSheet.create({
   },
   mainContainer: {
     top: 20,
-    height: height / 1,
+    height: height,
     width: width,
     flex: 1.2,
     flexDirection: "column",
@@ -201,12 +217,12 @@ const FirstTimeUserStyle = StyleSheet.create({
     top: 125,
     color: "#F6F930",
     alignItems: "center",
-    backgroundColor: "#F6F930",
+    backgroundColor: "#fdeb93",
     padding: 5,
     fontSize: 20,
     borderWidth: 2,
     borderRadius: 15,
-    borderColor: "#F6F930",
+    borderColor: "#fdeb93",
     overflow: "hidden",
     zIndex: 1,
     elevation: 1,

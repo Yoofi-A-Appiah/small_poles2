@@ -9,6 +9,7 @@ import {
   Modal,
   Pressable,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   ImageBackground,
   SafeAreaView,
   Alert,
@@ -49,6 +50,8 @@ import {
 import UseFullPageLoader from "../hooks/useFullPageLoader";
 import { set_team_value } from "../redux/actions";
 import HomeStyles from "../../styles/homeStyles";
+import Onboarding from "react-native-onboarding-swiper";
+
 const FirstTimeUser = ({ route }) => {
   const navigation = useNavigation();
   const [favteam, setFavTeam] = useState("");
@@ -56,6 +59,7 @@ const FirstTimeUser = ({ route }) => {
   const [teams, setPlayers] = useState([]);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [loader, showLoader, hideLoader] = UseFullPageLoader();
+  const [infoScreen, setInfoScreen] = useState(true);
   const dispatch = useDispatch();
   let fetching = async () => {
     teamData.onSnapshot((querySnapshot) => {
@@ -413,15 +417,93 @@ const FirstTimeUser = ({ route }) => {
   const saveReamianingState = () => {
     checkAllParams();
   };
+  const callUnboarding = () => {
+    setInfoScreen(true);
+  };
   useEffect(() => {
     //amountLeft();
+    callUnboarding();
     dispatch(balance(amountLeft()));
     fetching();
     dispatch(set_team_value(calculateTeamValue()));
   }, []);
   const playerIcon = require("../../assets/football-player.png");
+  const Done = ({ ...props }) => (
+    <TouchableOpacity {...props}>
+      <Text style={{ fontSize: 20 }}>Done</Text>
+    </TouchableOpacity>
+  );
   return (
-    <SafeAreaView style={styles.allcontainer}>
+    <View style={styles.allcontainer}>
+      {infoScreen && (
+        <View style={FirstTimeUserStyle.FTUcenteredView}>
+          <Onboarding
+            DoneButtonComponent={Done}
+            onDone={() => setInfoScreen(false)}
+            onSkip={() => setInfoScreen(false)}
+            showDone={true}
+            pages={[
+              {
+                backgroundColor: "#a6e4d0",
+                image: (
+                  <Image
+                    style={{ width: 100, height: 100 }}
+                    source={require("../../assets/football.png")}
+                  />
+                ),
+                title: "Welcome",
+                subtitle: "Welcome to Small Poles",
+              },
+              {
+                backgroundColor: "#fdeb93",
+                image: (
+                  <Image
+                    style={{ width: 100, height: 100 }}
+                    source={require("../../assets/jersey.png")}
+                  />
+                ),
+                title: "Create Your Team",
+                subtitle: "click the icon to add players to your team",
+              },
+              {
+                backgroundColor: "#e9bcbe",
+                image: (
+                  <Image
+                    style={{ width: 100, height: 100 }}
+                    source={require("../../assets/podium.png")}
+                  />
+                ),
+                title: "Select The Best",
+                subtitle:
+                  "Scroll through the list of players and select your dream team",
+              },
+              {
+                backgroundColor: "#e9bcbe",
+                image: (
+                  <Image
+                    style={{ width: 100, height: 100 }}
+                    source={require("../../assets/podium.png")}
+                  />
+                ),
+                title: "Budget Restrictions",
+                subtitle: "Ensure that your transfers are within budget",
+              },
+              {
+                backgroundColor: "#e9bcbe",
+                image: (
+                  <Image
+                    style={{ width: 100, height: 100 }}
+                    source={require("../../assets/podium.png")}
+                  />
+                ),
+                title: "All Done",
+                subtitle: "Click save to proceed into the Small Poles Arena",
+              },
+            ]}
+          />
+        </View>
+      )}
+
       <View style={FirstTimeUserStyle.container}>
         <Text style={{ fontSize: 18, marginBottom: 10 }}>
           Let's create your dream team
@@ -511,852 +593,854 @@ const FirstTimeUser = ({ route }) => {
         {/* <Text>Balance: {useSelector((state) => state.userReducer.balance)}</Text> */}
 
         {/* <Text>Value: {useSelector((state) => state.userReducer.team_value)}</Text> */}
-        <ImageBackground
-          source={image}
-          resizeMode="cover"
-          style={FirstTimeUserStyle.backImg}
-        >
-          <View style={FirstTimeUserStyle.mainContainer}>
-            <View style={FirstTimeUserStyle.subContainer1}>
-              {player_gk1 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "GK",
-                      reduxParams: set_player_gk1,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "GK",
-                      reduxParams: set_player_gk1,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{gk1_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+        <ScrollView>
+          <ImageBackground
+            source={image}
+            resizeMode="cover"
+            style={{ flex: 1 }}
+          >
+            <SafeAreaView style={FirstTimeUserStyle.mainContainer}>
+              <View style={FirstTimeUserStyle.subContainer1}>
+                {player_gk1 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "GK",
+                        reduxParams: set_player_gk1,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "GK",
+                        reduxParams: set_player_gk1,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{gk1_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_gk1}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_gk2 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_gk2}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "GK",
-                      reduxParams: set_player_gk2,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "GK",
-                      reduxParams: set_player_gk2,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{gk2_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_gk1}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_gk2 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_gk2}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "GK",
+                        reduxParams: set_player_gk2,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "GK",
+                        reduxParams: set_player_gk2,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{gk2_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_gk2}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-            </View>
-            <View style={FirstTimeUserStyle.subContainer2}>
-              {player_def1 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_def1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def1,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def1,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{def1_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_gk2}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+              </View>
+              <View style={FirstTimeUserStyle.subContainer2}>
+                {player_def1 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_def1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def1,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def1,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{def1_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_def1}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_def2 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_def2}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def2,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def2,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{def2_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_def1}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_def2 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_def2}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def2,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def2,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{def2_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_def2}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_def3 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_def3}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def3,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def3,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{def3_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_def2}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_def3 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_def3}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def3,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def3,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{def3_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_def3}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_def4 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_def4}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def4,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def4,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{def4_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_def3}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_def4 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_def4}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def4,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def4,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{def4_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_def4}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_def5 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_def5}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def5,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "DEF",
-                      reduxParams: set_player_def5,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{def5_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_def4}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_def5 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_def5}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def5,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "DEF",
+                        reduxParams: set_player_def5,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{def5_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_def5}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-            </View>
-            <View style={FirstTimeUserStyle.subContainer3}>
-              {player_mid1 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_mid1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "MID",
-                      reduxParams: set_player_mid1,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "MID",
-                      reduxParams: set_player_mid1,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{mid1_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_def5}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+              </View>
+              <View style={FirstTimeUserStyle.subContainer3}>
+                {player_mid1 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_mid1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "MID",
+                        reduxParams: set_player_mid1,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "MID",
+                        reduxParams: set_player_mid1,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{mid1_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_mid1}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_mid2 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_mid2}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "MID",
-                      reduxParams: set_player_mid2,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "MID",
-                      reduxParams: set_player_mid2,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{mid2_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_mid1}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_mid2 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_mid2}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "MID",
+                        reduxParams: set_player_mid2,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "MID",
+                        reduxParams: set_player_mid2,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{mid2_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_mid2}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_mid3 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_mid3}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "MID",
-                      reduxParams: set_player_mid3,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "MID",
-                      reduxParams: set_player_mid3,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{mid3_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_mid2}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_mid3 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_mid3}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "MID",
+                        reduxParams: set_player_mid3,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "MID",
+                        reduxParams: set_player_mid3,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{mid3_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_mid3}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_mid4 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_mid4}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "MID",
-                      reduxParams: set_player_mid4,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "MID",
-                      reduxParams: set_player_mid4,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{mid4_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_mid3}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_mid4 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_mid4}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "MID",
+                        reduxParams: set_player_mid4,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "MID",
+                        reduxParams: set_player_mid4,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{mid4_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_mid4}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-            </View>
-            <View style={FirstTimeUserStyle.subContainer4}>
-              {player_fwd1 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_fwd1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "FWD",
-                      reduxParams: set_player_fwd1,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "FWD",
-                      reduxParams: set_player_fwd1,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{fwd1_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_mid4}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+              </View>
+              <View style={FirstTimeUserStyle.subContainer4}>
+                {player_fwd1 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_fwd1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "FWD",
+                        reduxParams: set_player_fwd1,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "FWD",
+                        reduxParams: set_player_fwd1,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{fwd1_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_fwd1}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_fwd2 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_fwd2}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "FWD",
-                      reduxParams: set_player_fwd2,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "FWD",
-                      reduxParams: set_player_fwd2,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{fwd2_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_fwd1}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_fwd2 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_fwd2}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "FWD",
+                        reduxParams: set_player_fwd2,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "FWD",
+                        reduxParams: set_player_fwd2,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{fwd2_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_fwd2}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_fwd3 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_fwd3}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "FWD",
-                      reduxParams: set_player_fwd3,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "FWD",
-                      reduxParams: set_player_fwd3,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{fwd3_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_fwd2}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_fwd3 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_fwd3}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "FWD",
+                        reduxParams: set_player_fwd3,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "FWD",
+                        reduxParams: set_player_fwd3,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{fwd3_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_fwd3}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-              {player_fwd4 === "N@me" ? (
-                <Ionicons
-                  name="add-circle-outline"
-                  size={40}
-                  color={"black"}
-                  style={FirstTimeUserStyle.player_fwd4}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "FWD",
-                      reduxParams: set_player_fwd4,
-                    });
-                  }}
-                ></Ionicons>
-              ) : (
-                <Pressable
-                  style={FirstTimeUserStyle.player_gk1}
-                  onPress={() => {
-                    dispatch(set_team_value(calculateTeamValue()));
-                    //dispatch(balance(amountLeft()));
-                    navigation.navigate("Make Transfer", {
-                      paramKey: "FWD",
-                      reduxParams: set_player_fwd4,
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 60, height: 60 }}
-                    source={playerIcon}
-                  />
-                  <Text style={HomeStyles.player_value}>
-                    {" "}
-                    &#8373;{fwd4_value}
-                  </Text>
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 5,
-                      padding: 5,
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_fwd3}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+                {player_fwd4 === "N@me" ? (
+                  <Ionicons
+                    name="add-circle-outline"
+                    size={40}
+                    color={"black"}
+                    style={FirstTimeUserStyle.player_fwd4}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "FWD",
+                        reduxParams: set_player_fwd4,
+                      });
+                    }}
+                  ></Ionicons>
+                ) : (
+                  <Pressable
+                    style={FirstTimeUserStyle.player_gk1}
+                    onPress={() => {
+                      dispatch(set_team_value(calculateTeamValue()));
+                      //dispatch(balance(amountLeft()));
+                      navigation.navigate("Make Transfer", {
+                        paramKey: "FWD",
+                        reduxParams: set_player_fwd4,
+                      });
                     }}
                   >
-                    <TextTicker
-                      style={FirstTimeUserStyle.player_text}
-                      duration={3000}
-                      loop
-                      bounce
-                      repeatSpacer={50}
-                      marqueeDelay={3000}
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={playerIcon}
+                    />
+                    <Text style={HomeStyles.player_value}>
+                      {" "}
+                      &#8373;{fwd4_value}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
                     >
-                      {player_fwd4}
-                    </TextTicker>
-                  </View>
-                </Pressable>
-              )}
-            </View>
-          </View>
-        </ImageBackground>
+                      <TextTicker
+                        style={FirstTimeUserStyle.player_text}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={3000}
+                      >
+                        {player_fwd4}
+                      </TextTicker>
+                    </View>
+                  </Pressable>
+                )}
+              </View>
+            </SafeAreaView>
+          </ImageBackground>
+        </ScrollView>
         <View
           style={{
             flexDirection: "row",
             width: 300,
-            justifyContent: "space-evenly",
+            justifyContent: "space-between",
             alignContent: "center",
           }}
         >
@@ -1402,9 +1486,8 @@ const FirstTimeUser = ({ route }) => {
             <Text style={{ textAlign: "center", color: "white" }}>SAVE</Text>
           </Pressable>
         </View>
-        {loader}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
