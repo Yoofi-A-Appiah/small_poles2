@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { Component, useEffect, useState,useRef } from "react";
+import React, { Component, useEffect, useState, useRef } from "react";
 import {
   View,
   Button,
@@ -30,6 +30,7 @@ import { firebase } from "../../initFirebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
 import { db } from "../../initFirebase";
 import TextTicker from "react-native-text-ticker";
+import Select, { SelectItem } from "@redmin_delishaj/react-native-select";
 import {
   set_player_gk1,
   set_player_gk2,
@@ -55,6 +56,7 @@ import {
 } from "../redux/actions";
 import UseFullPageLoader from "../hooks/useFullPageLoader";
 import axios from "axios";
+import { Platform } from "react-native";
 const auth = getAuth(initializedBase);
 
 const Home = ({ navigation, route }) => {
@@ -68,6 +70,7 @@ const Home = ({ navigation, route }) => {
   const [loader, showLoader, hideLoader] = UseFullPageLoader();
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [gameWN, setGameWN] = useState([]);
+  const [androidGameWN, setandroidGameWN] = useState([]);
   const [gwPerformance, setGWPerformance] = useState([]);
   const dispatch = useDispatch();
   let getUserid = useSelector((state) => state.signupReducer.user_id);
@@ -257,7 +260,7 @@ const Home = ({ navigation, route }) => {
           )
         )
       );
-    setValueDispatch(false);
+      setValueDispatch(false);
     });
   };
   const getPlayers = async () => {
@@ -384,7 +387,17 @@ const Home = ({ navigation, route }) => {
         { id: "5", iName: "5" },
         { id: "6", iName: "6" },
       ];
+      const androidgameweekNumbers = [
+        //add new gameweek here
+        { text: "1", value: 1 },
+        { text: "2", value: 2 },
+        { text: "3", value: 3 },
+        { text: "4", value: 4 },
+        { text: "5", value: 5 },
+        { text: "6", value: 6 },
+      ];
       setGameWN(gameweekNumbers);
+      setandroidGameWN(androidgameweekNumbers);
       dispatchingFunction();
       getGWPoints();
     });
@@ -777,85 +790,130 @@ const Home = ({ navigation, route }) => {
 
   const OVR_GW = () => {
     var gk1_points = {
-      Points: Object.keys(Points_GK1()).length == 0 ? 0 : Points_GK1().map((item) => {
-        return item.Points;
-        //return item.Points;
-      }),
+      Points:
+        Object.keys(Points_GK1()).length == 0
+          ? 0
+          : Points_GK1().map((item) => {
+              return item.Points;
+              //return item.Points;
+            }),
     };
     var gk2_points = {
-      Points: Object.keys(Points_GK2()).length == 0 ? 0 : Points_GK2().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_GK2()).length == 0
+          ? 0
+          : Points_GK2().map((item) => {
+              return item.Points;
+            }),
     };
 
     var def1_points = {
-      Points: Object.keys(Points_DEF1()).length == 0 ? 0 : Points_DEF1().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_DEF1()).length == 0
+          ? 0
+          : Points_DEF1().map((item) => {
+              return item.Points;
+            }),
     };
     var def2_points = {
-      Points: Object.keys(Points_DEF2()).length == 0 ? 0 : Points_DEF2().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_DEF2()).length == 0
+          ? 0
+          : Points_DEF2().map((item) => {
+              return item.Points;
+            }),
     };
     var def3_points = {
-      Points: Object.keys(Points_DEF3()).length == 0 ? 0 : Points_DEF3().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_DEF3()).length == 0
+          ? 0
+          : Points_DEF3().map((item) => {
+              return item.Points;
+            }),
     };
     var def4_points = {
-      Points: Object.keys(Points_DEF4()).length == 0 ? 0 : Points_DEF4().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_DEF4()).length == 0
+          ? 0
+          : Points_DEF4().map((item) => {
+              return item.Points;
+            }),
     };
     var def5_points = {
-      Points: Object.keys(Points_DEF5()).length == 0 ? 0 : Points_DEF5().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_DEF5()).length == 0
+          ? 0
+          : Points_DEF5().map((item) => {
+              return item.Points;
+            }),
     };
     var mid1_points = {
-      Points: Object.keys(Points_MID1()).length == 0 ? 0 : Points_MID1().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_MID1()).length == 0
+          ? 0
+          : Points_MID1().map((item) => {
+              return item.Points;
+            }),
     };
     var mid2_points = {
-      Points: Object.keys(Points_MID2()).length == 0 ? 0 : Points_MID2().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_MID2()).length == 0
+          ? 0
+          : Points_MID2().map((item) => {
+              return item.Points;
+            }),
     };
-//console.log(Points_MID3());
+    //console.log(Points_MID3());
     var mid3_points = {
-      Points: Object.keys(Points_MID3()).length == 0 ? 0 : Points_MID3().map((item) => {
-        //console.log(item.Points);
-        return item.Points;
-       // return JSON.stringify(item.Points) === '{}' ? 0 : item.Points;
-      }),
+      Points:
+        Object.keys(Points_MID3()).length == 0
+          ? 0
+          : Points_MID3().map((item) => {
+              //console.log(item.Points);
+              return item.Points;
+              // return JSON.stringify(item.Points) === '{}' ? 0 : item.Points;
+            }),
     };
-   //console.log(mid3_points)
+    //console.log(mid3_points)
     var mid4_points = {
-      Points: Object.keys(Points_MID4()).length == 0 ? 0 : Points_MID4().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_MID4()).length == 0
+          ? 0
+          : Points_MID4().map((item) => {
+              return item.Points;
+            }),
     };
     var fwd1_points = {
-      Points: Object.keys(Points_FWD1()).length == 0 ? 0 : Points_FWD1().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_FWD1()).length == 0
+          ? 0
+          : Points_FWD1().map((item) => {
+              return item.Points;
+            }),
     };
     var fwd2_points = {
-      Points: Object.keys(Points_FWD2()).length == 0 ? 0 : Points_FWD2().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_FWD2()).length == 0
+          ? 0
+          : Points_FWD2().map((item) => {
+              return item.Points;
+            }),
     };
     var fwd3_points = {
-      Points: Object.keys(Points_FWD3()).length == 0 ? 0 : Points_FWD3().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_FWD3()).length == 0
+          ? 0
+          : Points_FWD3().map((item) => {
+              return item.Points;
+            }),
     };
     var fwd4_points = {
-      Points: Object.keys(Points_FWD4()).length == 0 ? 0 : Points_FWD4().map((item) => {
-        return item.Points;
-      }),
+      Points:
+        Object.keys(Points_FWD4()).length == 0
+          ? 0
+          : Points_FWD4().map((item) => {
+              return item.Points;
+            }),
     };
     const totalPoints =
       parseInt(gk1_points.Points) +
@@ -873,23 +931,31 @@ const Home = ({ navigation, route }) => {
       parseInt(fwd2_points.Points) +
       parseInt(fwd3_points.Points) +
       parseInt(fwd4_points.Points);
-    
+
     return totalPoints;
   };
-
-  
+  const config = {
+    fontSize: 18,
+    backgroundColor: "#404040",
+    textColor: "white",
+    selectedBackgroundColor: "white",
+    selectedTextColor: "black",
+    selectedFontWeight: "bold",
+    elevation: 3,
+  };
   let showContent = () => {
     return (
       <View style={{ flex: 1 }}>
-        {isLoading && valueDispatch &&(
-              <View style={ HomeStyles.gifLoader}>
-
-              <Image source={thesource} style={{ alignText: "center" }}></Image>
-              <Image source={thesecondsource} style={{ alignText: "center" }}></Image>
-    </View>
-
+        {isLoading && valueDispatch && (
+          <View style={HomeStyles.gifLoader}>
+            <Image source={thesource} style={{ alignText: "center" }}></Image>
+            <Image
+              source={thesecondsource}
+              style={{ alignText: "center" }}
+            ></Image>
+          </View>
         )}
-        
+
         {!isLoading && !valueDispatch && gettingPoints && (
           <View style={{ flex: 1 }}>
             <View style={HomeStyles.topDesign}>
@@ -898,6 +964,22 @@ const Home = ({ navigation, route }) => {
                   return item.Team_name;
                 })}
               </Text>
+              {Platform.OS === "android" && (
+                //<View style={{ elevation: 2 }}>
+                <Select
+                  data={androidGameWN}
+                  onSelect={(value) => dispatch(set_home_game_week(value))}
+                  value={homeGW}
+                  config={config}
+                />
+                //</View>
+                // <View style={{ flexDirection: "row", elevation: 2 }}>
+                //   <Text style={LeaderBoardStyle.matchweek}>
+                //     Match Week {homeGW}
+                //   </Text>
+
+                // </View>
+              )}
               <Text style={HomeStyles.teamValue}>
                 Team Value: &#8373;
                 {allPlayers.map((item) => {
@@ -905,18 +987,22 @@ const Home = ({ navigation, route }) => {
                 })}{" "}
                 M
               </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Pressable onPress={() => setIsPickerVisible(true)}>
-                  <Text style={LeaderBoardStyle.matchweek}>
-                    Match Week {homeGW}
-                    <Ionicons
-                      name="caret-down-circle"
-                      size={25}
-                      color={"white"}
-                    ></Ionicons>
-                  </Text>
-                </Pressable>
-              </View>
+
+              {Platform.OS === "ios" && (
+                <View style={{ flexDirection: "row" }}>
+                  <Pressable onPress={() => setIsPickerVisible(true)}>
+                    <Text style={LeaderBoardStyle.matchweek}>
+                      Match Week {homeGW}
+                      <Ionicons
+                        name="caret-down-circle"
+                        size={25}
+                        color={"white"}
+                      ></Ionicons>
+                    </Text>
+                  </Pressable>
+                </View>
+              )}
+
               <Modal
                 animationType="slide"
                 transparent={true}
@@ -992,10 +1078,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                        {
-      Object.keys(Points_GK1()).length == 0 ? 0 : Points_GK1().map((item) => {
-        return item.Points;
-                        })}
+                        {Object.keys(Points_GK1()).length == 0
+                          ? 0
+                          : Points_GK1().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
                       <View
                         style={{
@@ -1025,16 +1112,17 @@ const Home = ({ navigation, route }) => {
                     </Pressable>
                   </View>
                   <View style={HomeStyles.subContainer2}>
-                    <Pressable style={HomeStyles.player_gk1} 
-                    >
+                    <Pressable style={HomeStyles.player_gk1}>
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_DEF1()).length == 0 ? 0 : Points_DEF1().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_DEF1()).length == 0
+                          ? 0
+                          : Points_DEF1().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
 
                       <View
@@ -1064,9 +1152,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_DEF2()).length == 0 ? 0 : Points_DEF2().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_DEF2()).length == 0
+                          ? 0
+                          : Points_DEF2().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
                       <View
                         style={{
@@ -1095,9 +1185,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_DEF3()).length == 0 ? 0 : Points_DEF3().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_DEF3()).length == 0
+                          ? 0
+                          : Points_DEF3().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
                       <View
                         style={{
@@ -1126,9 +1218,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_DEF4()).length == 0 ? 0 : Points_DEF4().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_DEF4()).length == 0
+                          ? 0
+                          : Points_DEF4().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
                       <View
                         style={{
@@ -1159,9 +1253,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_MID1()).length == 0 ? 0 : Points_MID1().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_MID1()).length == 0
+                          ? 0
+                          : Points_MID1().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
                       <View
                         style={{
@@ -1190,9 +1286,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_MID2()).length == 0 ? 0 : Points_MID2().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_MID2()).length == 0
+                          ? 0
+                          : Points_MID2().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
                       <View
                         style={{
@@ -1221,9 +1319,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_MID3()).length == 0 ? 0 : Points_MID3().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_MID3()).length == 0
+                          ? 0
+                          : Points_MID3().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
                       <View
                         style={{
@@ -1254,9 +1354,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_FWD1()).length == 0 ? 0 : Points_FWD1().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_FWD1()).length == 0
+                          ? 0
+                          : Points_FWD1().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
 
                       <View
@@ -1286,9 +1388,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_FWD2()).length == 0 ? 0 : Points_FWD2().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_FWD2()).length == 0
+                          ? 0
+                          : Points_FWD2().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
                       <View
                         style={{
@@ -1317,9 +1421,11 @@ const Home = ({ navigation, route }) => {
                         source={playerIcon}
                       />
                       <Text style={HomeStyles.player_points}>
-                      {Object.keys(Points_FWD3()).length == 0 ? 0 : Points_FWD3().map((item) => {
-                          return item.Points;
-                        })}
+                        {Object.keys(Points_FWD3()).length == 0
+                          ? 0
+                          : Points_FWD3().map((item) => {
+                              return item.Points;
+                            })}
                       </Text>
                       <View
                         style={{
@@ -1358,9 +1464,11 @@ const Home = ({ navigation, route }) => {
                       source={playerIcon}
                     />
                     <Text style={HomeStyles.player_points}>
-                    {Object.keys(Points_GK2()).length == 0 ? 0 : Points_GK2().map((item) => {
-                        return item.Points;
-                      })}
+                      {Object.keys(Points_GK2()).length == 0
+                        ? 0
+                        : Points_GK2().map((item) => {
+                            return item.Points;
+                          })}
                     </Text>
                     <View
                       style={{
@@ -1389,9 +1497,11 @@ const Home = ({ navigation, route }) => {
                       source={playerIcon}
                     />
                     <Text style={HomeStyles.player_points}>
-                    {Object.keys(Points_DEF5()).length == 0 ? 0 : Points_DEF5().map((item) => {
-                        return item.Points;
-                      })}
+                      {Object.keys(Points_DEF5()).length == 0
+                        ? 0
+                        : Points_DEF5().map((item) => {
+                            return item.Points;
+                          })}
                     </Text>
                     <View
                       style={{
@@ -1420,9 +1530,11 @@ const Home = ({ navigation, route }) => {
                       source={playerIcon}
                     />
                     <Text style={HomeStyles.player_points}>
-                    {Object.keys(Points_MID4()).length == 0 ? 0 : Points_MID4().map((item) => {
-                        return item.Points;
-                      })}
+                      {Object.keys(Points_MID4()).length == 0
+                        ? 0
+                        : Points_MID4().map((item) => {
+                            return item.Points;
+                          })}
                     </Text>
                     <View
                       style={{
@@ -1451,9 +1563,11 @@ const Home = ({ navigation, route }) => {
                       source={playerIcon}
                     />
                     <Text style={HomeStyles.player_points}>
-                    {Object.keys(Points_FWD4()).length == 0 ? 0 : Points_FWD4().map((item) => {
-                        return item.Points;
-                      })}
+                      {Object.keys(Points_FWD4()).length == 0
+                        ? 0
+                        : Points_FWD4().map((item) => {
+                            return item.Points;
+                          })}
                     </Text>
                     <View
                       style={{

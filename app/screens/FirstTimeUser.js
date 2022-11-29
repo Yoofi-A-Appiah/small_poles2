@@ -16,6 +16,7 @@ import {
   ScrollView,
   StyleSheet,
   StatusBar,
+  Platform,
 } from "react-native";
 import TextTicker from "react-native-text-ticker";
 import _ from "lodash";
@@ -51,27 +52,37 @@ import UseFullPageLoader from "../hooks/useFullPageLoader";
 import { set_team_value } from "../redux/actions";
 import HomeStyles from "../../styles/homeStyles";
 import Onboarding from "react-native-onboarding-swiper";
+import Select, { SelectItem } from "@redmin_delishaj/react-native-select";
 
 const FirstTimeUser = ({ route }) => {
   const navigation = useNavigation();
   const [favteam, setFavTeam] = useState("");
   const teamData = firebase.firestore().collection("Teams");
   const [teams, setPlayers] = useState([]);
+  const [androidTeam, setAndroidTeam] = useState([]);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [loader, showLoader, hideLoader] = UseFullPageLoader();
   const [infoScreen, setInfoScreen] = useState(true);
+  const [showdropdown, setDropdownIsVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
   const dispatch = useDispatch();
   let fetching = async () => {
     teamData.onSnapshot((querySnapshot) => {
       const teams = [];
+      const androidTeams = [];
       querySnapshot.forEach((doc) => {
         const { Team_name } = doc.data();
         teams.push({
           id: doc.id,
           name: Team_name,
         });
+        androidTeams.push({
+          text: Team_name,
+          value: doc.id,
+        });
       });
       setPlayers(teams);
+      setAndroidTeam(androidTeams);
     });
   };
 
@@ -506,7 +517,7 @@ const FirstTimeUser = ({ route }) => {
 
       <View style={FirstTimeUserStyle.container}>
         <Text style={{ fontSize: 18, marginBottom: 10 }}>
-          Let's create your dream team
+          Create your dream team
         </Text>
         <View style={{ flexDirection: "row" }}>
           <TextInput
@@ -515,19 +526,22 @@ const FirstTimeUser = ({ route }) => {
             value={useSelector((state) => state.userReducer.name)}
             onChangeText={(value) => dispatch(set_team_name(value))}
           ></TextInput>
-          <Pressable onPress={() => setIsPickerVisible(true)}>
-            <Text
-              style={{
-                fontSize: 18,
-                backgroundColor: "#387262",
-                color: "white",
-                padding: 8,
-                width: 150,
-              }}
-            >
-              Select Favorite Team
-            </Text>
-          </Pressable>
+          {Platform.OS === "ios" && (
+            <Pressable onPress={() => setIsPickerVisible(true)}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  backgroundColor: "#387262",
+                  color: "white",
+                  padding: 8,
+                  width: 150,
+                  height: 50,
+                }}
+              >
+                Select Team
+              </Text>
+            </Pressable>
+          )}
         </View>
         <Modal
           animationType="slide"
@@ -577,19 +591,34 @@ const FirstTimeUser = ({ route }) => {
         Current team value is{" "}
         {useSelector((state) => state.userReducer.team_value)}
       </Text> */}
+        {Platform.OS === "android" && (
+          <Select
+            data={androidTeam}
+            onSelect={(value) => dispatch(set_fav_team(value))}
+            value={selectedItem}
+          />
+        )}
         {useSelector((state) => state.userReducer.budget) === false
           ? ""
           : overBudgetAlert()}
-        <View style={FirstTimeUserStyle.balance}>
-          <Text>{amountLeft()}</Text>
-          <Text>Budget balance</Text>
+        <View
+          style={
+            Platform.OS === "ios"
+              ? FirstTimeUserStyle.balance
+              : FirstTimeUserStyle.androidBalance
+          }
+        >
+          <Text>&#8373;{amountLeft()}</Text>
+          <Text>Balance</Text>
         </View>
-        <View style={FirstTimeUserStyle.favTeam}>
-          <Text style={FirstTimeUserStyle.favTeam1}>
-            {useSelector((state) => state.userReducer.fav)}
-          </Text>
-          <Text style={FirstTimeUserStyle.favTeam2}> Favorite Team</Text>
-        </View>
+        {Platform.OS === "ios" && (
+          <View style={FirstTimeUserStyle.favTeam}>
+            <Text style={FirstTimeUserStyle.favTeam1}>
+              {useSelector((state) => state.userReducer.fav)}
+            </Text>
+            <Text style={FirstTimeUserStyle.favTeam2}> Favorite Team</Text>
+          </View>
+        )}
         {/* <Text>Balance: {useSelector((state) => state.userReducer.balance)}</Text> */}
 
         {/* <Text>Value: {useSelector((state) => state.userReducer.team_value)}</Text> */}

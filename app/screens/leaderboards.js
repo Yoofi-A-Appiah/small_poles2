@@ -113,6 +113,7 @@ const LeaderBoard = ({ route }) => {
     fwd4,
   ];
   const firstFetch = async () => {
+    setIsLoading(true);
     const getTeamNames = {
       method: "GET",
       url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/Teams`,
@@ -137,7 +138,7 @@ const LeaderBoard = ({ route }) => {
           // doc("Players"),
           // collection(`${ele}`)
         );
-        showLoader();
+        //showLoader();
         const querySnapshot = await getDocs(docRef);
         //playerData.onSnapshot((querySnapshot) => {
         const newplayers = [];
@@ -176,8 +177,8 @@ const LeaderBoard = ({ route }) => {
           newNames.filter((item) => !parameterArray.includes(item.Player_id))
         );
         setPlayers(players);
-        setIsLoading(true);
-        hideLoader();
+        setIsLoading(false);
+        //hideLoader();
         //});
         // console.log(newNames);
       }
@@ -238,12 +239,10 @@ const LeaderBoard = ({ route }) => {
     firstFetch();
     isOverBudget();
   }, []);
+  const thesource = require("../../assets/loadingPlayers.gif");
+
   return (
     <View style={styles.center}>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        {loader}
-      </View>
-
       <View style={HomeStyles.teamValue}>
         <Text style={HomeStyles.teamValue}>
           Current Team Value: &#8373;
@@ -257,6 +256,11 @@ const LeaderBoard = ({ route }) => {
       {/* <Pressable onPress={() => fetching()}>
         <Text>PRESS</Text>
       </Pressable> */}
+      {isLoading && (
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Image source={thesource} style={{ alignText: "center" }}></Image>
+        </View>
+      )}
       <FlatList
         style={LeaderBoardStyle.mainContainer}
         data={test}

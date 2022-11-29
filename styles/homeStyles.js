@@ -81,12 +81,13 @@ const HomeStyles = StyleSheet.create({
     color: "black",
     overflow: "hidden",
     padding: 2,
-    fontSize: 15,
+    fontSize: 10,
     position:
       "absolute" /* Position the badge within the relatively positioned button */,
-    top: 0,
+    top: 5,
     right: 10,
     width: 50,
+    alignText: "center",
   },
   game_week_points: {
     backgroundColor: "#ffffff",
