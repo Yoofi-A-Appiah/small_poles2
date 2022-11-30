@@ -610,21 +610,21 @@ const Statistics = ({ navigation, route }) => {
 
   const hasTransferBeenMade = () => {
     const initialState = {
-      player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_def2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_def3: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_def4: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_def5: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
-      player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+      player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_def1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_def2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_def3: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_def4: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_def5: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
     };
     if (
       _.isEqual(initialState.player_gk1, transferState.player_gk1) === false ||
@@ -719,35 +719,31 @@ const Statistics = ({ navigation, route }) => {
               style={{ flex: 1 }}
             >
               {transferMade === true ? (
-                <Pressable
-                  onPress={() => {
-                    dispatch(transfer_balance(amountLeft()));
-                    confirmTransfers();
-                  }}
-                >
+               
                   <MaterialIcons
                     name="check-circle"
-                    size={50}
+                    size={60}
                     color={"black"}
                     style={HomeStyles.confirmButton}
+                    onPress={() => {
+                      dispatch(transfer_balance(amountLeft()));
+                      confirmTransfers();
+                    }}
                   ></MaterialIcons>
-                </Pressable>
               ) : (
                 ""
               )}
               {transferMade === true ? (
-                <Pressable
-                  onPress={() => {
-                    dispatch(clear_transfer_data());
-                  }}
-                >
+                
                   <MaterialIcons
                     name="cancel"
-                    size={50}
+                    size={60}
                     color={"black"}
                     style={HomeStyles.declineButton}
+                    onPress={() => {
+                      dispatch(clear_transfer_data());
+                    }}
                   ></MaterialIcons>
-                </Pressable>
               ) : (
                 ""
               )}

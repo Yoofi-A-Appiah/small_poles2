@@ -62,47 +62,47 @@ const initialState = {
   fav: "___",
   team_value: 0,
   budget: false, //indicates that user is under budget by default
-  balance: 1000,
+  balance: 1000, 
   user_id: "",
   all_player_value: 0,
   season_points: 0,
   game_week_points: 0,
-  player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def3: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def4: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def5: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_def1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_def2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_def3: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_def4: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_def5: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
+  player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0, teamid:"N@" },
 };
 const transferState = {
   transfer_made: false,
   team_value: 0,
   budget: false, //indicates that user is under budget by default
   balance: 1000,
-  player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def3: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def4: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_def5: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0 },
-  player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0 },
+  player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@"  },
+  player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_def1: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_def2: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_def3: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_def4: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_def5: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
+  player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0,teamid:"N@" },
 };
 const leagueState = {
   league_name: "",
@@ -400,6 +400,7 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
       const newState = {
         ...state,
         player_gk1: {
@@ -407,6 +408,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid,
         },
       };
       return newState;
@@ -415,6 +417,7 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
       const newState = {
         ...state,
         player_gk2: {
@@ -422,6 +425,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid
         },
       };
       return newState;
@@ -430,6 +434,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_def1: {
@@ -437,6 +443,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid,
         },
       };
       return newState;
@@ -445,6 +452,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_def2: {
@@ -452,6 +461,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid,
         },
       };
       return newState;
@@ -460,6 +470,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_def3: {
@@ -467,6 +479,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid,
         },
       };
       return newState;
@@ -475,6 +488,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_def4: {
@@ -482,6 +497,8 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid,
+
         },
       };
       return newState;
@@ -490,6 +507,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_def5: {
@@ -497,6 +516,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid,
         },
       };
       return newState;
@@ -505,6 +525,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_mid1: {
@@ -512,6 +534,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid
         },
       };
       return newState;
@@ -520,6 +543,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_mid2: {
@@ -527,6 +552,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid
         },
       };
       return newState;
@@ -535,6 +561,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_mid3: {
@@ -542,6 +570,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid
         },
       };
       return newState;
@@ -550,6 +579,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_mid4: {
@@ -557,6 +588,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid
         },
       };
       return newState;
@@ -565,6 +597,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_fwd1: {
@@ -572,6 +606,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid
         },
       };
       return newState;
@@ -580,6 +615,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_fwd2: {
@@ -587,6 +624,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid
         },
       };
       return newState;
@@ -595,6 +633,8 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
+
       const newState = {
         ...state,
         player_fwd3: {
@@ -602,6 +642,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid
         },
       };
       return newState;
@@ -610,6 +651,7 @@ export function userReducer(state = initialState, action) {
       const player_id = action.player_id;
       const player_name = action.player_name;
       const player_value = action.player_value;
+      const teamid = action.teamid;
       const newState = {
         ...state,
         player_fwd4: {
@@ -617,6 +659,7 @@ export function userReducer(state = initialState, action) {
           player_id,
           player_name,
           player_value,
+          teamid
         },
       };
       return newState;

@@ -203,6 +203,8 @@ const Transfers = ({ route }) => {
   ];
 
   const firstFetch = async () => {
+    setIsLoading(true);
+
     const getTeamNames = {
       method: "GET",
       url: `https://firestore.googleapis.com/v1/projects/gffapp-small-poles/databases/(default)/documents/Teams`,
@@ -233,7 +235,7 @@ const Transfers = ({ route }) => {
         );
 
         //const fetching = async () => {
-        showLoader();
+        
         const querySnapshot = await getDocs(docRef);
         //console.log("a");
         //playerData.onSnapshot((querySnapshot) => {
@@ -242,12 +244,12 @@ const Transfers = ({ route }) => {
         querySnapshot.forEach((doc) => {
           const {
             Player_Name,
-            Team_id,
             Player_Value,
             Position,
             Player_id,
             Team_Name,
             Player_Image,
+            TeamID
           } = doc.data();
           newplayers.push({
             id: doc.id,
@@ -258,6 +260,7 @@ const Transfers = ({ route }) => {
             Player_id,
             Team_Name,
             Player_Image,
+            TeamID,
           });
         });
         newplayers.forEach((val) => {
@@ -275,8 +278,6 @@ const Transfers = ({ route }) => {
         // })
 
         setPlayers(players);
-        setIsLoading(true);
-        hideLoader();
         //});
         //};
         setTest(() =>
@@ -284,6 +285,8 @@ const Transfers = ({ route }) => {
         );
       }
     });
+    setIsLoading(false);
+
   };
   const dispatch = useDispatch();
 
@@ -425,9 +428,10 @@ const Transfers = ({ route }) => {
     //isOverBudget();
   }, []);
   let update_balance = route.params.curr_bal;
+  const thesource = require("../../assets/loadingPlayers.gif");
+
   return (
     <View style={styles.center}>
-      {loader}
       <View style={HomeStyles.teamValue}>
         <Text style={HomeStyles.teamValue}>
           Current Transfers Value : &#8373;{" "}
@@ -440,6 +444,11 @@ const Transfers = ({ route }) => {
       {/* <Pressable onPress={() => fetching()}>
         <Text>PRESS</Text>
       </Pressable> */}
+      {isLoading && (
+        <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
+          <Image source={thesource} style={{ alignText: "center" }}></Image>
+        </View>
+      )}
       <FlatList
         style={LeaderBoardStyle.mainContainer}
         data={test}
@@ -457,7 +466,8 @@ const Transfers = ({ route }) => {
                 route.params.reduxParams(
                   item.Player_Name,
                   item.Player_id,
-                  item.Player_Value
+                  item.Player_Value,
+                  item.TeamID
                 ),
                 dispatch(transfer_made(true))
               );

@@ -145,11 +145,11 @@ const LeaderBoard = ({ route }) => {
         querySnapshot.forEach((doc) => {
           const {
             Player_Name,
-            Team_id,
             Player_Value,
             Position,
             Player_id,
             Player_Image,
+            TeamID
           } = doc.data();
           newplayers.push({
             id: doc.id,
@@ -159,6 +159,7 @@ const LeaderBoard = ({ route }) => {
             Position,
             Player_id,
             Player_Image,
+            TeamID
           });
         });
         newplayers.forEach((val) => {
@@ -177,12 +178,13 @@ const LeaderBoard = ({ route }) => {
           newNames.filter((item) => !parameterArray.includes(item.Player_id))
         );
         setPlayers(players);
-        setIsLoading(false);
         //hideLoader();
         //});
         // console.log(newNames);
       }
     });
+    setIsLoading(false);
+
   };
 
   const dispatch = useDispatch();
@@ -257,7 +259,7 @@ const LeaderBoard = ({ route }) => {
         <Text>PRESS</Text>
       </Pressable> */}
       {isLoading && (
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
           <Image source={thesource} style={{ alignText: "center" }}></Image>
         </View>
       )}
@@ -277,7 +279,8 @@ const LeaderBoard = ({ route }) => {
                 route.params.reduxParams(
                   item.Player_Name,
                   item.Player_id,
-                  item.Player_Value
+                  item.Player_Value,
+                  item.TeamID
                 )
                 //dispatch(balance(amountLeft()))
               );
@@ -297,6 +300,7 @@ const LeaderBoard = ({ route }) => {
               <Text style={LeaderBoardStyle.insidetext}>
                 Team Name: {item.ele}
               </Text>
+              
             </View>
             <View style={LeaderBoardStyle.secondsection}>
               <Text style={LeaderBoardStyle.insidetext}>

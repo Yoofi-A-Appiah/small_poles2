@@ -71,7 +71,7 @@ export const set_fixtures_gw = (fixturesGW) => (dispatch) => {
     type: FIXTURES_GW,
     fixturesGW: fixturesGW,
   });
-};
+}; 
 export const save_email = (email) => (dispatch) => {
   dispatch({
     type: SAVE_EMAIL,
@@ -109,139 +109,154 @@ export const transfer_made = (transfer_made) => (dispatch) => {
   });
 };
 export const transfer_player_GK1 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value, teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_GK1,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_GK2 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_GK2,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_DEF1 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_DEF1,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_DEF2 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_DEF2,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_DEF3 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_DEF3,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_DEF4 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_DEF4,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_DEF5 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_DEF5,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_MID1 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_MID1,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_MID2 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_MID2,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 
 export const transfer_player_MID3 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_MID3,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_MID4 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_MID4,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_FWD1 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_FWD1,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_FWD2 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_FWD2,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_FWD3 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_FWD3,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_player_FWD4 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: TRANSFER_PLAYER_FWD4,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
     });
   };
 export const transfer_team_value = (total_value) => (dispatch) => {
@@ -310,137 +325,167 @@ export const set_team_value = (total_value) => (dispatch) => {
   });
 };
 export const set_player_gk1 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_GK1,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
+
     });
   };
 export const set_player_gk2 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_GK2,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
+
     });
   };
 export const set_player_def1 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_DEF1,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+      teamid: teamid,
+
     });
   };
 export const set_player_def2 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_DEF2,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_def3 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_DEF3,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_def4 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_DEF4,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_def5 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_DEF5,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_mid1 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_MID1,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_mid2 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_MID2,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_mid3 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_MID3,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_mid4 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_MID4,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_fwd1 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_FWD1,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_fwd2 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_FWD2,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_fwd3 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_FWD3,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };
 export const set_player_fwd4 =
-  (player_name, player_id, player_value) => (dispatch) => {
+  (player_name, player_id, player_value,teamid) => (dispatch) => {
     dispatch({
       type: SET_PLAYER_FWD4,
       player_name: player_name,
       player_id: player_id,
       player_value: player_value,
+            teamid: teamid,
+
     });
   };

@@ -148,10 +148,15 @@ const HomeStyles = StyleSheet.create({
   confirmButton: {
     position: "absolute",
     left: width / 1.2,
+    backgroundColor: "white",
+    borderRadius: 100,
   },
   declineButton: {
     position: "absolute",
     right: width / 1.2,
+    backgroundColor: "white",
+    borderRadius: 100,
+
   },
   homeWelcome: {
     justifyContent: "center",
