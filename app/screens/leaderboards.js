@@ -258,7 +258,13 @@ const LeaderBoard = ({ route }) => {
         <Text>PRESS</Text>
       </Pressable> */}
       {isLoading && (
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "white",
+          }}
+        >
           <Image source={thesource} style={{ alignText: "center" }}></Image>
         </View>
       )}

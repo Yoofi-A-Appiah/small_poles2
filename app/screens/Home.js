@@ -27,7 +27,14 @@ import FloatingButton from "../components/FloatingButton";
 import HomeStyles from "../../styles/homeStyles";
 import { Ionicons } from "react-native-vector-icons";
 import { firebase } from "../../initFirebase";
-import { collection, query, where, getDocs, limit } from "firebase/firestore"; //const firestore = Firestore();
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  limit,
+} from "firebase/firestore"; //const firestore = Firestore();
 import { db } from "../../initFirebase";
 import TextTicker from "react-native-text-ticker";
 import Select, { SelectItem } from "@redmin_delishaj/react-native-select";
@@ -267,6 +274,19 @@ const Home = ({ navigation, route }) => {
     //showLoader();
     const querySnapshot = await getDocs(q);
     // playerData.onSnapshot((querySnapshot) => {
+    //console.log(querySnapshot);
+    if (querySnapshot.empty === true) {
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: "FirstTimeUser",
+            params: { reason: "You have not set your initial team" },
+          },
+        ],
+      });
+    }
+    console.log(querySnapshot.data);
     const players = [];
     querySnapshot.forEach((doc) => {
       const {

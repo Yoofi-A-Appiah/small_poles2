@@ -581,12 +581,26 @@ const FirstTimeUser = ({ route }) => {
   };
   useEffect(() => {
     //amountLeft();
+    checkRedirect();
     callUnboarding();
     dispatch(balance(amountLeft()));
     fetching();
     dispatch(set_team_value(calculateTeamValue()));
   }, []);
   const playerIcon = require("../../assets/football-player.png");
+  const initialSelection = () => {
+    Alert.alert(
+      "You have not created your initial team",
+      "Make sure you set your team's name, favorite team and have selected 15 players that are within budget ",
+      [{ text: "Create team" }]
+    );
+    dispatch(clear_data());
+  };
+  const checkRedirect = () => {
+    if (route.params.reason !== undefined) {
+      initialSelection();
+    }
+  };
   const Done = ({ ...props }) => (
     <TouchableOpacity {...props}>
       <Text style={{ fontSize: 20 }}>Done</Text>
@@ -780,7 +794,7 @@ const FirstTimeUser = ({ route }) => {
               <View style={FirstTimeUserStyle.subContainer1}>
                 {player_gk1 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
                     style={FirstTimeUserStyle.player_gk1}
@@ -835,10 +849,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_gk2 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_gk2}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -892,10 +906,10 @@ const FirstTimeUser = ({ route }) => {
               <View style={FirstTimeUserStyle.subContainer2}>
                 {player_def1 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_def1}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -947,10 +961,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_def2 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_def2}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1002,10 +1016,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_def3 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_def3}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1057,10 +1071,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_def4 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_def4}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1112,10 +1126,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_def5 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_def5}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1169,10 +1183,10 @@ const FirstTimeUser = ({ route }) => {
               <View style={FirstTimeUserStyle.subContainer3}>
                 {player_mid1 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_mid1}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1224,10 +1238,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_mid2 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_mid2}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1279,10 +1293,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_mid3 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_mid3}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1334,10 +1348,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_mid4 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_mid4}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1391,10 +1405,10 @@ const FirstTimeUser = ({ route }) => {
               <View style={FirstTimeUserStyle.subContainer4}>
                 {player_fwd1 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_fwd1}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1446,10 +1460,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_fwd2 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_fwd2}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1501,10 +1515,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_fwd3 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_fwd3}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
@@ -1556,10 +1570,10 @@ const FirstTimeUser = ({ route }) => {
                 )}
                 {player_fwd4 === "N@me" ? (
                   <Ionicons
-                    name="add-circle-outline"
+                    name="add-circle"
                     size={40}
                     color={"black"}
-                    style={FirstTimeUserStyle.player_fwd4}
+                    style={FirstTimeUserStyle.player_gk1}
                     onPress={() => {
                       dispatch(set_team_value(calculateTeamValue()));
                       //dispatch(balance(amountLeft()));
