@@ -99,22 +99,18 @@ const FirstTimeUser = ({ route }) => {
   let gk1_value = useSelector(
     (state) => state.userReducer.player_gk1.player_value
   );
-  let gk1_Team = useSelector(
-    (state) => state.userReducer.player_gk1.teamid
-  );
-  console.log(gk1_Team);
+  let gk1_Team = useSelector((state) => state.userReducer.player_gk1.teamid);
+  //console.log(gk1_Team);
   let player_gk2 = useSelector(
     (state) => state.userReducer.player_gk2.player_name
   );
   let player_gk2_id = useSelector(
     (state) => state.userReducer.player_gk2.player_id
-  ); 
+  );
   let gk2_value = useSelector(
     (state) => state.userReducer.player_gk2.player_value
   );
-  let gk2_Team = useSelector(
-    (state) => state.userReducer.player_gk2.teamid
-  );
+  let gk2_Team = useSelector((state) => state.userReducer.player_gk2.teamid);
   let player_def1 = useSelector(
     (state) => state.userReducer.player_def1.player_name
   );
@@ -124,9 +120,7 @@ const FirstTimeUser = ({ route }) => {
   let def1_value = useSelector(
     (state) => state.userReducer.player_def1.player_value
   );
-  let def1_Team = useSelector(
-    (state) => state.userReducer.player_def1.teamid
-  );
+  let def1_Team = useSelector((state) => state.userReducer.player_def1.teamid);
   let player_def2 = useSelector(
     (state) => state.userReducer.player_def2.player_name
   );
@@ -136,9 +130,7 @@ const FirstTimeUser = ({ route }) => {
   let def2_value = useSelector(
     (state) => state.userReducer.player_def2.player_value
   );
-  let def2_Team = useSelector(
-    (state) => state.userReducer.player_def2.teamid
-  );
+  let def2_Team = useSelector((state) => state.userReducer.player_def2.teamid);
   let player_def3 = useSelector(
     (state) => state.userReducer.player_def3.player_name
   );
@@ -148,9 +140,7 @@ const FirstTimeUser = ({ route }) => {
   let def3_value = useSelector(
     (state) => state.userReducer.player_def3.player_value
   );
-  let def3_Team = useSelector(
-    (state) => state.userReducer.player_def3.teamid
-  );
+  let def3_Team = useSelector((state) => state.userReducer.player_def3.teamid);
   let player_def4 = useSelector(
     (state) => state.userReducer.player_def4.player_name
   );
@@ -160,9 +150,7 @@ const FirstTimeUser = ({ route }) => {
   let def4_value = useSelector(
     (state) => state.userReducer.player_def4.player_value
   );
-  let def4_Team = useSelector(
-    (state) => state.userReducer.player_def4.teamid
-  );
+  let def4_Team = useSelector((state) => state.userReducer.player_def4.teamid);
   let player_def5 = useSelector(
     (state) => state.userReducer.player_def5.player_name
   );
@@ -172,9 +160,7 @@ const FirstTimeUser = ({ route }) => {
   let def5_value = useSelector(
     (state) => state.userReducer.player_def5.player_value
   );
-  let def5_Team = useSelector(
-    (state) => state.userReducer.player_def5.teamid
-  );
+  let def5_Team = useSelector((state) => state.userReducer.player_def5.teamid);
   let player_mid1 = useSelector(
     (state) => state.userReducer.player_mid1.player_name
   );
@@ -184,9 +170,7 @@ const FirstTimeUser = ({ route }) => {
   let mid1_value = useSelector(
     (state) => state.userReducer.player_mid1.player_value
   );
-  let mid1_Team = useSelector(
-    (state) => state.userReducer.player_mid1.teamid
-  );
+  let mid1_Team = useSelector((state) => state.userReducer.player_mid1.teamid);
   let player_mid2 = useSelector(
     (state) => state.userReducer.player_mid2.player_name
   );
@@ -196,9 +180,7 @@ const FirstTimeUser = ({ route }) => {
   let mid2_value = useSelector(
     (state) => state.userReducer.player_mid2.player_value
   );
-  let mid2_Team = useSelector(
-    (state) => state.userReducer.player_mid2.teamid
-  );
+  let mid2_Team = useSelector((state) => state.userReducer.player_mid2.teamid);
   let player_mid3 = useSelector(
     (state) => state.userReducer.player_mid3.player_name
   );
@@ -208,9 +190,7 @@ const FirstTimeUser = ({ route }) => {
   let mid3_value = useSelector(
     (state) => state.userReducer.player_mid3.player_value
   );
-  let mid3_Team = useSelector(
-    (state) => state.userReducer.player_mid3.teamid
-  );
+  let mid3_Team = useSelector((state) => state.userReducer.player_mid3.teamid);
   let player_mid4 = useSelector(
     (state) => state.userReducer.player_mid4.player_name
   );
@@ -220,9 +200,7 @@ const FirstTimeUser = ({ route }) => {
   let mid4_value = useSelector(
     (state) => state.userReducer.player_mid4.player_value
   );
-  let mid4_Team = useSelector(
-    (state) => state.userReducer.player_mid4.teamid
-  );
+  let mid4_Team = useSelector((state) => state.userReducer.player_mid4.teamid);
   let player_fwd1 = useSelector(
     (state) => state.userReducer.player_fwd1.player_name
   );
@@ -232,9 +210,7 @@ const FirstTimeUser = ({ route }) => {
   let fwd1_value = useSelector(
     (state) => state.userReducer.player_fwd1.player_value
   );
-  let fwd1_Team = useSelector(
-    (state) => state.userReducer.player_fwd1.teamid
-  );
+  let fwd1_Team = useSelector((state) => state.userReducer.player_fwd1.teamid);
   let player_fwd2 = useSelector(
     (state) => state.userReducer.player_fwd2.player_name
   );
@@ -244,9 +220,7 @@ const FirstTimeUser = ({ route }) => {
   let fwd2_value = useSelector(
     (state) => state.userReducer.player_fwd2.player_value
   );
-  let fwd2_Team = useSelector(
-    (state) => state.userReducer.player_fwd2.teamid
-  );
+  let fwd2_Team = useSelector((state) => state.userReducer.player_fwd2.teamid);
   let player_fwd3 = useSelector(
     (state) => state.userReducer.player_fwd3.player_name
   );
@@ -256,9 +230,7 @@ const FirstTimeUser = ({ route }) => {
   let fwd3_value = useSelector(
     (state) => state.userReducer.player_fwd3.player_value
   );
-  let fwd3_Team = useSelector(
-    (state) => state.userReducer.player_fwd3.teamid
-  );
+  let fwd3_Team = useSelector((state) => state.userReducer.player_fwd3.teamid);
   let player_fwd4 = useSelector(
     (state) => state.userReducer.player_fwd4.player_name
   );
@@ -268,9 +240,7 @@ const FirstTimeUser = ({ route }) => {
   let fwd4_value = useSelector(
     (state) => state.userReducer.player_fwd4.player_value
   );
-  let fwd4_Team = useSelector(
-    (state) => state.userReducer.player_fwd4.teamid
-  );
+  let fwd4_Team = useSelector((state) => state.userReducer.player_fwd4.teamid);
   let team_name = useSelector((state) => state.userReducer.name);
   let favorite_team = useSelector((state) => state.userReducer.fav);
   let user_id = useSelector((state) => state.userReducer.user_id);
@@ -313,21 +283,96 @@ const FirstTimeUser = ({ route }) => {
       budget: false, //indicates that user is under budget by default
       balance: 1000,
       user_id: "",
-      player_gk1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_gk2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_def1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_def2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_def3: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_def4: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_def5: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_mid1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_mid2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_mid3: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_mid4: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_fwd1: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_fwd2: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_fwd3: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
-      player_fwd4: { player_id: "ID", player_name: "N@me", player_value: 0, teamid: "N@" },
+      player_gk1: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_gk2: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_def1: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_def2: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_def3: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_def4: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_def5: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_mid1: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_mid2: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_mid3: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_mid4: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_fwd1: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_fwd2: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_fwd3: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
+      player_fwd4: {
+        player_id: "ID",
+        player_name: "N@me",
+        player_value: 0,
+        teamid: "N@",
+      },
     };
     if (
       amountLeft() < 0 ||
@@ -382,20 +427,76 @@ const FirstTimeUser = ({ route }) => {
           Player_id: player_gk1_id,
           TeamID: gk1_Team,
         },
-        Player_GK2: { Name: player_gk2, Player_id: player_gk2_id,TeamID: gk2_Team, },
-        Player_DEF1: { Name: player_def1, Player_id: player_def1_id,TeamID: def1_Team, },
-        Player_DEF2: { Name: player_def2, Player_id: player_def2_id,TeamID: def2_Team, },
-        Player_DEF3: { Name: player_def3, Player_id: player_def3_id,TeamID: def3_Team, },
-        Player_DEF4: { Name: player_def4, Player_id: player_def4_id,TeamID: def4_Team, },
-        Player_DEF5: { Name: player_def5, Player_id: player_def5_id,TeamID: def5_Team, },
-        Player_MID1: { Name: player_mid1, Player_id: player_mid1_id,TeamID: mid1_Team, },
-        Player_MID2: { Name: player_mid2, Player_id: player_mid2_id,TeamID: mid2_Team, },
-        Player_MID3: { Name: player_mid3, Player_id: player_mid3_id,TeamID: mid3_Team, },
-        Player_MID4: { Name: player_mid4, Player_id: player_mid4_id,TeamID: mid4_Team, },
-        Player_FWD1: { Name: player_fwd1, Player_id: player_fwd1_id,TeamID: fwd1_Team, },
-        Player_FWD2: { Name: player_fwd2, Player_id: player_fwd2_id,TeamID: fwd2_Team, },
-        Player_FWD3: { Name: player_fwd3, Player_id: player_fwd3_id,TeamID: fwd3_Team, },
-        Player_FWD4: { Name: player_fwd4, Player_id: player_fwd4_id,TeamID: fwd4_Team, },
+        Player_GK2: {
+          Name: player_gk2,
+          Player_id: player_gk2_id,
+          TeamID: gk2_Team,
+        },
+        Player_DEF1: {
+          Name: player_def1,
+          Player_id: player_def1_id,
+          TeamID: def1_Team,
+        },
+        Player_DEF2: {
+          Name: player_def2,
+          Player_id: player_def2_id,
+          TeamID: def2_Team,
+        },
+        Player_DEF3: {
+          Name: player_def3,
+          Player_id: player_def3_id,
+          TeamID: def3_Team,
+        },
+        Player_DEF4: {
+          Name: player_def4,
+          Player_id: player_def4_id,
+          TeamID: def4_Team,
+        },
+        Player_DEF5: {
+          Name: player_def5,
+          Player_id: player_def5_id,
+          TeamID: def5_Team,
+        },
+        Player_MID1: {
+          Name: player_mid1,
+          Player_id: player_mid1_id,
+          TeamID: mid1_Team,
+        },
+        Player_MID2: {
+          Name: player_mid2,
+          Player_id: player_mid2_id,
+          TeamID: mid2_Team,
+        },
+        Player_MID3: {
+          Name: player_mid3,
+          Player_id: player_mid3_id,
+          TeamID: mid3_Team,
+        },
+        Player_MID4: {
+          Name: player_mid4,
+          Player_id: player_mid4_id,
+          TeamID: mid4_Team,
+        },
+        Player_FWD1: {
+          Name: player_fwd1,
+          Player_id: player_fwd1_id,
+          TeamID: fwd1_Team,
+        },
+        Player_FWD2: {
+          Name: player_fwd2,
+          Player_id: player_fwd2_id,
+          TeamID: fwd2_Team,
+        },
+        Player_FWD3: {
+          Name: player_fwd3,
+          Player_id: player_fwd3_id,
+          TeamID: fwd3_Team,
+        },
+        Player_FWD4: {
+          Name: player_fwd4,
+          Player_id: player_fwd4_id,
+          TeamID: fwd4_Team,
+        },
       })
       .then(addToGlobalLeague())
       .catch((e) => {

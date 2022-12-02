@@ -149,7 +149,7 @@ const LeaderBoard = ({ route }) => {
             Position,
             Player_id,
             Player_Image,
-            TeamID
+            TeamID,
           } = doc.data();
           newplayers.push({
             id: doc.id,
@@ -159,7 +159,7 @@ const LeaderBoard = ({ route }) => {
             Position,
             Player_id,
             Player_Image,
-            TeamID
+            TeamID,
           });
         });
         newplayers.forEach((val) => {
@@ -184,7 +184,6 @@ const LeaderBoard = ({ route }) => {
       }
     });
     setIsLoading(false);
-
   };
 
   const dispatch = useDispatch();
@@ -259,7 +258,7 @@ const LeaderBoard = ({ route }) => {
         <Text>PRESS</Text>
       </Pressable> */}
       {isLoading && (
-        <View style={{ justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Image source={thesource} style={{ alignText: "center" }}></Image>
         </View>
       )}
@@ -300,7 +299,6 @@ const LeaderBoard = ({ route }) => {
               <Text style={LeaderBoardStyle.insidetext}>
                 Team Name: {item.ele}
               </Text>
-              
             </View>
             <View style={LeaderBoardStyle.secondsection}>
               <Text style={LeaderBoardStyle.insidetext}>
