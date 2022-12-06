@@ -29,7 +29,7 @@ const MaterialTabs = () => {
         name="Fixtures"
         component={Fixtures}
         options={{
-          tabBarLabel: "News",
+          tabBarLabel: "Fixtures",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="newspaper-variant-multiple-outline"

@@ -12,7 +12,6 @@ import {
   FlatList,
   Pressable,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { firebase } from "../../initFirebase";
 import { set_fixtures_gw } from "../redux/actions";
 import FirstTimeUserStyle from "../../styles/firstTimeUserStyle";
@@ -20,7 +19,7 @@ import { db } from "../../initFirebase";
 import { query, collection, getDocs } from "firebase/firestore";
 import LeaderBoardStyle from "../../styles/LeaderBoardStyle";
 import { Ionicons } from "react-native-vector-icons";
-
+import Select from "@redmin_delishaj/react-native-select";
 const Fixtures = () => {
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const [showFixtures, setShowFixtures] = useState([]);
@@ -46,13 +45,13 @@ const Fixtures = () => {
     });
     setShowFixtures(fixtures);
     const gameweekNumbers = [
-      { id: "7", iName: "7" },
-      { id: "8", iName: "8" },
-      { id: "9", iName: "9" },
-      { id: "10", iName: "10" },
-      { id: "11", iName: "11" },
-      { id: "12", iName: "12" },
-      { id: "13", iName: "13" },
+      //add new gameweek here
+      { text: "7", value: 7 },
+      { text: "8", value: 8 },
+      { text: "9", value: 9 },
+      { text: "10", value: 10 },
+      { text: "11", value: 11 },
+      { text: "12", value: 12 },
     ];
     setGameWN(gameweekNumbers);
     //});
@@ -74,6 +73,17 @@ const Fixtures = () => {
     fetching();
   }, [fixturesGW]);
   // console.log(showFixtures);
+  const config = {
+    fontSize: 18,
+    backgroundColor: "#404040",
+    textColor: "white",
+    selectedBackgroundColor: "white",
+    selectedTextColor: "black",
+    selectedFontWeight: "bold",
+    elevation: 3,
+    height: 250,
+    width: 250,
+  };
 
   return (
     <View>
@@ -100,34 +110,30 @@ const Fixtures = () => {
                 style={{
                   color: "white",
                   borderColor: "#6AB547",
-                  borderWidth: "1",
-                  width: 300,
+                  //borderWidth: "1",
+                  width: 100,
                   height: 50,
-                  fontSize: 35,
+                  fontSize: 18,
                   textAlign: "center",
-                  backgroundColor: "#6AB547",
+                  backgroundColor: "#191716",
                   padding: 5,
+                  margin: 5,
+                  //   borderRadius: 10,
+                  //   overflow: "hidden",
                 }}
               >
-                DONE
+                CLOSE
               </Text>
             </Pressable>
-            <Picker
-              selectedValue={useSelector(
-                (state) => state.userReducer.fixturesGW
-              )}
-              style={{ height: 200, width: 250 }}
-              onValueChange={(value, index) => dispatch(set_fixtures_gw(value))}
-              mode="dropdown"
-            >
-              {gameWN.map((value) => (
-                <Picker.Item
-                  key={value.id}
-                  label={value.iName}
-                  value={value.iName}
-                />
-              ))}
-            </Picker>
+            <Select
+              data={gameWN}
+              onSelect={(value) => {
+                dispatch(set_fixtures_gw(value)),
+                  setIsPickerVisible(!isPickerVisible);
+              }}
+              value={fixturesGW}
+              config={config}
+            />
           </View>
         </View>
       </Modal>

@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Icon } from "react-native-elements";
+import { Entypo } from "react-native-vector-icons";
+
 import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
@@ -20,13 +21,7 @@ const styles = StyleSheet.create({
 
 const BaseIcon = ({ containerStyle, icon }) => (
   <View style={[styles.container, containerStyle]}>
-    <Icon
-      size={24}
-      color="white"
-      type="material"
-      name="notifications"
-      {...icon}
-    />
+    <Entypo name="notification" size={24} color={"white"} />
   </View>
 );
 

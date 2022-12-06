@@ -118,6 +118,26 @@ const League_details = ({ route }) => {
           )}
         </Text>
       </View>
+      <View
+        style={{
+          justifyContent: "space-between",
+          flexDirection: "row",
+          margin: 5,
+          backgroundColor: "#DBE9EE",
+          padding: 5,
+        }}
+      >
+        <Text>Position</Text>
+
+        <Text
+          style={{
+            margin: 2,
+            padding: 2,
+          }}
+        >
+          Season Points
+        </Text>
+      </View>
       {loadingLeague && (
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Image source={thesource} style={{ alignText: "center" }}></Image>
@@ -133,7 +153,7 @@ const League_details = ({ route }) => {
           <Pressable
             style={[
               LeaderBoardStyle.single_item,
-              { backgroundColor: item.nid == getUserid ? "green" : "white" },
+              { backgroundColor: item.nid == getUserid ? "#598392" : "white" },
             ]}
           >
             <View>
@@ -141,23 +161,46 @@ const League_details = ({ route }) => {
             </View>
 
             <View style={LeaderBoardStyle.firstSection}>
-              <Text>Team Name: {item.Team_name}</Text>
-              <Text>Season Points: {item.Season_Points}</Text>
-              <Text>Game Week Points: {item.Game_Week_Points}</Text>
+              <Text>{item.Team_name}</Text>
+
+              <Text>GW Points: {item.Game_Week_Points}</Text>
             </View>
-            {route.params.checkPrivate && item.nid !== getUserid && (
-              <AntDesign
-                name="message1"
-                size={35}
-                style={LeaderBoardStyle.secondsection}
-                color={"black"}
-                onPress={() =>
-                  navigation.navigate("UserChat", {
-                    usersID: item.id,
-                  })
-                }
-              ></AntDesign>
-            )}
+            <View style={LeaderBoardStyle.secondsection}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  backgroundColor: "#FEC601",
+                  padding: 10,
+                  margin: 10,
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  overflow: "hidden",
+                  borderColor: "#FEC601",
+                  width: 50,
+                }}
+              >
+                <Text style={{ alignText: "center" }}>
+                  {item.Season_Points}
+                </Text>{" "}
+              </Text>
+              {route.params.checkPrivate && item.nid !== getUserid && (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("UserChat", {
+                      usersID: item.id,
+                      userName: item.Team_name,
+                    })
+                  }
+                >
+                  <AntDesign
+                    name="message1"
+                    size={35}
+                    color={"black"}
+                  ></AntDesign>
+                  <Text>Chat</Text>
+                </Pressable>
+              )}
+            </View>
           </Pressable>
         )}
       />

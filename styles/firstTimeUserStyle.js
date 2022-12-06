@@ -11,9 +11,9 @@ const FirstTimeUserStyle = StyleSheet.create({
   },
 
   picker: {
+    alignSelf: "center",
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -23,12 +23,17 @@ const FirstTimeUserStyle = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    height: height / 1.2,
+    width: width,
+    padding: 10,
   },
   centeredView: {
     position: "absolute",
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
+    alignContent: "center",
+    textAlign: "center",
   },
   FTUcenteredView: {
     // position: "absolute",

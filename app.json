@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "small_poles2",
-    "slug": "small_poles2",
+    "name": "smallpoles2",
+    "slug": "smallpoles2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -22,10 +24,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.yoofi_a.smallpoles2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2be83f13-f577-4443-b696-d8dcebf87caa"
+      }
+    },
+    "owner": "yoofi_a "
   }
 }

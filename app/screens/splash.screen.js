@@ -1,6 +1,12 @@
 import React, { Component, useEffect, useState } from "react";
-import { ScrollView, Switch, StyleSheet, Text, View } from "react-native";
-import { Avatar, ListItem } from "react-native-elements";
+import {
+  ScrollView,
+  Switch,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+} from "react-native";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import BaseIcon from "./Icon";
@@ -35,6 +41,9 @@ const styles = StyleSheet.create({
     height: 55,
     borderWidth: 0.5,
     borderColor: "#ECECEC",
+    fontSize: 30,
+    padding: 10,
+    textAlign: "center",
   },
 });
 
@@ -79,12 +88,12 @@ const SettingsScreen = () => {
   // };
   var finEmail = useSelector((state) => state.userReducer.email);
   let teamName = useSelector((state) => state.userReducer.name);
-
+  const asource = require("../../assets/football-player.png");
   return (
     <ScrollView style={styles.scroll}>
       <View style={styles.userRow}>
         <View style={styles.userImage}>
-          <Avatar rounded size="large" source={{}} />
+          <Image style={{ width: 60, height: 60 }} source={asource} />
         </View>
         <View>
           <Text style={{ fontSize: 16 }}>{teamName}</Text>
@@ -100,7 +109,8 @@ const SettingsScreen = () => {
       </View>
       <InfoText text="Account" />
       <View>
-        <ListItem
+        <Text style={[styles.listItemContainer]}>COMING SOON...</Text>
+        {/* <ListItem
           hideChevron
           title="Push Notifications"
           containerStyle={styles.listItemContainer}
@@ -261,7 +271,7 @@ const SettingsScreen = () => {
             />
           }
           rightIcon={<Chevron />}
-        />
+        /> */}
       </View>
     </ScrollView>
   );

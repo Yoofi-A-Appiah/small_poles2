@@ -11,13 +11,22 @@ const HomeStyles = StyleSheet.create({
   topDesign: {
     backgroundColor: "black",
   },
+
   picker: {
-    margin: 20,
-    backgroundColor: "white",
+    margin: 5,
+    //backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 2,
     alignItems: "center",
     shadowColor: "#000",
+    height: 56,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+
+    // increase the zIndex value something like : zIndex >> 10 to 1000
+
+    zIndex: 1000,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -156,7 +165,6 @@ const HomeStyles = StyleSheet.create({
     right: width / 1.2,
     backgroundColor: "white",
     borderRadius: 100,
-
   },
   homeWelcome: {
     justifyContent: "center",

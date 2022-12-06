@@ -1,14 +1,8 @@
 import React from "react";
-import { Icon } from "react-native-elements";
+import { Entypo } from "react-native-vector-icons";
+
 // import { Colors } from "../../constants";
 
-const Chevron = () => (
-  <Icon
-    name="chevron-right"
-    type="entypo"
-    color="black"
-    containerStyle={{ marginLeft: -15, width: 20 }}
-  />
-);
+const Chevron = () => <Entypo name="chevron-right" size={40} color={"black"} />;
 
 export default Chevron;

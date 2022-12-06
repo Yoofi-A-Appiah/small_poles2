@@ -14,7 +14,6 @@ import {
   Modal,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { Picker } from "@react-native-picker/picker";
 import loginStyle from "../../styles/loginStyle";
 import { initializedBase } from "../../initFirebase";
 import { getAuth, signOut, sendEmailVerification } from "firebase/auth";
@@ -962,6 +961,8 @@ const Home = ({ navigation, route }) => {
     selectedTextColor: "black",
     selectedFontWeight: "bold",
     elevation: 3,
+    height: 250,
+    width: 250,
   };
   let showContent = () => {
     return (
@@ -984,22 +985,6 @@ const Home = ({ navigation, route }) => {
                   return item.Team_name;
                 })}
               </Text>
-              {Platform.OS === "android" && (
-                //<View style={{ elevation: 2 }}>
-                <Select
-                  data={androidGameWN}
-                  onSelect={(value) => dispatch(set_home_game_week(value))}
-                  value={homeGW}
-                  config={config}
-                />
-                //</View>
-                // <View style={{ flexDirection: "row", elevation: 2 }}>
-                //   <Text style={LeaderBoardStyle.matchweek}>
-                //     Match Week {homeGW}
-                //   </Text>
-
-                // </View>
-              )}
               <Text style={HomeStyles.teamValue}>
                 Team Value: &#8373;
                 {allPlayers.map((item) => {
@@ -1008,20 +993,18 @@ const Home = ({ navigation, route }) => {
                 M
               </Text>
 
-              {Platform.OS === "ios" && (
-                <View style={{ flexDirection: "row" }}>
-                  <Pressable onPress={() => setIsPickerVisible(true)}>
-                    <Text style={LeaderBoardStyle.matchweek}>
-                      Match Week {homeGW}
-                      <Ionicons
-                        name="caret-down-circle"
-                        size={25}
-                        color={"white"}
-                      ></Ionicons>
-                    </Text>
-                  </Pressable>
-                </View>
-              )}
+              <View style={{ flexDirection: "row" }}>
+                <Pressable onPress={() => setIsPickerVisible(true)}>
+                  <Text style={LeaderBoardStyle.matchweek}>
+                    Match Week {homeGW}
+                    <Ionicons
+                      name="caret-down-circle"
+                      size={25}
+                      color={"white"}
+                    ></Ionicons>
+                  </Text>
+                </Pressable>
+              </View>
 
               <Modal
                 animationType="slide"
@@ -1038,34 +1021,30 @@ const Home = ({ navigation, route }) => {
                         style={{
                           color: "white",
                           borderColor: "#6AB547",
-                          borderWidth: "1",
-                          width: 300,
+                          //borderWidth: "1",
+                          width: 100,
                           height: 50,
-                          fontSize: 35,
+                          fontSize: 18,
                           textAlign: "center",
-                          backgroundColor: "#6AB547",
+                          backgroundColor: "#191716",
                           padding: 5,
+                          margin: 5,
+                          //   borderRadius: 10,
+                          //   overflow: "hidden",
                         }}
                       >
-                        DONE
+                        CLOSE
                       </Text>
                     </Pressable>
-                    <Picker
-                      selectedValue={homeGW}
-                      style={{ height: 200, width: 250 }}
-                      onValueChange={(value, index) =>
-                        dispatch(set_home_game_week(value))
-                      }
-                      mode="dropdown"
-                    >
-                      {gameWN.map((value) => (
-                        <Picker.Item
-                          key={value.id}
-                          label={value.iName}
-                          value={value.iName}
-                        />
-                      ))}
-                    </Picker>
+                    <Select
+                      data={androidGameWN}
+                      onSelect={(value) => {
+                        dispatch(set_home_game_week(value)),
+                          setIsPickerVisible(!isPickerVisible);
+                      }}
+                      value={homeGW}
+                      config={config}
+                    />
                   </View>
                 </View>
               </Modal>

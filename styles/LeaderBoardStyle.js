@@ -67,7 +67,6 @@ const LeaderBoardStyle = StyleSheet.create({
   firstSection: {
     textAlign: "left",
     justifyContent: "space-evenly",
-
     left: 0,
     width: width / 2,
     padding: 10,
