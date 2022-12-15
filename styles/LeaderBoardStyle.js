@@ -21,6 +21,12 @@ const LeaderBoardStyle = StyleSheet.create({
     padding: 0,
     backgroundColor: "rgba(52, 52, 52, 0.8)",
   },
+  bottomSheetmainContainer: {
+    flex: 1,
+    height: 50,
+    width: width,
+    padding: 0,
+  },
   single_item: {
     flexDirection: "row",
     justifyContent: "space-around",

@@ -27,6 +27,23 @@ const FirstTimeUserStyle = StyleSheet.create({
     width: width,
     padding: 10,
   },
+  bottomSheet: {
+    alignSelf: "center",
+    backgroundColor: "white",
+    borderRadius: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    height: height / 3,
+    width: width,
+    padding: 10,
+  },
   centeredView: {
     position: "absolute",
     bottom: 0,

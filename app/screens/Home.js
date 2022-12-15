@@ -12,6 +12,7 @@ import {
   ScrollView,
   FlatList,
   Modal,
+  TouchableNativeFeedback,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import loginStyle from "../../styles/loginStyle";
@@ -33,6 +34,7 @@ import {
   getDocs,
   getDoc,
   limit,
+  collectionGroup,
 } from "firebase/firestore"; //const firestore = Firestore();
 import { db } from "../../initFirebase";
 import TextTicker from "react-native-text-ticker";
@@ -75,9 +77,11 @@ const Home = ({ navigation, route }) => {
   const [transferOccur, setTransferOccur] = useState(false);
   const [loader, showLoader, hideLoader] = UseFullPageLoader();
   const [isPickerVisible, setIsPickerVisible] = useState(false);
+  const [isBottomSheet, setIsBottomSheet] = useState(false);
   const [gameWN, setGameWN] = useState([]);
   const [androidGameWN, setandroidGameWN] = useState([]);
   const [gwPerformance, setGWPerformance] = useState([]);
+  const [playerDetails, setPlayerDetails] = useState([]);
   const dispatch = useDispatch();
   let getUserid = useSelector((state) => state.signupReducer.user_id);
   let homeGW = useSelector((state) => state.userReducer.homeGW);
@@ -111,7 +115,6 @@ const Home = ({ navigation, route }) => {
           )
         )
       );
-      console.log(Value_GK1());
       dispatch(
         set_player_gk2(
           item.Player_GK2.Name,
@@ -285,7 +288,7 @@ const Home = ({ navigation, route }) => {
         ],
       });
     }
-    console.log(querySnapshot.data);
+    // console.log(querySnapshot.data);
     const players = [];
     querySnapshot.forEach((doc) => {
       const {
@@ -514,6 +517,7 @@ const Home = ({ navigation, route }) => {
     });
     return arr;
   };
+  //console.log(Points_GK1);
   let Value_GK1 = () => {
     const temp = allPlayers.map((item) => {
       return item.Player_GK1.Player_id;
@@ -964,6 +968,46 @@ const Home = ({ navigation, route }) => {
     height: 250,
     width: 250,
   };
+  const getPlayerDetails = async (playerId, playerTeam) => {
+    //console.log(playerTeam);
+    const q2 = query(
+      collectionGroup(db, `${playerTeam}`),
+      where(
+        firebase.firestore.FieldPath.documentId(),
+        "==",
+        `/TeamPlayers/Players/${playerTeam}/${playerId}`
+      )
+    );
+    const querySnapshot2 = await getDocs(q2);
+    const players2 = [];
+    querySnapshot2.forEach((doc) => {
+      // console.log(doc.data());
+      const {
+        Age,
+        Jersey_Number,
+        Player_Image,
+        Player_Value,
+        Position,
+        Player_id,
+        Season_Points,
+        Player_Name,
+      } = doc.data();
+      players2.push({
+        id: doc.id,
+        age: Age,
+        jersey: Jersey_Number,
+        image: Player_Image,
+        name: Player_Name,
+        value: Player_Value,
+        pid: Player_id,
+        position: Position,
+        Team: playerTeam[0],
+        sp: Season_Points,
+      });
+    });
+    setPlayerDetails(players2);
+    setIsBottomSheet(true);
+  };
   let showContent = () => {
     return (
       <View style={{ flex: 1 }}>
@@ -1048,6 +1092,140 @@ const Home = ({ navigation, route }) => {
                   </View>
                 </View>
               </Modal>
+
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={isBottomSheet}
+              >
+                <View style={[FirstTimeUserStyle.centeredView]}>
+                  <View style={FirstTimeUserStyle.bottomSheet}>
+                    <Pressable
+                      onPress={() => setIsBottomSheet(!isBottomSheet)}
+                      style={{ flexDirection: "column" }}
+                    >
+                      <Text
+                        style={{
+                          color: "white",
+                          borderColor: "#6AB547",
+                          //borderWidth: "1",
+                          width: 100,
+                          height: 50,
+                          fontSize: 35,
+                          textAlign: "center",
+                          backgroundColor: "#191716",
+                          padding: 10,
+                          margin: 5,
+                          borderRadius: 10,
+                          overflow: "hidden",
+                        }}
+                      >
+                        X
+                      </Text>
+                    </Pressable>
+                    <FlatList
+                      style={LeaderBoardStyle.bottomSheetmainContainer}
+                      data={playerDetails}
+                      // refreshing={isRefreshing} // Added pull to refesh state
+                      // onRefresh={onRefresh}
+                      numColumns={1}
+                      renderItem={({ item }) => (
+                        <View style={{}}>
+                          <Text
+                            style={{
+                              textAlign: "center",
+                              alignSelf: "center",
+                              width: 60,
+                              height: 60,
+                              fontSize: 20,
+                            }}
+                          >
+                            {item.name}
+                          </Text>
+
+                          <View
+                            style={{
+                              flex: 1,
+                              flexDirection: "row",
+                              justifyContent: "space-evenly",
+                            }}
+                          >
+                            <Image
+                              source={{ uri: item.image }}
+                              style={{
+                                width: 60,
+                                height: 60,
+                                flexDirection: "column",
+                              }}
+                            />
+                            <View
+                              style={{
+                                flexDirection: "column",
+                                borderWidth: 2,
+                                padding: 1,
+                                margin: 3,
+                              }}
+                            >
+                              <Text>Age</Text>
+                              <Text style={{ fontSize: 20 }}>{item.age}</Text>
+                            </View>
+                            <View
+                              style={{
+                                flexDirection: "column",
+                                borderWidth: 2,
+                                padding: 1,
+                                margin: 3,
+                              }}
+                            >
+                              <Text>Team</Text>
+                              <Text style={{ fontSize: 20 }}>{item.Team}</Text>
+                            </View>
+                            <View
+                              style={{
+                                flexDirection: "column",
+                                borderWidth: 2,
+                                padding: 1,
+                                margin: 3,
+                              }}
+                            >
+                              <Text>Jersey Number</Text>
+                              <Text style={{ fontSize: 20 }}>
+                                {item.jersey}
+                              </Text>
+                            </View>
+                            <View
+                              style={{
+                                flexDirection: "column",
+                                borderWidth: 2,
+                                padding: 1,
+                                margin: 3,
+                              }}
+                            >
+                              <Text>Position</Text>
+                              <Text style={{ fontSize: 20 }}>
+                                {item.position}
+                              </Text>
+                            </View>
+                            <View
+                              style={{
+                                flexDirection: "column",
+                                borderWidth: 2,
+                                padding: 1,
+                                margin: 3,
+                              }}
+                            >
+                              <Text>Value</Text>
+                              <Text style={{ fontSize: 20 }}>
+                                {item.value} M
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      )}
+                    />
+                  </View>
+                </View>
+              </Modal>
             </View>
             <ScrollView>
               <ImageBackground
@@ -1071,7 +1249,19 @@ const Home = ({ navigation, route }) => {
                     })}
                   </Text>
                   <View style={HomeStyles.subContainer1}>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_GK1().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_GK1().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1111,7 +1301,19 @@ const Home = ({ navigation, route }) => {
                     </Pressable>
                   </View>
                   <View style={HomeStyles.subContainer2}>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_DEF1().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_DEF1().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1145,7 +1347,19 @@ const Home = ({ navigation, route }) => {
                         </TextTicker>
                       </View>
                     </Pressable>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_DEF2().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_DEF2().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1178,7 +1392,19 @@ const Home = ({ navigation, route }) => {
                         </TextTicker>
                       </View>
                     </Pressable>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_DEF3().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_DEF3().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1211,7 +1437,19 @@ const Home = ({ navigation, route }) => {
                         </TextTicker>
                       </View>
                     </Pressable>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_DEF4().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_DEF4().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1246,7 +1484,19 @@ const Home = ({ navigation, route }) => {
                     </Pressable>
                   </View>
                   <View style={HomeStyles.subContainer3}>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_MID1().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_MID1().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1279,7 +1529,19 @@ const Home = ({ navigation, route }) => {
                         </TextTicker>
                       </View>
                     </Pressable>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_MID2().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_MID2().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1312,7 +1574,19 @@ const Home = ({ navigation, route }) => {
                         </TextTicker>
                       </View>
                     </Pressable>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_MID3().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_MID3().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1347,7 +1621,19 @@ const Home = ({ navigation, route }) => {
                     </Pressable>
                   </View>
                   <View style={HomeStyles.subContainer4}>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_FWD1().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_FWD1().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1381,7 +1667,19 @@ const Home = ({ navigation, route }) => {
                         </TextTicker>
                       </View>
                     </Pressable>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_FWD2().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_FWD2().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1414,7 +1712,19 @@ const Home = ({ navigation, route }) => {
                         </TextTicker>
                       </View>
                     </Pressable>
-                    <Pressable style={HomeStyles.player_gk1}>
+                    <Pressable
+                      style={HomeStyles.player_gk1}
+                      onPress={() => {
+                        getPlayerDetails(
+                          Points_FWD3().map((item) => {
+                            return item.Player_id;
+                          }),
+                          Value_FWD3().map((item) => {
+                            return item.Players_Team;
+                          })
+                        );
+                      }}
+                    >
                       <Image
                         style={{ width: 60, height: 60 }}
                         source={playerIcon}
@@ -1457,7 +1767,19 @@ const Home = ({ navigation, route }) => {
                   </View>
                 </SafeAreaView>
                 <View style={HomeStyles.substitues}>
-                  <Pressable style={HomeStyles.player_gk1}>
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      getPlayerDetails(
+                        Points_GK2().map((item) => {
+                          return item.Player_id;
+                        }),
+                        Value_GK2().map((item) => {
+                          return item.Players_Team;
+                        })
+                      );
+                    }}
+                  >
                     <Image
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
@@ -1490,7 +1812,19 @@ const Home = ({ navigation, route }) => {
                       </TextTicker>
                     </View>
                   </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      getPlayerDetails(
+                        Points_DEF5().map((item) => {
+                          return item.Player_id;
+                        }),
+                        Value_DEF5().map((item) => {
+                          return item.Players_Team;
+                        })
+                      );
+                    }}
+                  >
                     <Image
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
@@ -1523,7 +1857,19 @@ const Home = ({ navigation, route }) => {
                       </TextTicker>
                     </View>
                   </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      getPlayerDetails(
+                        Points_MID4().map((item) => {
+                          return item.Player_id;
+                        }),
+                        Value_MID4().map((item) => {
+                          return item.Players_Team;
+                        })
+                      );
+                    }}
+                  >
                     <Image
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
@@ -1556,7 +1902,19 @@ const Home = ({ navigation, route }) => {
                       </TextTicker>
                     </View>
                   </Pressable>
-                  <Pressable style={HomeStyles.player_gk1}>
+                  <Pressable
+                    style={HomeStyles.player_gk1}
+                    onPress={() => {
+                      getPlayerDetails(
+                        Points_FWD4().map((item) => {
+                          return item.Player_id;
+                        }),
+                        Value_FWD4().map((item) => {
+                          return item.Players_Team;
+                        })
+                      );
+                    }}
+                  >
                     <Image
                       style={{ width: 60, height: 60 }}
                       source={playerIcon}
